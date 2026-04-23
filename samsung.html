@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+  (function(){var t=localStorage.getItem('imseon-theme-v2');if(t)document.documentElement.setAttribute('data-theme',t);})();
+</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Samsung SmartThings — Imseon Kwon</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; fill=&quot;none&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;>
+<rect x=&quot;6&quot; y=&quot;16.3999&quot; width=&quot;48&quot; height=&quot;6.4&quot; fill=&quot;black&quot;/>
+<rect x=&quot;6&quot; y=&quot;26.7998&quot; width=&quot;21.6&quot; height=&quot;6.4&quot; fill=&quot;black&quot;/>
+<rect x=&quot;32.4004&quot; y=&quot;26.7998&quot; width=&quot;21.6&quot; height=&quot;6.4&quot; fill=&quot;black&quot;/>
+<rect x=&quot;6&quot; y=&quot;37.1997&quot; width=&quot;48&quot; height=&quot;6.4&quot; fill=&quot;black&quot;/>
+</svg>
+">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+
+  /* ── imseon_DS.v.1.0 — Design Tokens ── */
+  :root {
+    --clr-bg:        #FAFAFA;
+    --clr-surface:   #FFFFFF;
+    --txt-900:       #0D0D0D;
+    --txt-600:       #555555;
+    --txt-400:       #999999;
+    --txt-200:       #D4D4D4;
+    --txt-100:       #F0F0F0;
+    --clr-lime:      #C8FF4A;
+    --clr-lime-2:    #DAFF78;
+    --clr-pink:      #BAE8FF;
+    --clr-pink-2:    #D5F3FF;
+    --clr-success:   #3ECF8E;
+    --clr-success-bg:#EDFAF4;
+    --clr-warning:   #F5A623;
+    --clr-warning-bg:#FFF8EC;
+    --clr-error:     #EF4444;
+    --clr-error-bg:  #FEF2F2;
+    --clr-info:      #6366F1;
+    --clr-info-bg:   #EEF2FF;
+    --lg-bg:           rgba(255,255,255,0.12);
+    --lg-bg-hover:     rgba(255,255,255,0.52);
+    --lg-hi:           rgba(255,255,255,0.90);
+    --lg-lo:           rgba(255,255,255,0.30);
+    --lg-border:       rgba(255,255,255,0.68);
+    --lg-blur:         blur(28px) saturate(180%);
+    --lg-shadow:       0 1px 0 rgba(255,255,255,0.55) inset, 0 8px 20px rgba(51,51,51,0.08);
+    --lg-shadow-float: 0 1px 0 rgba(255,255,255,0.80) inset, 0 24px 56px rgba(51,51,51,0.10), 0 6px 16px rgba(51,51,51,0.06);
+    --shadow-xs: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+    --shadow-xl: 0 16px 56px rgba(0,0,0,0.12);
+    --radius-xs:   4px;  --radius-sm:   8px;
+    --radius-md:   12px; --radius-lg:   16px;
+    --radius-xl:   20px; --radius-2xl:  24px;
+    --radius-3xl:  28px; --radius-full: 99999px;
+    --sp-4:4px; --sp-8:8px; --sp-12:12px; --sp-16:16px;
+    --sp-20:20px; --sp-24:24px; --sp-28:28px; --sp-32:32px;
+    --sp-40:40px; --sp-48:48px; --sp-64:64px; --sp-80:80px;
+    --sp-96:96px; --sp-128:128px;
+    --dur-fast:150ms; --dur-base:300ms; --dur-slow:500ms; --dur-spring:600ms;
+    --ease-base:ease;
+    --ease-out:cubic-bezier(0.2,0,0,1);
+    --ease-spring:cubic-bezier(0.34,1.52,0.64,1);
+    --ease-water:cubic-bezier(0.34,1.45,0.64,1);
+    /* Legacy aliases */
+    --sp-xs:var(--sp-16); --sp-sm:var(--sp-24);
+    --sp-md:var(--sp-48); --sp-lg:var(--sp-80); --sp-xl:var(--sp-96);
+    /* Samsung brand */
+    --ss-blue: #1428A0;
+    --ss-bg:   #EEF0FA;
+  }
+
+  /* ── imseon_DS.v.1.0 — Dark Mode Tokens ── */
+  [data-theme="dark"] {
+    --clr-bg:        #111111;
+    --clr-surface:   #1C1C1C;
+    --txt-900:       #EFEFEF;
+    --txt-600:       #9A9A9A;
+    --txt-400:       #555555;
+    --txt-200:       #2C2C2C;
+    --txt-100:       #1C1C1C;
+    --lg-bg:           rgba(255,255,255,0.04);
+    --lg-bg-hover:     rgba(255,255,255,0.09);
+    --lg-hi:           rgba(0,191,255,0.07);
+    --lg-lo:           rgba(255,255,255,0.02);
+    --lg-border:       rgba(255,255,255,0.10);
+    --lg-shadow:       inset 0 1px 0 rgba(0,191,255,0.06), 0 4px 16px rgba(0,0,0,0.35);
+    --lg-shadow-float: inset 0 1px 0 rgba(0,191,255,0.07), 0 20px 48px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.25);
+    --shadow-xs: 0 1px 3px rgba(0,0,0,0.30);
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.35);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.40);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.50);
+    --shadow-xl: 0 16px 56px rgba(0,0,0,0.60);
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Geist', system-ui, sans-serif;
+    background-color: var(--clr-bg);
+    color: var(--txt-900);
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse 50% 40% at 90% 5%,  rgba(20,40,160,.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 35% at 10% 95%, rgba(20,40,160,.08) 0%, transparent 70%);
+    background-attachment: fixed;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: 64px; padding: 0 28px 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,0.06); border: 1px solid transparent;
+    border-bottom-color: rgba(255,255,255,0.22);
+    backdrop-filter: var(--lg-blur); -webkit-backdrop-filter: var(--lg-blur);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.40) inset, 0 1px 6px rgba(51,51,51,0.04);
+    border-radius: 0;
+    transition:
+      top var(--dur-slow) var(--ease-water),
+      left var(--dur-slow) var(--ease-water),
+      right var(--dur-slow) var(--ease-water),
+      border-radius var(--dur-slow) var(--ease-water),
+      background var(--dur-base) var(--ease-base),
+      box-shadow var(--dur-base) var(--ease-base),
+      border-color var(--dur-base) var(--ease-base);
+  }
+  nav.floating {
+    top: 12px; left: 12px; right: 12px; border-radius: 18px;
+    background: rgba(255,255,255,0.48); border-color: rgba(255,255,255,0.60);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.75) inset, 0 4px 16px rgba(51,51,51,0.06), 0 1px 4px rgba(51,51,51,0.04);
+  }
+  .nav-logo { color: var(--txt-900); text-decoration: none; flex-shrink: 0; display: flex; align-items: center; transition: opacity 0.25s; }
+  .nav-logo-text { font-family: 'Varent','Syne',sans-serif; font-weight: 800; font-size: 0.95rem; letter-spacing: -0.2px; white-space: nowrap; }
+  .nav-logo-icon { display: none; color: var(--txt-900); }
+  nav.floating .nav-logo-text { display: none; }
+  nav.floating .nav-logo-icon { display: flex; align-items: center; }
+  .nav-right { display: flex; align-items: center; gap: 32px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: 1rem; font-weight: 400; color: var(--txt-600); transition: color .2s, font-weight .1s; white-space: nowrap; }
+  .nav-links a:hover { color: var(--txt-900); font-weight: 700; }
+  .nav-links a.active { color: var(--txt-900); font-weight: 600; }
+  .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 6px; border-radius: var(--radius-sm); transition: background .2s; }
+  .nav-burger:hover { background: rgba(0,0,0,.05); }
+  .nav-burger span { display: block; width: 18px; height: 1.5px; background: var(--txt-900); border-radius: 2px; transition: transform .25s ease, opacity .25s ease; transform-origin: center; }
+  .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .nav-drawer {
+    display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 199;
+    background: rgba(255,255,255,0.80); border: 1px solid rgba(255,255,255,0.80); border-top: none;
+    backdrop-filter: var(--lg-blur); -webkit-backdrop-filter: var(--lg-blur);
+    padding: 20px var(--sp-24) 24px; flex-direction: column; gap: 0;
+    transition: top var(--dur-slow) var(--ease-water), left var(--dur-slow) var(--ease-water),
+      right var(--dur-slow) var(--ease-water), border-radius var(--dur-slow) var(--ease-water);
+    animation: slideDown .22s ease;
+  }
+  .nav-drawer.open { display: flex; }
+  nav.floating + .nav-drawer, .nav-drawer.floating { top: calc(12px + 64px); left: 12px; right: 12px; border-radius: 0 0 18px 18px; border-top: 1px solid rgba(255,255,255,0.40); }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  .nav-drawer a { text-decoration: none; font-size: 1rem; font-weight: 500; color: var(--txt-600); padding: 14px 0; border-bottom: 1px solid rgba(0,0,0,.05); transition: color .2s; }
+  .nav-drawer a:last-child { border-bottom: none; }
+  .nav-drawer a:hover { color: var(--txt-900); }
+
+  /* ── LAYOUT ── */
+  main { padding-top: 64px; }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    padding: var(--sp-32) var(--sp-48) 0;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .breadcrumb a {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.78rem; font-weight: 500; color: var(--txt-400);
+    text-decoration: none; letter-spacing: 0.3px;
+    transition: color .2s;
+  }
+  .breadcrumb a:hover { color: var(--txt-900); }
+  .breadcrumb a svg { transition: transform .25s var(--ease-water); }
+  .breadcrumb a:hover svg { transform: translateX(-3px); }
+
+  /* ── HEADER ── */
+  .project-header {
+    padding: var(--sp-32) var(--sp-48) var(--sp-48);
+    max-width: 1200px; margin: 0 auto;
+    border-bottom: 1px solid var(--txt-200);
+  }
+  .project-eyebrow {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 1.8px;
+    text-transform: uppercase; color: var(--txt-400); margin-bottom: var(--sp-16);
+  }
+  .project-title {
+    font-family: 'Geist', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.6rem);
+    font-weight: 700; letter-spacing: -1px; line-height: 1.15;
+    color: var(--txt-900); margin-bottom: var(--sp-32);
+  }
+  .project-meta {
+    display: flex; gap: var(--sp-48); flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--txt-400); }
+  .meta-value { font-size: 0.88rem; font-weight: 500; color: var(--txt-900); }
+  .meta-value a { color: var(--txt-900); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ── SECTION WRAPPER ── */
+  .detail-section {
+    max-width: 1200px; margin: 0 auto;
+    padding: var(--sp-64) var(--sp-48);
+    border-bottom: 1px solid var(--txt-200);
+  }
+  .detail-section:last-of-type { border-bottom: none; }
+  .section-eyebrow {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 1.8px;
+    text-transform: uppercase; color: var(--txt-400);
+    margin-bottom: var(--sp-40);
+  }
+
+  /* ── INFO ROW (label | body) ── */
+  .info-row {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: var(--sp-24); padding: var(--sp-24) 0;
+    border-top: 1px solid var(--txt-100);
+  }
+  .info-row:last-child { border-bottom: 1px solid var(--txt-100); }
+  .info-label {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--txt-400);
+    padding-top: 3px; line-height: 1.6;
+  }
+  .info-body {
+    font-size: 0.95rem; font-weight: 400; line-height: 1.75;
+    color: var(--txt-600);
+  }
+  .info-body strong { color: var(--txt-900); font-weight: 600; }
+
+  /* ── FULL-WIDTH MEDIA BLOCK ── */
+  .media-block {
+    width: 100%; border-radius: var(--radius-3xl);
+    overflow: hidden; margin: var(--sp-48) 0;
+    position: relative;
+  }
+  .media-block img { width: 100%; display: block; }
+
+  /* ── CONTENT ROW (label-left | stacked-imgs-right) ── */
+  .content-row {
+    display: grid; grid-template-columns: 1fr 1.6fr;
+    gap: var(--sp-48); align-items: start;
+    padding: var(--sp-48) 0;
+    border-top: 1px solid var(--txt-100);
+  }
+  .content-row:last-child { border-bottom: 1px solid var(--txt-100); }
+  .content-row-left { display: flex; flex-direction: column; gap: var(--sp-16); }
+  .content-label {
+    font-size: 1.15rem; font-weight: 700; letter-spacing: -0.3px;
+    text-transform: uppercase; color: var(--ss-blue); line-height: 1.2;
+  }
+  .content-body {
+    font-size: 0.9rem; line-height: 1.75; color: var(--txt-600); font-weight: 400;
+  }
+  .content-row-imgs { display: flex; flex-direction: column; gap: var(--sp-16); }
+  .content-row-imgs picture { display: block; width: 100%; }
+  .content-row-imgs img { width: 100%; height: auto; display: block; border-radius: var(--radius-xl); }
+
+  /* ── BACK TO TOP ── */
+  .back-to-top {
+    position: fixed; bottom: 32px; right: 32px; z-index: 100;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--txt-900); color: white;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-md);
+    opacity: 0; pointer-events: none;
+    transition: opacity var(--dur-base) ease, transform var(--dur-base) var(--ease-spring);
+    transform: translateY(8px);
+  }
+  .back-to-top.visible { opacity: 1; pointer-events: auto; transform: none; }
+  .back-to-top:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 1200px; margin: 0 auto;
+    padding: 32px var(--sp-48);
+    font-size: 0.75rem; color: var(--txt-400);
+    border-top: 1px solid var(--txt-200);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 8px;
+  }
+  footer a { color: inherit; opacity: 0.55; text-decoration: none; font-size: 0.72rem; letter-spacing: 0.3px; transition: opacity .2s; }
+  footer a:hover { opacity: 1; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    .nav-links  { display: none; }
+    .nav-burger { display: flex; }
+    .nav-logo-text { display: none; } .nav-logo-icon { display: flex; }
+    .breadcrumb, .project-header, .detail-section { padding-left: var(--sp-24); padding-right: var(--sp-24); }
+    .project-meta { gap: var(--sp-24); }
+    .info-row { grid-template-columns: 1fr; gap: var(--sp-8); }
+    .content-row { grid-template-columns: 1fr; }
+    footer { padding: 24px var(--sp-24); flex-direction: column; gap: 8px; text-align: center; }
+    .back-to-top { bottom: 20px; right: 20px; }
+  }
+  
+  /* ── Dark Mode — Component Overrides ── */
+  [data-theme="dark"] body {
+    background-color: var(--clr-bg);
+    background-image: radial-gradient(ellipse 50% 40% at 90% 5%, rgba(20,40,160,.14) 0%, transparent 70%), radial-gradient(ellipse 40% 35% at 10% 95%, rgba(20,40,160,.14) 0%, transparent 70%);
+  }
+  [data-theme="dark"] nav {
+    background: rgba(17,17,17,0.10);
+    border-bottom-color: rgba(255,255,255,0.08);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 1px 6px rgba(0,0,0,0.30);
+  }
+  [data-theme="dark"] nav.floating {
+    background: rgba(17,17,17,0.80);
+    border-color: rgba(255,255,255,0.08);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 8px 32px rgba(0,0,0,0.50);
+  }
+  [data-theme="dark"] .nav-drawer {
+    background: rgba(17,17,17,0.92);
+    border-color: rgba(255,255,255,0.08);
+  }
+  [data-theme="dark"] .nav-drawer a { color: var(--txt-600); }
+  [data-theme="dark"] .hero-tag {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.10);
+    color: var(--txt-600);
+  }
+  [data-theme="dark"] .info-row {
+    border-top-color: var(--txt-200);
+  }
+  [data-theme="dark"] .back-to-top {
+    background: #2C2C2C;
+  }
+  [data-theme="dark"] .back-to-top:hover {
+    background: #3A3A3A;
+  }
+  /* ── Theme Toggle — Liquidic Drop ── */
+  .theme-toggle {
+    position: relative; display: flex; align-items: center; justify-content: center;
+    min-height: 48px; min-width: 48px; padding: 0 4px;
+    background: none; border: none; cursor: pointer;
+    flex-shrink: 0; -webkit-tap-highlight-color: transparent; outline: none;
+  }
+  .toggle-track {
+    position: relative;
+    display: flex; align-items: center; gap: 4px; padding: 4px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.30), 0 2px 8px rgba(0,0,0,0.08);
+    backdrop-filter: blur(12px) saturate(1.4);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+    border-radius: var(--radius-full);
+    transition: background var(--lb-quick,280ms) var(--lb-ease,cubic-bezier(0.16,1,0.3,1)),
+                border-color var(--lb-quick,280ms) var(--lb-ease,cubic-bezier(0.16,1,0.3,1)),
+                box-shadow var(--lb-quick,280ms) var(--lb-ease,cubic-bezier(0.16,1,0.3,1));
+  }
+  /* The liquid drop indicator — slides between sun & moon */
+  .toggle-indicator {
+    position: absolute;
+    top: 4px; left: 4px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 30% 20%, #00BFFF 0%, #0095FF 100%);
+    box-shadow: 0 2px 4px rgba(0,191,255,0.30);
+    pointer-events: none;
+    will-change: transform;
+    transform: translateX(0px);
+    transition: background var(--lb-base,440ms) var(--lb-ease,cubic-bezier(0.16,1,0.3,1)),
+                box-shadow var(--lb-base,440ms) var(--lb-ease,cubic-bezier(0.16,1,0.3,1));
+  }
+  [data-theme="dark"] .toggle-indicator {
+    transform: translateX(36px);
+    background: radial-gradient(ellipse at 30% 20%, #DBFF88 0%, #D1FF69 50%, #C8FF4A 100%);
+    box-shadow: 0 2px 4px rgba(200,255,74,0.30);
+  }
+  /* Liquid drop slide animations */
+  @keyframes lb-drop-right {
+    0%   { transform: translateX(0px)  scaleX(1);    border-radius: 50%; }
+    30%  { transform: translateX(18px) scaleX(1.32); border-radius: 50%; }
+    62%  { transform: translateX(36px) scaleX(0.84); border-radius: 50%; }
+    78%  { transform: translateX(34px) scaleX(1.08); border-radius: 50%; }
+    90%  { transform: translateX(37px) scaleX(0.97); border-radius: 50%; }
+    100% { transform: translateX(36px) scaleX(1);    border-radius: 50%; }
+  }
+  @keyframes lb-drop-left {
+    0%   { transform: translateX(36px) scaleX(1);    border-radius: 50%; }
+    30%  { transform: translateX(18px) scaleX(1.32); border-radius: 50%; }
+    62%  { transform: translateX(0px)  scaleX(0.84); border-radius: 50%; }
+    78%  { transform: translateX(2px)  scaleX(1.08); border-radius: 50%; }
+    90%  { transform: translateX(-1px) scaleX(0.97); border-radius: 50%; }
+    100% { transform: translateX(0px)  scaleX(1);    border-radius: 50%; }
+  }
+  .toggle-indicator.drop-right {
+    animation: lb-drop-right 560ms cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .toggle-indicator.drop-left {
+    animation: lb-drop-left 560ms cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  /* Icons sit above the indicator */
+  .toggle-icon {
+    position: relative; z-index: 1;
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; background: transparent;
+  }
+  .toggle-icon svg { width: 18px; height: 18px; display: block; }
+  .toggle-icon-sun  svg { color: #fff;     transition: color var(--lb-quick,280ms) var(--lb-ease,cubic-bezier(0.16,1,0.3,1)); }
+  .toggle-icon-moon svg { color: #AAAAAA;  transition: color var(--lb-quick,280ms) var(--lb-ease,cubic-bezier(0.16,1,0.3,1)); }
+  [data-theme="dark"] .toggle-track  { background: #1A1A1A; border-color: rgba(255,255,255,0.06); }
+  [data-theme="dark"] .toggle-icon-sun  svg { color: #555555; }
+  [data-theme="dark"] .toggle-icon-moon svg { color: #1A1A1A; }
+
+  
+  /* ── Dark Mode — Color Palette & Component Fixes ── */
+
+  /* Status token backgrounds (no dark variants in :root yet) */
+  [data-theme="dark"] { 
+    --clr-success-bg: rgba(62,207,142,0.12);
+    --clr-warning-bg: rgba(245,166,35,0.12);
+    --clr-error-bg:   rgba(239,68,68,0.12);
+    --clr-info-bg:    rgba(99,102,241,0.12);
+    --clr-lime:       rgba(0,191,255,0.16);
+    --clr-lime-2:     rgba(0,191,255,0.10);
+    --clr-pink:       rgba(200,255,74,0.16);
+    --clr-pink-2:     rgba(200,255,74,0.12);
+  }
+
+  /* Buttons — var(--txt-900) becomes near-white in dark → flip text color */
+  [data-theme="dark"] .btn-primary,
+  [data-theme="dark"] .demo-btn {
+    background: var(--txt-900);
+    color: #111111;
+  }
+  [data-theme="dark"] .btn-secondary {
+    background: rgba(255,255,255,0.06);
+    border-color: var(--txt-200);
+    color: var(--txt-900);
+  }
+  [data-theme="dark"] .btn-secondary:hover {
+    background: rgba(255,255,255,0.10);
+    border-color: var(--txt-400);
+  }
+
+  /* Badges — hardcoded text colors → accessible dark equivalents */
+  [data-theme="dark"] .badge {
+    color: var(--txt-600);
+    background: var(--clr-surface);
+    border-color: var(--txt-200);
+  }
+  /* WCAG AA: #4ADE80 on rgba(62,207,142,.12) bg ≈ dark surface → 5.2:1 ✓ */
+  [data-theme="dark"] .badge-success { background: var(--clr-success-bg); color: #4ADE80; }
+  /* #FBBF24 on dark surface → 7.4:1 ✓ */
+  [data-theme="dark"] .badge-warning { background: var(--clr-warning-bg); color: #FBBF24; }
+  /* #F87171 on dark surface → 5.9:1 ✓ */
+  [data-theme="dark"] .badge-error   { background: var(--clr-error-bg);   color: #F87171; }
+  /* #818CF8 on dark surface → 5.1:1 ✓ */
+  [data-theme="dark"] .badge-info    { background: var(--clr-info-bg);    color: #818CF8; }
+
+  /* Status dots (colored dots — keep vibrant, just ensure visibility) */
+  [data-theme="dark"] .dot-success { background: #4ADE80; }
+
+  /* Tags — rgba(0,0,0,0.05) invisible on dark → use white transparency */
+  [data-theme="dark"] .tag,
+  [data-theme="dark"] .work-tag,
+  [data-theme="dark"] .skill-tag {
+    background: rgba(255,255,255,0.08);
+    color: var(--txt-400);
+  }
+
+  /* Keyword tags with color — boost to accessible on dark */
+  /* #4ADE80 on rgba bg → 6.8:1 ✓ */
+  [data-theme="dark"] .tag-lime { background: rgba(0,191,255,0.12); color: #38D4FF; }
+  /* #F472B6 on rgba bg → 5.4:1 ✓ */
+  [data-theme="dark"] .tag-pink { background: rgba(200,255,74,0.13); color: #BEFF4A; }
+
+  /* Inputs */
+  [data-theme="dark"] .input-demo {
+    background: rgba(255,255,255,0.05);
+    border-color: var(--txt-200);
+    color: var(--txt-900);
+  }
+  [data-theme="dark"] .input-demo:focus {
+    border-color: var(--txt-600);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.06);
+  }
+
+  /* Work card thumbs — light bg gradients → dark equivalents */
+  [data-theme="dark"] .work-card-thumb {
+    background: linear-gradient(135deg, #0A2030, #0E2840);
+  }
+  [data-theme="dark"] .thumb-lk {
+    background: linear-gradient(135deg, #152510, #1C3218);
+  }
+  [data-theme="dark"] .coming-soon-thumb {
+    background: linear-gradient(135deg, #1E1E1E, #282828);
+  }
+
+  /* Color swatches on DS page — lime / pink accent areas */
+  [data-theme="dark"] .swatch-lime { background: var(--clr-lime); }
+  [data-theme="dark"] .swatch-pink { background: var(--clr-pink); }
+
+  
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     LIQUIDIC BLEND — Theme Transition
+     Circular reveal emanates from the toggle position,
+     spreading like a drop landing on still water.
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* Liquidic Blend — theme dissolve
+     Old theme dims out softly; new theme blooms from the toggle origin —
+     colours overlap mid-transition for a gradient-blend feel, not a hard reveal. */
+  @keyframes lb-bloom {
+    from {
+      opacity: 0;
+      transform: scale(1.012);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes lb-dim {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+  ::view-transition-new(root) {
+    animation: lb-bloom 960ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    transform-origin: var(--vt-x, 50%) var(--vt-y, 48px);
+  }
+  ::view-transition-old(root) {
+    animation: lb-dim 560ms cubic-bezier(0.37, 0, 0.63, 1) both;
+  }
+
+  /* Align card hovers to Liquidic Blend */
+  .project-card, .work-item, .case-card, .card {
+    transition: transform var(--lb-base, 440ms) var(--lb-ease-rise, cubic-bezier(0.34,1.52,0.64,1)),
+                box-shadow var(--lb-base, 440ms) var(--lb-ease, cubic-bezier(0.16,1,0.3,1)),
+                border-color var(--lb-quick, 280ms) var(--lb-ease, cubic-bezier(0.16,1,0.3,1)) !important;
+  }
+  /* Align button hovers */
+  .btn, .btn-primary, .btn-secondary, button:not(#themeToggle):not(.burger) {
+    transition: background var(--lb-quick, 280ms) var(--lb-ease, cubic-bezier(0.16,1,0.3,1)),
+                color var(--lb-quick, 280ms) var(--lb-ease, cubic-bezier(0.16,1,0.3,1)),
+                transform var(--lb-base, 440ms) var(--lb-ease-rise, cubic-bezier(0.34,1.52,0.64,1)),
+                box-shadow var(--lb-base, 440ms) var(--lb-ease, cubic-bezier(0.16,1,0.3,1)) !important;
+  }
+  /* Align nav links */
+  nav a, .nav-link {
+    transition: color var(--lb-quick, 280ms) var(--lb-ease, cubic-bezier(0.16,1,0.3,1)),
+                opacity var(--lb-quick, 280ms) var(--lb-ease, cubic-bezier(0.16,1,0.3,1));
+  }
+
+  /* ── Results & Impact — Bento Grid ── */
+  .results-bento       { display:flex; flex-direction:column; gap:var(--sp-8); margin-bottom:var(--sp-48); }
+  .results-row         { display:flex; gap:var(--sp-8); align-items:stretch; }
+  .results-portraits   { flex:1; display:flex; gap:var(--sp-8); min-width:0; }
+  .results-portrait    { flex:1; min-width:0; border-radius:var(--radius-2xl); overflow:hidden; }
+  .results-portrait img{ width:100%; aspect-ratio:286/580; object-fit:cover; display:block; }
+  .results-square      { flex:1; min-width:0; border-radius:var(--radius-2xl); overflow:hidden; }
+  .results-square img  { width:100%; aspect-ratio:1/1; object-fit:cover; display:block; }
+  .results-photo       { flex:1; position:relative; min-width:0; border-radius:var(--radius-2xl); overflow:hidden; }
+  .results-photo img   { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+  .results-photo-label {
+    position:absolute; top:0; left:0; right:0; z-index:1;
+    padding:14px 20px; text-align:center;
+    background:linear-gradient(to bottom,rgba(0,0,0,0.48) 0%,transparent 100%);
+    color:#fff; font-size:0.9rem; font-weight:600;
+    text-shadow:0 1px 3px rgba(0,0,0,0.4);
+  }
+  .results-stats       { display:flex; flex-direction:column; gap:var(--sp-8); flex-shrink:0; }
+  .results-stats-row   { display:flex; gap:var(--sp-8); }
+  .stat-bento          {
+    width:260px; min-height:260px;
+    background:var(--txt-100); border-radius:var(--radius-xl);
+    padding:var(--sp-32); display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .stat-bento-num      { font-size:1.5rem; font-weight:700; color:var(--txt-900); text-transform:uppercase; line-height:1.1; letter-spacing:-0.04em; margin-bottom:0; }
+  .stat-bento-desc     { font-size:0.85rem; color:var(--txt-600); line-height:1.6; }
+  .stat-bento-img      { width:260px; min-height:260px; border-radius:var(--radius-xl); overflow:hidden; flex-shrink:0; }
+  .stat-bento-img img  { width:100%; height:100%; object-fit:cover; display:block; }
+  @media (max-width:860px) {
+    .results-row        { flex-direction:column; }
+    .results-portraits  { min-height:260px; }
+    .results-portrait img{ aspect-ratio:3/4; }
+    .results-square img { aspect-ratio:4/3; }
+    .results-photo      { min-height:260px; }
+    .results-stats      { flex-direction:row; flex-wrap:wrap; }
+    .stat-bento, .stat-bento-img { width:calc(50% - 4px); min-height:200px; }
+    .results-stats-row  { flex-wrap:wrap; width:100%; }
+  }
+  @media (max-width:540px) {
+    .stat-bento, .stat-bento-img { width:100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-text">Imseon Kwon</span>
+    <span class="nav-logo-icon">
+      <svg width="22" height="22" viewBox="0 0 60 60" fill="none">
+        <rect x="6" y="16.4" width="48" height="6.4" fill="currentColor"/>
+        <rect x="6" y="26.8" width="21.6" height="6.4" fill="currentColor"/>
+        <rect x="32.4" y="26.8" width="21.6" height="6.4" fill="currentColor"/>
+        <rect x="6" y="37.2" width="48" height="6.4" fill="currentColor"/>
+      </svg>
+    </span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="work.html" class="active">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <div class="toggle-track">
+        <div class="toggle-indicator"></div>
+        <div class="toggle-icon toggle-icon-sun">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4.5"/>
+            <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </div>
+        <div class="toggle-icon toggle-icon-moon">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </div>
+      </div>
+      </button>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-drawer" id="drawer">
+  <a href="work.html">Work</a>
+  <a href="about.html">About</a>
+  <a href="index.html#contact">Contact</a>
+</div>
+
+<main>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb reveal">
+    <a href="work.html">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      All Work
+    </a>
+  </div>
+
+  <!-- PROJECT HEADER -->
+  <header class="project-header">
+    <p class="project-eyebrow reveal">Promotion · Multi-platform · Campaign</p>
+    <h1 class="project-title reveal">SAMSUNG — SMARTTHINGS<br>BUYING GUIDE 2025–2026</h1>
+    <div class="project-meta">
+      <div class="meta-item reveal">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">Product Designer</span>
+      </div>
+      <div class="meta-item reveal">
+        <span class="meta-label">Duration</span>
+        <span class="meta-value">2025 — 2026</span>
+      </div>
+      <div class="meta-item reveal">
+        <span class="meta-label">Company</span>
+        <span class="meta-value"><a href="https://www.samsung.com/us/" target="_blank">Samsung</a> · <a href="http://www.cheeseade.com/" target="_blank">Cheese Aid Co., Ltd</a></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- OVERVIEW SECTION -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Overview</p>
+    <div class="info-row reveal">
+      <span class="info-label">Overview</span>
+      <p class="info-body">The Buying Guide is an offline promotional interface for Smart TV screens. I led the design of the interface and operation dashboard, rolling out across 8+ countries with a reusable component system.</p>
+    </div>
+    <div class="info-row reveal">
+      <span class="info-label">Contribution</span>
+      <p class="info-body">I was charged in a designer in the Samsung SmartThings Promotion Campaign. This project was designed to let customers, who visit offline home appliance stores, experience everyday life with SmartThings.</p>
+    </div>
+  </section>
+
+  <!-- SUMMARY IMAGE -->
+  <div class="detail-section" style="padding-top:0;padding-bottom:0;border-bottom:none;">
+    <div class="media-block reveal" style="margin-top:var(--sp-48);">
+      <picture>
+        <source media="(max-width:860px)" srcset="samsung/00summary_m.png">
+        <img src="samsung/00summary.png" alt="Samsung SmartThings summary" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+      </picture>
+    </div>
+  </div>
+
+  <!-- SECTION: INTERACTIONS & COMPONENTS -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Interactions &amp; Components</p>
+
+    <!-- Content row 1: challenge + stacked images -->
+    <div class="content-row reveal">
+      <div class="content-row-left">
+        <p class="content-label">What was the challenge?</p>
+        <p class="content-body">We faced 3 crucial challenges in the project since it's run by international company, Samsung.<br><br>① Multi-language support across 8+ countries required careful localization of all interface elements.<br>② Cross-device consistency between Samsung Smart TV screens and tablet PCs demanded unified interaction patterns.<br>③ A reusable component system was essential to sustain the campaign across multiple seasons without full redesign.</p>
+      </div>
+      <div class="content-row-imgs">
+        <picture>
+          <source media="(max-width:860px)" srcset="samsung/ss01_m.png">
+          <img src="samsung/ss01.png" alt="SmartThings interface screen 1">
+        </picture>
+        <picture>
+          <source media="(max-width:860px)" srcset="samsung/ss02_m.png">
+          <img src="samsung/ss02.png" alt="SmartThings interface screen 2">
+        </picture>
+        <picture>
+          <source media="(max-width:860px)" srcset="samsung/ss02-2_m.png">
+          <img src="samsung/ss02-2.png" alt="SmartThings interface screen 2-2">
+        </picture>
+        <picture>
+          <source media="(max-width:860px)" srcset="samsung/ss03-1_m.png">
+          <img src="samsung/ss03-1.png" alt="SmartThings interface screen 3-1">
+        </picture>
+      </div>
+    </div>
+
+    <!-- Content row 2: optimized interfaces -->
+    <div class="content-row reveal">
+      <div class="content-row-left">
+        <p class="content-label">optimized interfaces</p>
+        <p class="content-body">For the TV screen, I designed an interaction system where 3D graphic assets' coordinates drive a natural exploration flow — allowing users to discover product features through intuitive navigation. On the tablet PC, I established component guidelines and interaction patterns that ensured a seamless experience across both devices.</p>
+      </div>
+      <div class="content-row-imgs">
+        <picture>
+          <source media="(max-width:860px)" srcset="samsung/ss03-2_m.png">
+          <img src="samsung/ss03-2.png" alt="SmartThings optimized interface">
+        </picture>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: DOCUMENTATION -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Documentation</p>
+
+    <div class="content-row reveal">
+      <div class="content-row-left">
+        <p class="content-label">sustainable guide</p>
+        <p class="content-body">To support smooth operation and management, I created detailed functional specification documents for each screen. This ensured that non-design stakeholders could understand, operate, and update the content without design dependency.</p>
+      </div>
+      <div class="content-row-imgs">
+        <picture>
+          <source media="(max-width:860px)" srcset="samsung/ss04_m.png">
+          <img src="samsung/ss04.png" alt="Documentation screen 1">
+        </picture>
+        <picture>
+          <source media="(max-width:860px)" srcset="samsung/ss05_m.png">
+          <img src="samsung/ss05.png"detail-section">
+    <p class="section-eyebrow reveal">Results &amp; Impact</p>
+
+    <div class="results-bento reveal">
+
+      <!-- Row 1: 2 portraits + 1 square -->
+      <div class="results-row">
+        <div class="results-portraits">
+          <div class="results-portrait">
+            <img src="samsung/ss06_offline-store01.png" alt="Offline store view 1">
+          </div>
+          <div class="results-portrait">
+            <img src="samsung/ss06_offline-store02.png" alt="Offline store view 2">
+          </div>
+        </div>
+        <div class="results-square">
+          <img src="samsung/ss06_offline-store03.png" alt="Offline store view 3">
+        </div>
+      </div>
+
+      <!-- Row 2: AI photo + stat cards bento -->
+      <div class="results-row">
+        <div class="results-photo">
+          <img src="samsung/ss07.png" alt="AI generated campaign image">
+          <div class="results-photo-label">AI generated image</div>
+        </div>
+        <div class="results-stats">
+          <div class="results-stats-row">
+            <div class="stat-bento">
+              <p class="stat-bento-num">8+<br>countries</p>
+              <p class="stat-bento-desc">Successfully rolled out across 8+ countries on Samsung Smart TV screens.</p>
+            </div>
+            <div class="stat-bento">
+              <p class="stat-bento-num">sustained for<br>2 seasons</p>
+              <p class="stat-bento-desc">The project was sustained for two consecutive seasons (2025 &amp; 2026), validating the system's scalability and maintainability.</p>
+            </div>
+          </div>
+          <div class="results-stats-row">
+            <div class="stat-bento">
+              <p class="stat-bento-num">reusable<br>component</p>
+              <p class="stat-bento-desc">A reusable Figma component library was established, enabling faster iteration for future promotional campaigns.</p>
+            </div>
+            <div class="stat-bento-img">
+              <img src="samsung/ss08.png" alt="SmartThings app">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+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" alt="Samsung SmartThings full view 2" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Imseon Kwon</span>
+  <a href="mailto:kwon.ray0902@gmail.com">kwon.ray0902@gmail.com</a>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <path d="M9 14V4M4 9l5-5 5 5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  // Nav floating
+  const nav = document.getElementById('nav');
+  const drawer = document.getElementById('drawer');
+  const burger = document.getElementById('burger');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      nav.classList.add('floating');
+      drawer.classList.add('floating');
+    } else {
+      nav.classList.remove('floating');
+      drawer.classList.remove('floating');
+    }
+  });
+
+  // Mobile nav burger
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    drawer.classList.toggle('open');
+  });
+
+  // Back to top
+  const btt = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 300);
+  });
+  btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Reveal animation with 400ms fallback
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // 400ms fallback: force reveal all if not yet triggered
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in'));
+  }, 400);
+
+  // ── Theme Toggle ──
+  // ── Liquidic Blend — Theme Toggle ──
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const rect = themeToggle.getBoundingClientRect();
+      const x = Math.round(rect.left + rect.width / 2);
+      const y = Math.round(rect.top  + rect.height / 2);
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+
+      /* Liquid drop animation on the indicator */
+      const indicator = themeToggle.querySelector('.toggle-indicator');
+      if (indicator) {
+        indicator.classList.remove('drop-right', 'drop-left');
+        void indicator.offsetWidth; /* force reflow to restart animation */
+        indicator.classList.add(next === 'dark' ? 'drop-right' : 'drop-left');
+        setTimeout(() => indicator.classList.remove('drop-right', 'drop-left'), 580);
+      }
+
+      /* Set origin for page-level dissolve */
+      document.documentElement.style.setProperty('--vt-x', x + 'px');
+      document.documentElement.style.setProperty('--vt-y', y + 'px');
+
+      if (!document.startViewTransition) {
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('imseon-theme-v2', next);
+        return;
+      }
+
+      const vt = document.startViewTransition(() => {
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('imseon-theme-v2', next);
+      });
+      vt.ready.catch(() => {});
+    });
+  }
+
+</script>
+
+</body>
+</html>
