@@ -453,7 +453,7 @@
     .project-meta { gap: var(--sp-24); }
     .info-row { grid-template-columns: 1fr; gap: var(--sp-8); }
     .content-row { grid-template-columns: 1fr; }
-    .content-row-img { aspect-ratio: 4/3; }
+    .content-row-img { aspect-ratio: unset; }
     .logo-concepts { gap: var(--sp-16); }
     .logo-circle { width: 140px; height: 140px; font-size: 0.78rem; }
     footer { padding: 24px var(--sp-24); flex-direction: column; gap: 8px; text-align: center; }
@@ -744,6 +744,34 @@
   }
   .work-card-thumb img { transition: transform 0.5s cubic-bezier(0.16,1,0.3,1); }
   .work-card:hover .work-card-thumb img { transform: scale(1.04) translateY(-3px); }
+
+  /* ── Real Life section ── */
+  .real-life-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: var(--sp-16);
+    margin-top: var(--sp-40);
+  }
+  .real-life-grid .rl-img { border-radius: var(--radius-3xl); overflow: hidden; }
+  .real-life-grid .rl-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .real-life-grid .rl-img:first-child { grid-column: 1 / -1; }
+  @media (max-width: 640px) {
+    .real-life-grid { grid-template-columns: 1fr; }
+    .real-life-grid .rl-img:first-child { grid-column: 1; }
+  }
+
+  .content-row-text-only {
+    padding: var(--sp-40) 0 var(--sp-8);
+    border-top: 1px solid var(--txt-200);
+    max-width: 560px;
+  }
+  .content-row-text-only .content-number {
+    display: flex; gap: var(--sp-8); align-items: baseline;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--txt-400);
+    margin-bottom: var(--sp-16);
+  }
 </style>
 </head>
 <body>
@@ -833,7 +861,7 @@
   <!-- HERO -->
   <div class="hero-wrap reveal">
     <div class="hero-img">
-      <img loading="lazy" src="alain/alain01-1_m.png" alt="Alain — AI dining recommendation app hero screens">
+      <picture><source media="(max-width:860px)" srcset="alain/summary_m.png"><img loading="lazy" src="alain/summary.png" alt="Alain — project summary"></picture>
     </div>
   </div>
 
@@ -854,8 +882,7 @@
     <p class="section-eyebrow reveal">Context &amp; Brief</p>
 
     <div class="media-block reveal" style="margin-top: var(--sp-48);">
-      <img loading="lazy" src="alain/alain01-1.png" alt="Context — Korean F&B restaurant" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
-      <div class="media-badge">AI generated image</div>
+      <img loading="lazy" src="alain/ai-image.png" alt="Context — Korean F&B restaurant" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
     </div>
 
     <div class="info-row reveal">
@@ -873,10 +900,7 @@
         <p class="content-body">My first task involved mapping service flows for UI development.<br><br>During the initial kickoff, I interpreted project documentation from a UX perspective, providing critical insights that aligned the team with the user's needs.</p>
       </div>
       <div class="content-row-img">
-        <picture>
-          <source media="(max-width:860px)" srcset="alain/alain01-2_m.png">
-          <img src="alain/alain01-2.png" alt="Analyzing — service flow mapping" loading="lazy">
-        </picture>
+        <img src="alain/alain01-1.png" alt="Analyzing — research and brief" loading="lazy">
       </div>
     </div>
 
@@ -891,8 +915,8 @@
       </div>
       <div class="content-row-img">
         <picture>
-          <source media="(max-width:860px)" srcset="alain/alain02-1_m.png">
-          <img src="alain/alain02-1.png" alt="Leading UI — wireframes and component specs" loading="lazy">
+          <source media="(max-width:860px)" srcset="alain/alain01-2_m.png">
+          <img src="alain/alain01-2.png" alt="Leading UI — service flow" loading="lazy">
         </picture>
       </div>
     </div>
@@ -930,6 +954,10 @@
       </div>
     </div>
 
+    <div class="media-block reveal" style="margin-top: var(--sp-24);">
+      <img src="alain/logo structure.png" alt="Alain logo structure" loading="lazy" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+    </div>
+
     <!-- Typography -->
     <div class="type-specimen-wrap reveal">
       <p class="type-eyebrow">Typography</p>
@@ -965,15 +993,32 @@
     <div class="interface-grid">
       <div class="iface-img reveal">
         <picture>
-          <source media="(max-width:860px)" srcset="alain/alain02-2_m.png">
-          <img src="alain/alain02-2.png" alt="Alain interface — main app screens" loading="lazy">
+          <source media="(max-width:860px)" srcset="alain/alain02-1_m.png">
+          <img src="alain/alain02-1.png" alt="Alain — leading UI screens" loading="lazy">
         </picture>
       </div>
       <div class="iface-img reveal">
         <picture>
-          <source media="(max-width:860px)" srcset="alain/ai-image.png">
-          <img src="alain/ai-image.png" alt="Alain interface — AI generated campaign image" loading="lazy">
+          <source media="(max-width:860px)" srcset="alain/alain02-2_m.png">
+          <img src="alain/alain02-2.png" alt="Alain — main app screens" loading="lazy">
         </picture>
+      </div>
+    </div>
+  </section>
+
+  <!-- REAL LIFE -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">In Real Life</p>
+
+    <div class="real-life-grid">
+      <div class="rl-img reveal">
+        <img src="alain/real life01.png" alt="Customer scanning Alain QR code at restaurant" loading="lazy">
+      </div>
+      <div class="rl-img reveal">
+        <img src="alain/real life02.png" alt="Alain logo on restaurant window" loading="lazy">
+      </div>
+      <div class="rl-img reveal">
+        <img src="alain/real life03.png" alt="Customer using Alain app at restaurant" loading="lazy">
       </div>
     </div>
   </section>
