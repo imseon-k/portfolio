@@ -612,6 +612,14 @@
     transition: color var(--lb-quick, 280ms) var(--lb-ease, cubic-bezier(0.16,1,0.3,1)),
                 opacity var(--lb-quick, 280ms) var(--lb-ease, cubic-bezier(0.16,1,0.3,1));
   }
+
+  /* ── Accessibility: fix text tokens that used border-level colors ── */
+  [data-theme="dark"] .work-num        { color: #666666; }
+  [data-theme="dark"] .work-cat        { color: #8A8A8A; }
+  [data-theme="dark"] .section-eyebrow { color: #8A8A8A; }
+  [data-theme="dark"] .content-label   { color: #8A8A8A; }
+  [data-theme="dark"] .meta-item-label { color: #8A8A8A; }
+  [data-theme="dark"] .work-tag        { color: #8A8A8A; }
 </style>
 </head>
 <body>
