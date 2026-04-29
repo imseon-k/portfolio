@@ -1005,6 +1005,82 @@
   [data-theme="dark"] .content-label   { color: #8A8A8A; }
   [data-theme="dark"] .meta-item-label { color: #8A8A8A; }
   [data-theme="dark"] .work-tag        { color: #8A8A8A; }
+
+  /* ═══════════════════════════════════════════
+     INTERACTIONS PACK
+  ═══════════════════════════════════════════ */
+
+  /* ── 2. Hero text stagger ── */
+  .hero-headline .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: wordReveal 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  @keyframes wordReveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── 3. Card hover spotlight ── */
+  .work-item, .work-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .work-item::after, .work-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(400px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.07), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+  .work-item:hover::after, .work-card:hover::after { opacity: 1; }
+  [data-theme="dark"] .work-item::after,
+  [data-theme="dark"] .work-card::after {
+    background: radial-gradient(400px circle at var(--mx,50%) var(--my,50%), rgba(0,191,255,0.08), transparent 60%);
+  }
+
+  /* ── 4. Magnetic buttons — handled in JS ── */
+  .btn-primary, .btn-text {
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1),
+                background 0.2s ease, color 0.2s ease,
+                box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  /* ── 5. Scroll progress bar ── */
+  #scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, #00BFFF, #C8FF4A);
+    z-index: 9999;
+    transition: width 0.1s linear;
+    pointer-events: none;
+  }
+
+  /* ── 7. Page transition ── */
+  body { animation: pageFadeIn 0.4s ease forwards; }
+  @keyframes pageFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── 8. Image parallax on hover ── */
+  .work-card-thumb, .work-thumb-sm {
+    transform-style: preserve-3d;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  .work-card { perspective: 800px; }
+  .work-card:hover .work-card-thumb img {
+    transform: scale(1.04) translateY(-3px);
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .work-card-thumb img {
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
 </style>
 </head>
 <body>
@@ -1070,9 +1146,11 @@
       <span class="hero-role">UI · Product Designer</span>
 
       <h1 class="hero-headline">
-        The interface<br/>
-        is the<br/>
-        <span class="tint-word">brand.</span>
+        <span class="word" style="animation-delay:0.05s">The</span>
+        <span class="word" style="animation-delay:0.12s">interface</span><br/>
+        <span class="word" style="animation-delay:0.19s">is</span>
+        <span class="word" style="animation-delay:0.26s">the</span><br/>
+        <span class="word tint-word" style="animation-delay:0.33s">brand.</span>
       </h1>
 
       <p class="hero-desc">
@@ -1337,6 +1415,57 @@
     });
   }
 
+
+    /* ════════════════════════════════════════
+       INTERACTIONS PACK
+    ════════════════════════════════════════ */
+
+    /* ── 2. Hero text stagger — words pre-split in HTML ── */
+
+    /* ── 3. Card hover spotlight ── */
+    document.querySelectorAll('.work-item, .work-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        card.style.setProperty('--my', `${e.clientY - r.top}px`);
+      });
+    });
+
+    /* ── 4. Magnetic buttons ── */
+    document.querySelectorAll('.btn-primary, .btn-text').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        const dx = (e.clientX - r.left - r.width  / 2) * 0.25;
+        const dy = (e.clientY - r.top  - r.height / 2) * 0.25;
+        btn.style.transform = `translate(${dx}px, ${dy}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+
+    /* ── 5. Scroll progress bar ── */
+    const progressBar = document.getElementById('scroll-progress');
+    if (progressBar) {
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = docHeight > 0 ? (scrollTop / docHeight * 100) + '%' : '0%';
+      }, { passive: true });
+    }
+
+    /* ── 7. Page transition — fade out before navigate ── */
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        document.body.style.animation = 'none';
+        document.body.style.opacity = '1';
+        document.body.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-6px)'}],
+          {duration:250, easing:'ease', fill:'forwards'}).onfinish = () => { window.location.href = href; };
+      });
+    });
 </script>
 
 </body>
