@@ -110,12 +110,11 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
   body {
     font-family: 'Geist', system-ui, sans-serif;
     background-color: var(--clr-bg);
     color: var(--txt-900);
-    overflow-x: hidden;
     background-image:
       radial-gradient(ellipse 50% 40% at 90% 5%,  rgba(124,58,237,.08) 0%, transparent 70%),
       radial-gradient(ellipse 40% 35% at 10% 95%, rgba(124,58,237,.08) 0%, transparent 70%);
