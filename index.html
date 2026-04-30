@@ -1081,9 +1081,64 @@
   .work-card-thumb img {
     transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
   }
-</style>
+
+  /* ── PAGE LOADER + SKELETON ── */
+  #page-loader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--clr-bg);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 28px;
+    transition: opacity 0.4s cubic-bezier(0.2,0,0,1),
+                visibility 0.4s cubic-bezier(0.2,0,0,1);
+  }
+  #page-loader.pg-hide {
+    opacity: 0; visibility: hidden; pointer-events: none;
+  }
+  /* Spinner ring */
+  .pg-spinner {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2.5px solid var(--txt-200);
+    border-top-color: var(--txt-900);
+    animation: pg-spin 0.72s linear infinite;
+  }
+  @keyframes pg-spin { to { transform: rotate(360deg); } }
+  /* Skeleton bars */
+  .pg-skeleton { display: flex; flex-direction: column; gap: 10px; width: 240px; }
+  .pg-skel-bar {
+    height: 10px; border-radius: var(--radius-full);
+    background: linear-gradient(90deg,
+      var(--txt-100) 25%, var(--txt-200) 50%, var(--txt-100) 75%);
+    background-size: 200% 100%;
+    animation: pg-shimmer 1.5s ease-in-out infinite;
+  }
+  .pg-skel-bar:nth-child(1) { width: 55%; animation-delay: 0s; }
+  .pg-skel-bar:nth-child(2) { width: 100%; animation-delay: 0.1s; }
+  .pg-skel-bar:nth-child(3) { width: 75%; animation-delay: 0.2s; }
+  @keyframes pg-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  [data-theme="dark"] .pg-skel-bar {
+    background: linear-gradient(90deg,
+      var(--txt-100) 25%, rgba(255,255,255,0.07) 50%, var(--txt-100) 75%);
+    background-size: 200% 100%;
+    animation: pg-shimmer 1.5s ease-in-out infinite;
+  }
+
+  </style>
 </head>
 <body>
+  <!-- Page Loader -->
+  <div id="page-loader">
+    <div class="pg-spinner"></div>
+    <div class="pg-skeleton">
+      <div class="pg-skel-bar"></div>
+      <div class="pg-skel-bar"></div>
+      <div class="pg-skel-bar"></div>
+    </div>
+  </div>
+
+
 
   <!-- ──── NAV ──── -->
   <nav>
@@ -1467,6 +1522,39 @@
       });
     });
 </script>
+
+
+  <!-- Page Loader Script -->
+  <script>
+  (function(){
+    var loader = document.getElementById('page-loader');
+    function hideLoader() {
+      if (!loader) return;
+      loader.classList.add('pg-hide');
+    }
+    // Hide once DOM + critical resources ready
+    if (document.readyState === 'complete') {
+      setTimeout(hideLoader, 60);
+    } else {
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(hideLoader, 60);
+      });
+    }
+    // Show loader when navigating to internal pages
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('a[href]');
+      if (!link) return;
+      var href = link.getAttribute('href');
+      if (!href) return;
+      var isInternal = !href.startsWith('http') && !href.startsWith('#')
+                     && !href.startsWith('mailto') && !href.startsWith('tel')
+                     && href !== '' && !href.startsWith('data:');
+      if (isInternal && loader) {
+        loader.classList.remove('pg-hide');
+      }
+    });
+  })();
+  </script>
 
 </body>
 </html>
