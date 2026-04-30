@@ -408,6 +408,21 @@
   }
   .btn-text:hover { color: var(--txt-900); gap: 10px; }
 
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 24px; border-radius: var(--radius-full);
+    background: transparent; color: var(--txt-900);
+    font-family: inherit; font-size: 0.88rem; font-weight: 500;
+    text-decoration: none; border: 1px solid var(--txt-200);
+    cursor: pointer; white-space: nowrap;
+    transition: border-color .2s ease, background .2s ease, transform .2s ease;
+  }
+  .btn-secondary:hover {
+    border-color: var(--txt-600);
+    background: rgba(0,0,0,0.03);
+    transform: translateY(-1px);
+  }
+
   /* Meta card */
   .hero-meta {
     position: relative; overflow: hidden;
@@ -1288,6 +1303,10 @@
         <div class="work-thumb-sm t-mixed"><img loading="lazy" src="03.png" alt="RemainCo project thumbnail" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
       </a>
 
+    </div>
+
+    <div style="margin-top: var(--sp-40); display:flex; justify-content:center;">
+      <a href="work.html" class="btn-secondary">View all work →</a>
     </div>
   </div>
 
