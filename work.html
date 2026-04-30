@@ -603,41 +603,34 @@
   @media (hover: hover) and (pointer: fine) {
     .work-card:not(.coming-soon) { cursor: none; }
     #cursor-lens {
-      position: fixed; width: 190px; height: 190px;
+      position: fixed; width: 60px; height: 60px;
       border-radius: 50%; pointer-events: none; z-index: 8000;
-      overflow: hidden;
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.5);
-      transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.65);
+      transform: translate(-50%, -50%) scale(0.4);
+      transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.70);
       border-top-color: rgba(255,255,255,0.95);
-      backdrop-filter: blur(24px) saturate(200%);
-      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      backdrop-filter: blur(16px) saturate(200%);
+      -webkit-backdrop-filter: blur(16px) saturate(200%);
       box-shadow:
-        0 1px 0 rgba(255,255,255,0.80) inset,
-        0 -1px 0 rgba(255,255,255,0.20) inset,
-        0 12px 40px rgba(0,0,0,0.14),
-        0 4px 12px rgba(0,0,0,0.08);
+        0 1px 0 rgba(255,255,255,0.85) inset,
+        0 -1px 0 rgba(255,255,255,0.15) inset,
+        0 6px 20px rgba(0,0,0,0.12),
+        0 2px 6px rgba(0,0,0,0.06);
     }
     #cursor-lens.lens-active {
       opacity: 1;
       transform: translate(-50%, -50%) scale(1);
     }
-    #cursor-lens img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transform: scale(1.35);
-      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-    }
     [data-theme="dark"] #cursor-lens {
-      background: rgba(20,20,20,0.55);
-      border-color: rgba(255,255,255,0.12);
-      border-top-color: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.18);
+      border-top-color: rgba(255,255,255,0.30);
       box-shadow:
-        0 1px 0 rgba(255,255,255,0.10) inset,
-        0 12px 40px rgba(0,0,0,0.50),
-        0 4px 12px rgba(0,0,0,0.30);
+        0 1px 0 rgba(255,255,255,0.12) inset,
+        0 6px 20px rgba(0,0,0,0.45),
+        0 2px 6px rgba(0,0,0,0.25);
     }
   }
 
@@ -860,9 +853,7 @@
   </main>
 
   <!-- Cursor lens (desktop only) -->
-  <div id="cursor-lens" aria-hidden="true">
-    <img id="cursor-lens-img" src="" alt="">
-  </div>
+  <div id="cursor-lens" aria-hidden="true"></div>
 
   <footer>
     <span>© 2026 Imseon Kwon</span>
@@ -978,15 +969,14 @@
 
   /* ── Cursor lens (desktop only) ── */
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    const lens    = document.getElementById('cursor-lens');
-    const lensImg = document.getElementById('cursor-lens-img');
+    const lens = document.getElementById('cursor-lens');
     let mouseX = 0, mouseY = 0;
     let lensX  = 0, lensY  = 0;
 
     /* Smooth follow with lerp */
     (function loop() {
-      lensX += (mouseX - lensX) * 0.10;
-      lensY += (mouseY - lensY) * 0.10;
+      lensX += (mouseX - lensX) * 0.12;
+      lensY += (mouseY - lensY) * 0.12;
       lens.style.left = lensX + 'px';
       lens.style.top  = lensY + 'px';
       requestAnimationFrame(loop);
@@ -998,15 +988,8 @@
     });
 
     document.querySelectorAll('.work-card:not(.coming-soon)').forEach(card => {
-      const thumb = card.querySelector('.work-card-thumb img');
-      card.addEventListener('mouseenter', () => {
-        if (!thumb) return;
-        lensImg.src = thumb.currentSrc || thumb.src;
-        lens.classList.add('lens-active');
-      });
-      card.addEventListener('mouseleave', () => {
-        lens.classList.remove('lens-active');
-      });
+      card.addEventListener('mouseenter', () => lens.classList.add('lens-active'));
+      card.addEventListener('mouseleave', () => lens.classList.remove('lens-active'));
     });
   }
 </script>
