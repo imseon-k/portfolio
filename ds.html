@@ -355,6 +355,7 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
+    :root { --radius-3xl: 20px; --radius-2xl: 16px; --radius-xl: 14px; }
     .nav-links  { display: none; }
     .nav-burger { display: flex; }
     .nav-logo-text { display: none; } .nav-logo-icon { display: flex; }
@@ -999,7 +1000,10 @@
     <!-- 3-column example images -->
     <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-16);margin-top:var(--sp-32);">
       <img loading="lazy" src="ds/sg-usage02_m.png" style="width:100%;height:auto;border-radius:var(--radius-xl);" alt="Adjusting example 1">
-      <img loading="lazy" src="ds/sg-usage02.png" style="width:100%;height:auto;border-radius:var(--radius-xl);" alt="Adjusting example 2">
+      <picture>
+        <source media="(max-width:860px)" srcset="ds/sg-usage02_m.png">
+        <img loading="lazy" src="ds/sg-usage02.png" style="width:100%;height:auto;border-radius:var(--radius-xl);" alt="Adjusting example 2">
+      </picture>
       <img loading="lazy" src="ds/sg-usage03_m.png" style="width:100%;height:auto;border-radius:var(--radius-xl);" alt="Adjusting example 3">
     </div>
   </section>
@@ -1010,7 +1014,10 @@
 
     <!-- Full-width summary images -->
     <div class="media-block reveal">
-      <img loading="lazy" src="ds/sg-usage03.png" alt="Style Guide Summary">
+      <picture>
+        <source media="(max-width:860px)" srcset="ds/sg-usage03_m.png">
+        <img loading="lazy" src="ds/sg-usage03.png" alt="Style Guide Summary">
+      </picture>
     </div>
     <div class="media-block reveal">
       <img loading="lazy" src="ds/adjusting-eg01.png" alt="Style Guide Summary 2">

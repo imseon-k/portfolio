@@ -352,6 +352,7 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
+    :root { --radius-3xl: 20px; --radius-2xl: 16px; --radius-xl: 14px; }
     .nav-links  { display: none; }
     .nav-burger { display: flex; }
     .nav-logo-text { display: none; } .nav-logo-icon { display: flex; }
@@ -359,7 +360,7 @@
     .project-meta { gap: var(--sp-24); }
     .info-row { grid-template-columns: 1fr; gap: var(--sp-8); }
     .content-row { grid-template-columns: 1fr; }
-    .content-row-img { aspect-ratio: 4/3; }
+    .content-row-img { aspect-ratio: unset; }
     footer { padding: 24px var(--sp-24); flex-direction: column; gap: 8px; text-align: center; }
     .back-to-top { bottom: 20px; right: 20px; }
   }

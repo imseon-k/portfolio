@@ -446,6 +446,7 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
+    :root { --radius-3xl: 20px; --radius-2xl: 16px; --radius-xl: 14px; }
     .nav-links  { display: none; }
     .nav-burger { display: flex; }
     .nav-logo-text { display: none; } .nav-logo-icon { display: flex; }
@@ -900,7 +901,10 @@
         <p class="content-body">My first task involved mapping service flows for UI development.<br><br>During the initial kickoff, I interpreted project documentation from a UX perspective, providing critical insights that aligned the team with the user's needs.</p>
       </div>
       <div class="content-row-img">
-        <img src="alain/alain01-1.png" alt="Analyzing — research and brief" loading="lazy">
+        <picture>
+          <source media="(max-width:860px)" srcset="alain/alain01-1_m.png">
+          <img src="alain/alain01-1.png" alt="Analyzing — research and brief" loading="lazy">
+        </picture>
       </div>
     </div>
 
