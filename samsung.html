@@ -262,7 +262,41 @@
     overflow: hidden; margin: var(--sp-48) 0;
     position: relative;
   }
-  .media-block img { width: 100%; display: block; }
+  .media-block img { width: 100%; height: auto; display: block; }
+
+  /* ── CHALLENGE PANEL ── */
+  .challenge-panel {
+    background: #EEF1FC;
+    border-radius: var(--radius-3xl);
+    padding: var(--sp-28);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--sp-48);
+    margin: var(--sp-40) 0 0;
+  }
+  .challenge-label {
+    font-size: 1.1rem; font-weight: 700;
+    text-transform: uppercase; color: var(--txt-400);
+    line-height: 1.25; letter-spacing: -0.1px;
+    flex-shrink: 0; min-width: 160px;
+  }
+  .challenge-content {
+    flex: 1; display: flex; flex-direction: column; gap: var(--sp-16);
+  }
+  .challenge-intro {
+    font-size: 0.95rem; color: var(--txt-600); line-height: 1.6;
+  }
+  .challenge-list { display: flex; flex-direction: column; gap: var(--sp-8); }
+  .challenge-item { display: flex; gap: var(--sp-12); align-items: flex-start; }
+  .challenge-num {
+    font-size: 1.1rem; font-weight: 700; color: #1B4DE4;
+    min-width: 28px; line-height: 1.5; flex-shrink: 0;
+  }
+  .challenge-text {
+    font-size: 1.05rem; font-weight: 500; color: var(--txt-900); line-height: 1.5;
+  }
+  [data-theme="dark"] .challenge-panel { background: rgba(27,77,228,0.10); }
 
   /* ── CONTENT ROW (label-left | stacked-imgs-right) ── */
   .content-row {
@@ -321,6 +355,7 @@
     .project-meta { gap: var(--sp-24); }
     .info-row { grid-template-columns: 1fr; gap: var(--sp-8); }
     .content-row { grid-template-columns: 1fr; }
+    .challenge-panel { flex-direction: column; gap: var(--sp-16); }
     footer { padding: 24px var(--sp-24); flex-direction: column; gap: 8px; text-align: center; }
     .back-to-top { bottom: 20px; right: 20px; }
   }
@@ -816,44 +851,64 @@
   <section class="detail-section">
     <p class="section-eyebrow reveal">Interactions &amp; Components</p>
 
-    <!-- Content row 1: challenge + stacked images -->
-    <div class="content-row reveal">
-      <div class="content-row-left">
-        <p class="content-label">What was the challenge?</p>
-        <p class="content-body">We faced 3 crucial challenges in the project since it's run by international company, Samsung.<br><br>① Multi-language support across 8+ countries required careful localization of all interface elements.<br>② Cross-device consistency between Samsung Smart TV screens and tablet PCs demanded unified interaction patterns.<br>③ A reusable component system was essential to sustain the campaign across multiple seasons without full redesign.</p>
+    <!-- Challenge Panel -->
+    <div class="challenge-panel reveal">
+      <div class="challenge-label">
+        What was the<br>challenge?
       </div>
-      <div class="content-row-imgs">
-        <picture>
-          <source media="(max-width:860px)" srcset="samsung/ss01_m.png">
-          <img loading="lazy" src="samsung/ss01.png" alt="SmartThings interface screen 1">
-        </picture>
-        <picture>
-          <source media="(max-width:860px)" srcset="samsung/ss02_m.png">
-          <img loading="lazy" src="samsung/ss02.png" alt="SmartThings interface screen 2">
-        </picture>
-        <picture>
-          <source media="(max-width:860px)" srcset="samsung/ss02-2_m.png">
-          <img loading="lazy" src="samsung/ss02-2.png" alt="SmartThings interface screen 2-2">
-        </picture>
-        <picture>
-          <source media="(max-width:860px)" srcset="samsung/ss03-1_m.png">
-          <img loading="lazy" src="samsung/ss03-1.png" alt="SmartThings interface screen 3-1">
-        </picture>
+      <div class="challenge-content">
+        <p class="challenge-intro">We faced 3 crucial challenges in the project since it's run by international company, Samsung.</p>
+        <div class="challenge-list">
+          <div class="challenge-item">
+            <span class="challenge-num">01</span>
+            <span class="challenge-text">To deliver a consistent brand experience across 8+ countries on offline retail TV screens.</span>
+          </div>
+          <div class="challenge-item">
+            <span class="challenge-num">02</span>
+            <span class="challenge-text">To design both various sizes of TV and tablet device size to optimize every web device environment.</span>
+          </div>
+          <div class="challenge-item">
+            <span class="challenge-num">03</span>
+            <span class="challenge-text">To build a maintainable design system for consecutive two years (2025–2026) and maximize working efficiency.</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Content row 2: optimized interfaces -->
+    <!-- Full-width stacked images (ss01 removed) -->
+    <div class="media-block reveal" style="margin-top: var(--sp-12);">
+      <picture>
+        <source media="(max-width:860px)" srcset="samsung/ss02_m.png">
+        <img loading="lazy" src="samsung/ss02.png" alt="SmartThings TV interface" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+      </picture>
+    </div>
+    <div class="media-block reveal" style="margin-top: var(--sp-12);">
+      <picture>
+        <source media="(max-width:860px)" srcset="samsung/ss02-2_m.png">
+        <img loading="lazy" src="samsung/ss02-2.png" alt="SmartThings component spec" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+      </picture>
+    </div>
+    <div class="media-block reveal" style="margin-top: var(--sp-12);">
+      <picture>
+        <source media="(max-width:860px)" srcset="samsung/ss03-1_m.png">
+        <img loading="lazy" src="samsung/ss03-1.png" alt="SmartThings 3D interface" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+      </picture>
+    </div>
+
+    <!-- Optimized interfaces — text row -->
     <div class="content-row reveal">
       <div class="content-row-left">
         <p class="content-label">optimized interfaces</p>
-        <p class="content-body">For the TV screen, I designed an interaction system where 3D graphic assets' coordinates drive a natural exploration flow — allowing users to discover product features through intuitive navigation. On the tablet PC, I established component guidelines and interaction patterns that ensured a seamless experience across both devices.</p>
       </div>
-      <div class="content-row-imgs">
-        <picture>
-          <source media="(max-width:860px)" srcset="samsung/ss03-2_m.png">
-          <img loading="lazy" src="samsung/ss03-2.png" alt="SmartThings optimized interface">
-        </picture>
-      </div>
+      <p class="content-body">For the TV screen, I designed an interaction system where 3D graphic assets' coordinates drive a natural exploration flow — allowing users to discover product features through intuitive navigation. On the tablet PC, I established component guidelines and interaction patterns that ensured a seamless experience across both devices.</p>
+    </div>
+
+    <!-- ss03-2 full-width -->
+    <div class="media-block reveal" style="margin-top: var(--sp-12);">
+      <picture>
+        <source media="(max-width:860px)" srcset="samsung/ss03-2_m.png">
+        <img loading="lazy" src="samsung/ss03-2.png" alt="SmartThings optimized interface" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+      </picture>
     </div>
   </section>
 
