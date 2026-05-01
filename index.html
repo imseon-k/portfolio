@@ -1690,105 +1690,35 @@
   (function(){
     var loader = document.getElementById('page-loader');
 
-    function hideLoader(instant) {
+    function hideLoader() {
       if (!loader) return;
-      if (instant) {
-        loader.style.transition  = 'none';
-        loader.style.opacity     = '0';
-        loader.style.visibility  = 'hidden';
-        loader.style.pointerEvents = 'none';
-      } else {
-        loader.classList.add('pg-hide');
-      }
+      loader.style.transition    = 'none';
+      loader.style.opacity       = '0';
+      loader.style.visibility    = 'hidden';
+      loader.style.pointerEvents = 'none';
     }
 
-    // Initial page load: hide after DOM ready
-    if (document.readyState === 'complete') {
-      setTimeout(function(){ hideLoader(false); }, 60);
-    } else {
-      document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function(){ hideLoader(false); }, 60);
-      });
-    }
-
-    // Safety net: always visible after 1.5s no matter what
-    setTimeout(function() {
-      document.body.style.opacity = '1';
-      document.body.style.animation = 'none';
-      hideLoader(true);
-    }, 1500);
-
-    // pageshow fires on EVERY navigation — always force body visible + kill loader
-    window.addEventListener('pageshow', function() {
+    function showPage() {
       document.body.style.animation = 'none';
       document.body.style.opacity   = '1';
-      hideLoader(true);
-    });
+      hideLoader();
+    }
 
-    // Show loader when clicking internal links (forward navigation only)
-    document.addEventListener('click', function(e) {
-      var link = e.target.closest('a[href]');
-      if (!link) return;
-      var href = link.getAttribute('href');
-      if (!href) return;
-      var isInternal = !href.startsWith('http') && !href.startsWith('#')
-                     && !href.startsWith('mailto') && !href.startsWith('tel')
-                     && href !== '' && !href.startsWith('data:');
-      if (isInternal && loader) {
-        loader.style.transition  = '';
-        loader.style.opacity     = '';
-        loader.style.visibility  = '';
-        loader.style.pointerEvents = '';
-        loader.classList.remove('pg-hide');
-      }
-    });
+    // Hide loader once DOM is ready
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(showPage, 60);
+    } else {
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(showPage, 60);
+      });
+    }
+
+    // Always fire on any navigation (back/forward/initial)
+    window.addEventListener('pageshow', showPage);
+
+    // Nuclear fallback — never stay blank longer than 2s
+    setTimeout(showPage, 2000);
   })();
-
-    // ── Hero Headline Cursor — "At a Glance" glass card ──────────────────────
-    (function() {
-      var isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-      if (!isDesktop) return;
-
-      var cursor   = document.getElementById('hero-glance-cursor');
-      var headline = document.querySelector('.hero-headline');
-      if (!cursor || !headline) return;
-
-      var mouseX = 0, mouseY = 0;
-      var posX   = 0, posY   = 0;
-      var raf    = null;
-      var active = false;
-
-      function lerp(a, b, t) { return a + (b - a) * t; }
-
-      function loop() {
-        posX = lerp(posX, mouseX, 0.10);
-        posY = lerp(posY, mouseY, 0.10);
-        cursor.style.left = posX + 'px';
-        cursor.style.top  = posY + 'px';
-        if (active) raf = requestAnimationFrame(loop);
-      }
-
-      document.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      });
-
-      headline.addEventListener('mouseenter', function() {
-        active = true;
-        document.body.style.cursor = 'none';
-        cursor.classList.add('visible');
-        posX = mouseX; posY = mouseY; // snap on enter to avoid fly-in
-        raf = requestAnimationFrame(loop);
-      });
-
-      headline.addEventListener('mouseleave', function() {
-        active = false;
-        document.body.style.cursor = '';
-        cursor.classList.remove('visible');
-        cancelAnimationFrame(raf);
-      });
-    })();
-
   </script>
 
 </body>
