@@ -1139,10 +1139,159 @@
     animation: pg-shimmer 1.5s ease-in-out infinite;
   }
 
-  </style>
+  
+  /* ══════════════════════════════════════════════
+     HERO HEADLINE CURSOR — Liquid Glass "At a Glance"
+     Desktop only — hidden on touch/mobile
+     ══════════════════════════════════════════════ */
+  #hero-glance-cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9000;
+    opacity: 0;
+    transform: translate(-50%, -110%) scale(0.88);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    will-change: transform, opacity;
+
+    /* Liquid glass card */
+    width: 192px;
+    border-radius: 20px;
+    padding: 16px 18px 14px;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(28px) saturate(200%) brightness(1.08);
+    -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.08);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-bottom-color: rgba(255, 255, 255, 0.20);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.90) inset,
+      0 -1px 0 rgba(255,255,255,0.10) inset,
+      0 20px 48px rgba(0,0,0,0.14),
+      0 6px 16px rgba(0,0,0,0.08);
+  }
+
+  /* Top-edge glass highlight */
+  #hero-glance-cursor::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 8%; right: 8%;
+    height: 45%;
+    border-radius: 20px 20px 50% 50%;
+    background: linear-gradient(to bottom,
+      rgba(255,255,255,0.50) 0%,
+      rgba(255,255,255,0.0) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Subtle inner rim */
+  #hero-glance-cursor::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: 19px;
+    border: 1px solid rgba(255,255,255,0.18);
+    pointer-events: none;
+  }
+
+  #hero-glance-cursor.visible {
+    opacity: 1;
+    transform: translate(-50%, -115%) scale(1);
+  }
+
+  .hgc-label {
+    font-family: 'Geist', sans-serif;
+    font-size: 0.60rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.38);
+    margin-bottom: 10px;
+  }
+
+  [data-theme="dark"] .hgc-label {
+    color: rgba(255,255,255,0.35);
+  }
+
+  .hgc-title {
+    font-family: 'Varent', 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0D0D0D;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+
+  [data-theme="dark"] .hgc-title {
+    color: #FFFFFF;
+  }
+
+  .hgc-tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hgc-tool-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.80);
+    font-family: 'Geist', sans-serif;
+    font-size: 0.70rem;
+    font-weight: 600;
+    color: rgba(0,0,0,0.70);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  [data-theme="dark"] .hgc-tool-chip {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.22);
+    color: rgba(255,255,255,0.75);
+  }
+
+  .hgc-tool-chip svg {
+    flex-shrink: 0;
+  }
+
+  /* Hide entirely on touch devices */
+  @media (hover: none), (pointer: coarse), (max-width: 860px) {
+    #hero-glance-cursor { display: none !important; }
+  }
+</style>
 </head>
 <body>
   <!-- Page Loader -->
+  <!-- Hero headline cursor card -->
+  <div id="hero-glance-cursor" aria-hidden="true">
+    <div class="hgc-label">At a glance</div>
+    <div class="hgc-title">Product Designer</div>
+    <div class="hgc-tools">
+      <!-- Figma logo -->
+      <div class="hgc-tool-chip">
+        <svg width="12" height="16" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 28.5C19 23.8 22.8 20 27.5 20S36 23.8 36 28.5 32.2 37 27.5 37 19 33.2 19 28.5z" fill="#1ABCFE"/>
+          <path d="M2 47.5C2 42.8 5.8 39 10.5 39H19v8.5C19 52.2 15.2 56 10.5 56S2 52.2 2 47.5z" fill="#0ACF83"/>
+          <path d="M19 1v18h8.5C32.2 19 36 15.2 36 10.5S32.2 2 27.5 2L19 1z" fill="#FF7262"/>
+          <path d="M2 10.5C2 15.2 5.8 19 10.5 19H19V2h-8.5C5.8 2 2 5.8 2 10.5z" fill="#F24E1E"/>
+          <path d="M2 28.5C2 33.2 5.8 37 10.5 37H19V20h-8.5C5.8 20 2 23.8 2 28.5z" fill="#A259FF"/>
+        </svg>
+        Figma
+      </div>
+      <!-- Claude logo -->
+      <div class="hgc-tool-chip">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.37l-.23.048-4.719 2.647-.127.127v.31l.127.128.288-.255zm9.288-2.86c-.495-.304-1.09-.224-1.49.175L8.862 16.92l-.048.23.128.176.255.048 1.69-.976 2.807-2.152.048-.262-.144-.888-.1-.001zm3.024 4.16l-4.72-2.647h-.383l-.08.128.08.23 4.72 2.647.288.255.127-.128v-.31l-.032-.175zm-3.536 1.01c-.08-.463-.495-.783-.96-.767h-4.96v.016l-.063.32.255.272h.384l4.624-.016.72-.576v-.25zm2.575-7.64l4.72 2.647.127-.128v-.31l-.127-.128-4.72-2.647-.223.048-.08.128.08.23.223.16zm-2.048 5.23c.016-.463-.256-.895-.687-1.087l-4.432-2.024v-.016l-2.048-4.432c-.192-.432-.624-.72-1.103-.72h-.016c-.655.016-1.19.56-1.175 1.214v.032c.016.48.303.91.736 1.135l4.32 2.247.016.016 2.024 4.432c.191.416.607.687 1.07.687l.016.016c.671 0 1.23-.56 1.278-1.23v-.271h.001zm1.087-9.072l-4.72 2.647.08.23.08.128h.063l.256-.048 4.719-2.647.128-.128v-.31l-.128-.127-.478.255zM12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.001 21.333c-5.15 0-9.334-4.183-9.334-9.333s4.183-9.333 9.334-9.333c5.15 0 9.333 4.183 9.333 9.333s-4.183 9.333-9.333 9.333z" fill="#D97706"/>
+        </svg>
+        Claude
+      </div>
+    </div>
+  </div>
+
   <div id="page-loader">
     <div class="pg-spinner"></div>
     <div class="pg-skeleton">
@@ -1573,6 +1722,52 @@
       }
     });
   })();
+
+    // ── Hero Headline Cursor — "At a Glance" glass card ──────────────────────
+    (function() {
+      var isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (!isDesktop) return;
+
+      var cursor   = document.getElementById('hero-glance-cursor');
+      var headline = document.querySelector('.hero-headline');
+      if (!cursor || !headline) return;
+
+      var mouseX = 0, mouseY = 0;
+      var posX   = 0, posY   = 0;
+      var raf    = null;
+      var active = false;
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function loop() {
+        posX = lerp(posX, mouseX, 0.10);
+        posY = lerp(posY, mouseY, 0.10);
+        cursor.style.left = posX + 'px';
+        cursor.style.top  = posY + 'px';
+        if (active) raf = requestAnimationFrame(loop);
+      }
+
+      document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      headline.addEventListener('mouseenter', function() {
+        active = true;
+        document.body.style.cursor = 'none';
+        cursor.classList.add('visible');
+        posX = mouseX; posY = mouseY; // snap on enter to avoid fly-in
+        raf = requestAnimationFrame(loop);
+      });
+
+      headline.addEventListener('mouseleave', function() {
+        active = false;
+        document.body.style.cursor = '';
+        cursor.classList.remove('visible');
+        cancelAnimationFrame(raf);
+      });
+    })();
+
   </script>
 
 </body>
