@@ -1059,28 +1059,45 @@
   <script>
   (function(){
     var loader = document.getElementById('page-loader');
-    function hideLoader() {
+
+    function hideLoader(instant) {
       if (!loader) return;
-      loader.classList.add('pg-hide');
+      if (instant) {
+        // Skip CSS transition so loader vanishes immediately (back navigation)
+        loader.style.transition = 'none';
+        loader.style.opacity    = '0';
+        loader.style.visibility = 'hidden';
+        loader.style.pointerEvents = 'none';
+      } else {
+        loader.classList.add('pg-hide');
+      }
     }
-    // Hide once DOM + critical resources ready
+
+    // Initial page load: hide after DOM ready
     if (document.readyState === 'complete') {
-      setTimeout(hideLoader, 60);
+      setTimeout(function(){ hideLoader(false); }, 60);
     } else {
       document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(hideLoader, 60);
+        setTimeout(function(){ hideLoader(false); }, 60);
       });
     }
-    // BFCache fix: hide loader when page is restored via browser back/forward
-    window.addEventListener('pageshow', function(e) {
-      if (e.persisted) {
-        // Force body visible — pageFadeIn can replay on BFCache restore
-        document.body.style.animation = 'none';
-        document.body.style.opacity  = '1';
-        hideLoader();
-      }
+
+    // Safety net: always visible after 1.5s no matter what
+    setTimeout(function() {
+      document.body.style.opacity = '1';
+      document.body.style.animation = 'none';
+      hideLoader(true);
+    }, 1500);
+
+    // pageshow fires on EVERY navigation (back/forward + initial load)
+    // Always force body visible and instantly kill the loader
+    window.addEventListener('pageshow', function() {
+      document.body.style.animation = 'none';
+      document.body.style.opacity   = '1';
+      hideLoader(true);
     });
-    // Show loader when navigating to internal pages
+
+    // Show loader when clicking internal links (forward navigation only)
     document.addEventListener('click', function(e) {
       var link = e.target.closest('a[href]');
       if (!link) return;
@@ -1090,6 +1107,11 @@
                      && !href.startsWith('mailto') && !href.startsWith('tel')
                      && href !== '' && !href.startsWith('data:');
       if (isInternal && loader) {
+        // Re-enable transition before showing
+        loader.style.transition  = '';
+        loader.style.opacity     = '';
+        loader.style.visibility  = '';
+        loader.style.pointerEvents = '';
         loader.classList.remove('pg-hide');
       }
     });
