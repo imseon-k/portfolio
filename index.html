@@ -330,10 +330,8 @@
   .hero {
     min-height: 100vh;
     padding: 64px var(--sp-md) var(--sp-lg);
-    display: grid;
-    grid-template-columns: 1fr 300px;
+    display: flex;
     align-items: center;
-    gap: 60px;
   }
 
   .hero-left { padding-top: 60px; }
@@ -1282,10 +1280,15 @@
         </svg>
         Figma
       </div>
-      <!-- Claude logo -->
+      <!-- Claude logo (Anthropic mark) -->
       <div class="hgc-tool-chip">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.37l-.23.048-4.719 2.647-.127.127v.31l.127.128.288-.255zm9.288-2.86c-.495-.304-1.09-.224-1.49.175L8.862 16.92l-.048.23.128.176.255.048 1.69-.976 2.807-2.152.048-.262-.144-.888-.1-.001zm3.024 4.16l-4.72-2.647h-.383l-.08.128.08.23 4.72 2.647.288.255.127-.128v-.31l-.032-.175zm-3.536 1.01c-.08-.463-.495-.783-.96-.767h-4.96v.016l-.063.32.255.272h.384l4.624-.016.72-.576v-.25zm2.575-7.64l4.72 2.647.127-.128v-.31l-.127-.128-4.72-2.647-.223.048-.08.128.08.23.223.16zm-2.048 5.23c.016-.463-.256-.895-.687-1.087l-4.432-2.024v-.016l-2.048-4.432c-.192-.432-.624-.72-1.103-.72h-.016c-.655.016-1.19.56-1.175 1.214v.032c.016.48.303.91.736 1.135l4.32 2.247.016.016 2.024 4.432c.191.416.607.687 1.07.687l.016.016c.671 0 1.23-.56 1.278-1.23v-.271h.001zm1.087-9.072l-4.72 2.647.08.23.08.128h.063l.256-.048 4.719-2.647.128-.128v-.31l-.128-.127-.478.255zM12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.001 21.333c-5.15 0-9.334-4.183-9.334-9.333s4.183-9.333 9.334-9.333c5.15 0 9.333 4.183 9.333 9.333s-4.183 9.333-9.333 9.333z" fill="#D97706"/>
+        <svg width="14" height="12" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Anthropic logomark: 5 triangular rays, alternating heights -->
+          <path d="M2 20 L6 4 L8.5 12 Z" fill="#D97706"/>
+          <path d="M6 20 L10 8 L12.5 16 Z" fill="#D97706"/>
+          <path d="M11 20 L14 2 L17 20 Z" fill="#C96A06"/>
+          <path d="M15.5 20 L18 8 L22 20 Z" fill="#D97706"/>
+          <path d="M19.5 20 L22 4 L26 20 Z" fill="#D97706"/>
         </svg>
         Claude
       </div>
@@ -1390,22 +1393,7 @@
       </div>
     </div>
 
-    <!-- Desktop info card -->
-    <div class="hero-meta">
-      <div class="meta-label">At a glance</div>
-      <div class="meta-item">
-        <span class="meta-item-label">Based in</span>
-        <span class="meta-item-val">Toronto</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-item-label">Focus</span>
-        <span class="meta-item-val">Product &amp; Graphic</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-item-label">Tools</span>
-        <span class="meta-item-val">Figma, Claude, Adobe</span>
-      </div>
-    </div>
+
 
   </section>
 
