@@ -421,8 +421,10 @@
 
   /* ── CONTACT BAR ── */
   .contact-bar {
-    max-width: 1200px; margin: 0 auto;
-    padding: 0 var(--sp-md) var(--sp-lg);
+    max-width: 1200px;
+    width: calc(100% - 2 * var(--sp-md));
+    margin: 0 auto var(--sp-lg);
+    padding: 28px 36px;
     display: flex; align-items: center; justify-content: space-between;
     gap: 24px;
     background: var(--lg-bg);
@@ -431,8 +433,6 @@
     border: 1px solid var(--lg-lo);
     box-shadow: var(--lg-shadow);
     border-radius: var(--radius-xl);
-    padding: 28px 36px;
-    margin-bottom: var(--sp-lg);
   }
   .contact-text { font-size: 0.95rem; color: var(--txt-600); }
   .contact-text strong { color: var(--txt-900); font-weight: 600; }
@@ -980,7 +980,7 @@
     </section>
 
     <!-- ══ CONTACT BAR ══ -->
-    <div class="contact-bar reveal" style="max-width:1200px; margin: 0 auto var(--sp-lg); padding: 28px 36px; margin-left: var(--sp-md); margin-right: var(--sp-md);">
+    <div class="contact-bar reveal" style="max-width:1200px; margin: 0 auto var(--sp-lg); padding: 28px 36px;">
       <div class="contact-text">
         <strong>I'd love to hear from you :)</strong><br>
         Feel free to reach out — I reply pretty quickly!
