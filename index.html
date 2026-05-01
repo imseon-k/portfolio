@@ -1703,7 +1703,12 @@
     }
     // BFCache fix: hide loader when page is restored via browser back/forward
     window.addEventListener('pageshow', function(e) {
-      if (e.persisted && loader) hideLoader();
+      if (e.persisted) {
+        // Force body visible — pageFadeIn can replay on BFCache restore
+        document.body.style.animation = 'none';
+        document.body.style.opacity  = '1';
+        hideLoader();
+      }
     });
     // Show loader when navigating to internal pages
     document.addEventListener('click', function(e) {
