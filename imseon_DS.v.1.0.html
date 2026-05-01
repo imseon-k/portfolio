@@ -686,12 +686,42 @@
       </div>
 
       <div class="color-group">
-        <p class="color-group-label">Brand</p>
+        <p class="color-group-label">Brand — Primary (Light) · Cyan (Dark)</p>
         <div class="color-grid">
-          <div class="color-swatch"><div class="swatch-block" style="background:#C8EAD8;"></div><div class="swatch-info"><div class="swatch-name">Blue Lime</div><div class="swatch-hex">#C8EAD8</div></div></div>
-          <div class="color-swatch"><div class="swatch-block" style="background:#D6F0E4;"></div><div class="swatch-info"><div class="swatch-name">Blue Lime 2</div><div class="swatch-hex">#D6F0E4</div></div></div>
-          <div class="color-swatch"><div class="swatch-block" style="background:#FFDCE8;"></div><div class="swatch-info"><div class="swatch-name">Baby Pink</div><div class="swatch-hex">#FFDCE8</div></div></div>
-          <div class="color-swatch"><div class="swatch-block" style="background:#FFE8F1;"></div><div class="swatch-info"><div class="swatch-name">Baby Pink 2</div><div class="swatch-hex">#FFE8F1</div></div></div>
+          <div class="color-swatch">
+            <div class="swatch-block" style="background:var(--clr-lime);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Lime / Cyan</div>
+              <div class="swatch-hex swatch-hex-theme" data-light="#C8FF4A" data-dark="rgba(0,191,255,0.16)">#C8FF4A</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-block" style="background:var(--clr-lime-2);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Lime 2 / Cyan 2</div>
+              <div class="swatch-hex swatch-hex-theme" data-light="#DAFF78" data-dark="rgba(0,191,255,0.10)">#DAFF78</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-group">
+        <p class="color-group-label">Brand — Secondary (Light) · Lime (Dark)</p>
+        <div class="color-grid">
+          <div class="color-swatch">
+            <div class="swatch-block" style="background:var(--clr-pink);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Sky / Lime</div>
+              <div class="swatch-hex swatch-hex-theme" data-light="#BAE8FF" data-dark="rgba(200,255,74,0.16)">#BAE8FF</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-block" style="background:var(--clr-pink-2);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Sky 2 / Lime 2</div>
+              <div class="swatch-hex swatch-hex-theme" data-light="#D5F3FF" data-dark="rgba(200,255,74,0.12)">#D5F3FF</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1008,6 +1038,11 @@
 
       if (!document.startViewTransition) {
         document.documentElement.setAttribute('data-theme', next);
+        // Update brand swatch hex labels on theme change
+        document.querySelectorAll('.swatch-hex-theme').forEach(function(el) {
+          var isDark = next === 'dark';
+          el.textContent = isDark ? el.dataset.dark : el.dataset.light;
+        });
         localStorage.setItem('imseon-theme-v2', next);
         return;
       }
