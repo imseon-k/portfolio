@@ -1071,6 +1071,10 @@
         setTimeout(hideLoader, 60);
       });
     }
+    // BFCache fix: hide loader when page is restored via browser back/forward
+    window.addEventListener('pageshow', function(e) {
+      if (e.persisted && loader) hideLoader();
+    });
     // Show loader when navigating to internal pages
     document.addEventListener('click', function(e) {
       var link = e.target.closest('a[href]');
