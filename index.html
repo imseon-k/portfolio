@@ -1151,44 +1151,13 @@
     transition: opacity 0.22s ease, transform 0.22s ease;
     will-change: transform, opacity;
 
-    /* Liquid glass card */
     width: 192px;
-    border-radius: 20px;
+    border-radius: 18px;
     padding: 16px 18px 14px;
-    background: rgba(255, 255, 255, 0.14);
-    backdrop-filter: blur(28px) saturate(200%) brightness(1.08);
-    -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.08);
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    border-bottom-color: rgba(255, 255, 255, 0.20);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.90) inset,
-      0 -1px 0 rgba(255,255,255,0.10) inset,
-      0 20px 48px rgba(0,0,0,0.14),
-      0 6px 16px rgba(0,0,0,0.08);
-  }
-
-  /* Top-edge glass highlight */
-  #hero-glance-cursor::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 8%; right: 8%;
-    height: 45%;
-    border-radius: 20px 20px 50% 50%;
-    background: linear-gradient(to bottom,
-      rgba(255,255,255,0.50) 0%,
-      rgba(255,255,255,0.0) 100%
-    );
-    pointer-events: none;
-  }
-
-  /* Subtle inner rim */
-  #hero-glance-cursor::after {
-    content: '';
-    position: absolute;
-    inset: 1px;
-    border-radius: 19px;
-    border: 1px solid rgba(255,255,255,0.18);
-    pointer-events: none;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.22);
   }
 
   #hero-glance-cursor.visible {
