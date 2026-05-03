@@ -106,14 +106,21 @@ img.real-photo { /* photographic images render with default smoothing */ }
   font-family: var(--font-display);
   color: var(--ink);
 }
-.topbar-left {
-  display: flex; align-items: center; gap: 8px;
-  font-family: var(--font-display);
-  font-weight: 500; font-size: 13px;
-  letter-spacing: -0.1px;
-  color: var(--ink);
+/* Logo link — height matches the HUD chip on the right */
+.topbar-logo {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  border-radius: 6px;
+  transition: opacity .15s;
 }
-.topbar-left svg { width: 11px; height: 11px; }
+.topbar-logo:hover  { opacity: 0.75; }
+.topbar-logo:active { opacity: 0.55; }
+.topbar-logo img {
+  display: block;
+  height: 100%;
+  width: auto;
+}
 
 /* Detail-page back button */
 .topbar a.back {
@@ -776,6 +783,7 @@ footer .sprite { display: none; }
 /* ─── 22. ACCESSIBILITY ──────────────────────────────────────────── */
 
 .card:focus-visible,
+.topbar-logo:focus-visible,
 .topbar a.back:focus-visible,
 .pager a:focus-visible,
 .bio-cta:focus-visible,
