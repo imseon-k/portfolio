@@ -336,6 +336,19 @@
   .full-img picture { display: block; width: 100%; border-radius: var(--radius-3xl); }
   .full-img img { width: 100%; height: auto; display: block; border-radius: var(--radius-3xl); }
 
+  /* ── SIDE-BY-SIDE IMAGE ROW ── */
+  .img-row-side { display: flex; gap: var(--sp-8); align-items: stretch; margin-bottom: var(--sp-24); }
+  .img-row-side .img-left  { flex: 0 0 56%; border-radius: var(--radius-3xl); overflow: hidden; }
+  .img-row-side .img-right { flex: 1 1 0; border-radius: var(--radius-3xl); overflow: hidden; }
+  .img-row-side img  { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .img-row-side picture { display: block; width: 100%; height: 100%; }
+  @media (max-width: 860px) {
+    .img-row-side { flex-direction: column; }
+    .img-row-side .img-left,
+    .img-row-side .img-right { flex: none; width: 100%; }
+    .img-row-side img { height: auto; object-fit: contain; }
+  }
+
   /* ── BACK TO TOP ── */
   .back-to-top {
     position: fixed; bottom: 32px; right: 32px; z-index: 100;
@@ -900,11 +913,16 @@
         <img src="lkt/LKT06.png" alt="Dashboard logistics LKT06" loading="lazy">
       </picture>
     </div>
-    <div class="full-img reveal">
-      <picture>
-        <source media="(max-width: 600px)" srcset="lkt/LKT06_m-2.png">
-        <img src="lkt/LKT06-2.png" alt="Dashboard logistics LKT06-2" loading="lazy">
-      </picture>
+    <div class="img-row-side reveal">
+      <div class="img-left">
+        <picture>
+          <source media="(max-width: 860px)" srcset="lkt/LKT06_m-2.png">
+          <img src="lkt/LKT06-2.png" alt="Dashboard logistics LKT06-2" loading="lazy">
+        </picture>
+      </div>
+      <div class="img-right">
+        <img src="lkt/real-life-mockup.png" alt="Real life mockup" loading="lazy">
+      </div>
     </div>
     <div class="full-img reveal">
       <picture>
