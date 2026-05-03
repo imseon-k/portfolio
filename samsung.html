@@ -367,7 +367,7 @@
     .nav-links  { display: none; }
     .nav-burger { display: flex; }
     .nav-logo-text { display: none; } .nav-logo-icon { display: flex; }
-    .breadcrumb, .project-header, .detail-section { padding-left: var(--sp-24); padding-right: var(--sp-24); }
+    .breadcrumb, .project-header, .detail-section, .intro-img-wrap { padding-left: var(--sp-24); padding-right: var(--sp-24); }
     .project-meta { gap: var(--sp-24); }
     .info-row { grid-template-columns: 1fr; gap: var(--sp-8); }
     .content-row { grid-template-columns: 1fr; }
@@ -846,7 +846,7 @@
   </header>
 
   <!-- INTRO IMAGE -->
-  <div style="width:100%;margin:var(--sp-48) 0 0;">
+  <div class="intro-img-wrap" style="max-width:1200px;margin:var(--sp-48) auto 0;padding:0 var(--sp-48);">
     <picture>
       <source media="(max-width:860px)" srcset="samsung/00 intro_m.png">
       <img loading="eager" src="samsung/00 intro.png" alt="Samsung SmartThings Buying Guide overview" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
@@ -855,7 +855,6 @@
 
   <!-- OVERVIEW SECTION -->
   <section class="detail-section">
-    <p class="section-eyebrow reveal">Overview</p>
     <div class="info-row reveal">
       <span class="info-label">Overview</span>
       <p class="info-body">The Buying Guide is an offline promotional interface for Smart TV screens. I led the design of the interface and operation dashboard, rolling out across 8+ countries with a reusable component system.</p>
