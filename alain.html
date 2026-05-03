@@ -467,6 +467,8 @@
     .nav-burger { display: flex; }
     .nav-logo-text { display: none; } .nav-logo-icon { display: flex; }
     .breadcrumb, .project-header, .hero-wrap, .detail-section { padding-left: var(--sp-24); padding-right: var(--sp-24); }
+    .hero-img { aspect-ratio: unset; height: auto; }
+    .hero-img img { height: auto; object-fit: contain; }
     .project-meta { gap: var(--sp-24); }
     .info-row { grid-template-columns: 1fr; gap: var(--sp-8); }
     .content-row { grid-template-columns: 1fr; }
@@ -1072,16 +1074,10 @@
 
     <div class="interface-grid">
       <div class="iface-img reveal">
-        <picture>
-          <source media="(max-width:860px)" srcset="alain/alain02-1_m.png">
-          <img src="alain/alain02-1.png" alt="Alain — leading UI screens" loading="lazy">
-        </picture>
+        <img src="alain/alain02-1.png" alt="Alain — leading UI screens" loading="lazy" style="width:100%;height:auto;display:block;">
       </div>
       <div class="iface-img reveal">
-        <picture>
-          <source media="(max-width:860px)" srcset="alain/alain02-2_m.png">
-          <img src="alain/alain02-2.png" alt="Alain — main app screens" loading="lazy">
-        </picture>
+        <img src="alain/alain02-2.png" alt="Alain — main app screens" loading="lazy" style="width:100%;height:auto;display:block;">
       </div>
     </div>
   </section>
