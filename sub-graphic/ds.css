@@ -843,7 +843,20 @@ a:focus-visible {
 }
 
 
-/* ─── 23. RESPONSIVE ─────────────────────────────────────────────── */
+/* ─── 23. DETAIL PAGE — mono override (no blue) ─────────────────── */
+/* Add class="detail" to <body> on any project detail page.           */
+
+body.detail {
+  --primary:      var(--surface-2);   /* chip / CTA bg → neutral */
+  --primary-soft: var(--surface-2);   /* highlight bg  → neutral */
+  --primary-ink:  var(--ink-3);       /* blue text     → mid-gray */
+  --primary-hov:  #DCDCDF;            /* hover fill    → neutral */
+  --primary-act:  #CECECE;            /* active fill   → neutral */
+  --focus:        var(--ink-2);
+}
+
+
+/* ─── 24. RESPONSIVE ─────────────────────────────────────────────── */
 
 @media (max-width: 640px) {
   .app { padding: 0 12px; margin: 12px auto 16px; }
