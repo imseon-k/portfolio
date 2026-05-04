@@ -14,9 +14,9 @@
   <meta property="og:type" content="website"/>
   <meta name="twitter:card" content="summary_large_image"/>
 
-  <link rel="preconnect" href="https://api.fontshare.com">
-  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-  <link href="https://api.fontshare.com/v2/css?f[]=uncut-sans@300,400,500,600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="ds.css">
 </head>
 <body>
@@ -45,14 +45,12 @@
       </div>
     </div>
 
-    <!-- MARQUEE -->
     <!-- HERO -->
     <section class="hero">
-      <div class="hero-eyebrow">▸ press start ◂</div>
-      <h1 class="hero-title">
-        This is Imseon
-        <span class="line2">Archive</span>
-      </h1>
+      <div class="hero-titles">
+        <h1 class="hero-title">Imseon</h1>
+        <p class="hero-role">Product Designer</p>
+      </div>
       <p class="hero-sub">
         A personal archive of graphic design pieces — posters, marks, typography, and editorial work.
         Each one is a small exercise in grid, restraint, and the quiet pleasure of making something tactile.
@@ -62,29 +60,35 @@
     <!-- STATS STRIP -->
     <div class="stats">
       <div class="stat">
-        <div class="stat-num">06</div>
+        <div class="stat-num">04</div>
         <div class="stat-label">pieces</div>
       </div>
       <div class="stat">
-        <div class="stat-num">04</div>
+        <div class="stat-num">03</div>
         <div class="stat-label">categories</div>
       </div>
       <div class="stat">
-        <div class="stat-num">∞</div>
-        <div class="stat-label">pixels</div>
+        <div class="stat-num">04</div>
+        <div class="stat-label">years</div>
       </div>
     </div>
 
-    <!-- ABOUT ME (summary) -->
-    <div class="bio">
-      <div class="bio-kicker">» about me</div>
+    <!-- ABOUT ME — clickable card → about.html -->
+    <a class="bio" href="about.html">
+      <div class="bio-header">
+        <span class="bio-kicker">About me</span>
+        <span class="bio-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 17 L17 7 M9 7 H17 V15"/>
+          </svg>
+        </span>
+      </div>
       <p class="bio-text">
         Hi, I'm <strong>Imseon</strong> — a UI-focused Product Designer. I build interfaces that are
         visually precise, systematically scalable, and AI-accelerated. This archive is the graphics
         side of that practice.
       </p>
-      <a class="bio-cta" href="about.html">Read full bio →</a>
-    </div>
+    </a>
 
     <!-- WORK LIST -->
     <div class="sec-head">

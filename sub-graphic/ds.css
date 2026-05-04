@@ -37,7 +37,8 @@
   --r-pill:       999px;
 
   /* Type */
-  --font-display: 'Uncut Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  --font-display: 'Unbounded', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-label:   'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body:    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
                   system-ui, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
@@ -136,9 +137,10 @@ img.real-photo { /* photographic images render with default smoothing */ }
 
 /* Detail-page back button */
 .topbar a.back {
-  font-family: var(--font-display);
+  font-family: var(--font-label);
   font-weight: 500;
   font-size: 11px;
+  letter-spacing: -0.1px;
   padding: 4px 10px;
   background: var(--surface-2);
   color: var(--ink);
@@ -157,9 +159,10 @@ img.real-photo { /* photographic images render with default smoothing */ }
   color: var(--primary-ink);
   border: none;
   border-radius: var(--r-pill);
-  font-family: var(--font-display);
+  font-family: var(--font-label);
   font-weight: 500;
   font-size: 11px;
+  letter-spacing: -0.1px;
 }
 .topbar-hud svg { width: 10px; height: 10px; }
 
@@ -174,35 +177,34 @@ img.real-photo { /* photographic images render with default smoothing */ }
   background: var(--surface);
   border: none;
   border-radius: var(--r-xl);
-  padding: 26px 18px 24px;
+  padding: 32px;                        /* per Figma layout spec */
   text-align: left;
 }
-.hero-eyebrow {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 11px; letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: var(--primary-ink);
-  margin-bottom: 18px;
-}
+.hero-eyebrow { display: none; }        /* removed — direct name+role intro */
+.hero-titles { margin-bottom: 72px; }   /* generous gap to body per spec */
 .hero-title {
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: 36px; line-height: 1.05;
-  letter-spacing: -0.6px;
-  color: var(--ink);
+  font-family: var(--font-display);    /* Unbounded */
+  font-weight: 600;
+  font-size: 36px; line-height: 1;
+  letter-spacing: -1.2px;
+  color: #212121;
   text-shadow: none;
-  margin-bottom: 22px;
+  margin-bottom: 8px;
 }
-.hero-title .line2 {
-  display: block;
-  color: var(--primary-ink);
-  text-shadow: none;
+.hero-title .line2 { display: none; }   /* no longer used */
+.hero-role {
+  font-family: var(--font-body);
+  font-weight: 510;
+  font-size: 14px; line-height: 1;
+  letter-spacing: -0.14px;
+  color: rgba(33, 33, 33, 0.3);
 }
 .hero-sub {
   font-family: var(--font-body);
-  font-size: 14px; line-height: 1.65;
-  color: var(--ink-2);
+  font-weight: 400;
+  font-size: 14px; line-height: 1.4;
+  letter-spacing: -0.07px;
+  color: #757575;
   max-width: 100%;
   margin: 0;
 }
@@ -222,20 +224,21 @@ img.real-photo { /* photographic images render with default smoothing */ }
   background: var(--surface);
   border: none;
   border-radius: var(--r-md);
-  padding: 14px 8px 12px;
+  padding: 18px 8px 14px;
   text-align: center;
 }
 .stat-num {
   font-family: var(--font-display);
-  font-weight: 300;
-  font-size: 26px; line-height: 1;
+  font-weight: 500;
+  font-size: 22px; line-height: 1;
+  letter-spacing: -0.6px;
   color: var(--primary-ink);
   margin-bottom: 8px;
 }
 .stat-label {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 10px; letter-spacing: 0.8px;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px; letter-spacing: 0.4px;
   text-transform: uppercase;
   color: var(--ink-3);
   margin-top: 0;
@@ -248,8 +251,8 @@ img.real-photo { /* photographic images render with default smoothing */ }
   padding: 14px 4px 6px;
 }
 .sec-eyebrow {
-  font-family: var(--font-display);
-  font-weight: 400;
+  font-family: var(--font-label);
+  font-weight: 500;
   font-size: 11px; letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -257,9 +260,9 @@ img.real-photo { /* photographic images render with default smoothing */ }
 }
 .sec-title {
   font-family: var(--font-display);
-  font-weight: 300;
-  font-size: 28px; line-height: 1.0;
-  letter-spacing: -0.5px;
+  font-weight: 500;
+  font-size: 22px; line-height: 1.0;
+  letter-spacing: -0.7px;
   color: var(--ink);
   text-transform: none;
 }
@@ -306,14 +309,14 @@ img.real-photo { /* photographic images render with default smoothing */ }
   font-size: 13px; letter-spacing: 0;
 }
 .card-meta {
-  padding: 12px 12px 14px;
+  padding: 14px 14px 16px;
   display: flex; flex-direction: column; gap: 0;
 }
 .card-cat {
   display: inline-block;
   align-self: flex-start;
-  font-family: var(--font-display);
-  font-weight: 400;
+  font-family: var(--font-label);
+  font-weight: 500;
   font-size: 9px;
   background: var(--surface-2);
   color: var(--ink-2);
@@ -326,15 +329,15 @@ img.real-photo { /* photographic images render with default smoothing */ }
 .card-title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.25;
-  letter-spacing: -0.1px;
+  letter-spacing: -0.3px;
   color: var(--ink);
   margin-bottom: 4px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .card-year {
-  font-family: var(--font-display);
+  font-family: var(--font-label);
   font-weight: 400;
   font-size: 9px;
   color: var(--ink-4);
@@ -344,25 +347,45 @@ img.real-photo { /* photographic images render with default smoothing */ }
 
 /* ─── 10. BIO BLOCK (index.html) ─────────────────────────────────── */
 
+/* Bio block — clickable card linking to about.html.
+   Header row (label + ↗ arrow) sits at top, body 40px below per Figma spec. */
 .bio {
+  display: block;
   background: var(--surface);
   color: var(--ink);
   border: none;
   border-radius: var(--r-xl);
-  padding: 20px 18px 22px;
+  padding: 32px;
   margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s;
+}
+.bio:hover { background: #F5F5F7; }
+.bio-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 40px;
 }
 .bio-kicker {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 11px; letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: var(--primary-ink);
-  margin-bottom: 14px;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.14px;
+  text-transform: none;
+  color: var(--ink);
+  margin-bottom: 0;
 }
+.bio-arrow {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink);
+}
+.bio-arrow svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
 .bio-text {
   font-family: var(--font-body);
-  font-size: 14px; line-height: 1.65;
+  font-weight: 400;
+  font-size: 14px; line-height: 1.4;
+  letter-spacing: -0.07px;
   color: var(--ink);
 }
 .bio-text strong {
@@ -372,22 +395,7 @@ img.real-photo { /* photographic images render with default smoothing */ }
   border-radius: 4px;
   font-weight: 500;
 }
-.bio-cta {
-  display: inline-flex; align-items: center; gap: 5px;
-  margin-top: 18px;
-  padding: 8px 14px;
-  background: var(--primary);
-  color: var(--primary-ink);
-  border: none;
-  border-radius: var(--r-pill);
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 12px;
-  text-decoration: none;
-  transition: background .15s;
-}
-.bio-cta:hover  { background: var(--primary-hov); }
-.bio-cta:active { background: var(--primary-act); }
+.bio-cta { display: none; }   /* deprecated — replaced by clickable card + arrow */
 
 
 /* ─── 11. PROJECT HEAD (detail pages) ────────────────────────────── */
@@ -397,11 +405,11 @@ img.real-photo { /* photographic images render with default smoothing */ }
   border: none;
   border-bottom: none;
   border-radius: var(--r-xl);
-  padding: 26px 18px 22px;
+  padding: 32px;
 }
 .head-eyebrow {
-  font-family: var(--font-display);
-  font-weight: 400;
+  font-family: var(--font-label);
+  font-weight: 500;
   font-size: 11px; letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--primary-ink);
@@ -409,10 +417,10 @@ img.real-photo { /* photographic images render with default smoothing */ }
 }
 .head-title {
   font-family: var(--font-display);
-  font-weight: 300;
-  font-size: 32px;
-  letter-spacing: -0.6px;
-  line-height: 1.1;
+  font-weight: 600;
+  font-size: 28px;
+  letter-spacing: -1px;
+  line-height: 1.05;
   color: var(--ink);
   text-shadow: none;
   margin-bottom: 18px;
@@ -424,17 +432,20 @@ img.real-photo { /* photographic images render with default smoothing */ }
 }
 .head-desc {
   font-family: var(--font-body);
-  font-size: 14px; line-height: 1.65;
+  font-weight: 400;
+  font-size: 14px; line-height: 1.4;
+  letter-spacing: -0.07px;
   color: var(--ink-2);
   max-width: 100%;
 }
 /* About-page hero variant (centered) */
 .head.about-head { text-align: center; }
 .head-role {
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: 18px;
-  color: var(--ink-2);
+  font-family: var(--font-body);
+  font-weight: 510;
+  font-size: 14px;
+  letter-spacing: -0.14px;
+  color: rgba(33, 33, 33, 0.3);
   margin-top: 4px;
 }
 
@@ -457,9 +468,9 @@ img.real-photo { /* photographic images render with default smoothing */ }
 }
 .meta-cell:last-child { border-right: none; }
 .meta-label {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 10px; letter-spacing: 0.8px;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px; letter-spacing: 0.4px;
   text-transform: uppercase;
   color: var(--ink-3);
   margin-bottom: 6px;
@@ -468,6 +479,7 @@ img.real-photo { /* photographic images render with default smoothing */ }
   font-family: var(--font-display);
   font-weight: 500;
   font-size: 14px;
+  letter-spacing: -0.4px;
   color: var(--ink);
 }
 
@@ -528,12 +540,12 @@ img.real-photo { /* photographic images render with default smoothing */ }
   color: var(--ink);
   border: none;
   border-radius: var(--r-xl);
-  padding: 20px 18px;
+  padding: 32px;
   margin: 0;
 }
 .caption-kicker {
-  font-family: var(--font-display);
-  font-weight: 400;
+  font-family: var(--font-label);
+  font-weight: 500;
   font-size: 11px; letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--primary-ink);
@@ -541,7 +553,9 @@ img.real-photo { /* photographic images render with default smoothing */ }
 }
 .caption-text {
   font-family: var(--font-body);
-  font-size: 14px; line-height: 1.65;
+  font-weight: 400;
+  font-size: 14px; line-height: 1.4;
+  letter-spacing: -0.07px;
   color: var(--ink);
 }
 .caption-text strong {
@@ -564,22 +578,22 @@ img.real-photo { /* photographic images render with default smoothing */ }
   overflow: hidden;
 }
 .pager a {
-  padding: 16px 14px;
+  padding: 18px 16px;
   font-family: var(--font-display);
   font-weight: 500;
   font-size: 13px;
+  letter-spacing: -0.3px;
   color: var(--ink);
   display: flex; flex-direction: column; gap: 4px;
-  letter-spacing: -0.1px;
   transition: background .15s, color .15s;
 }
 .pager a:first-child { border-right: 0.5px solid var(--border); }
 .pager a:last-child  { text-align: right; align-items: flex-end; }
 .pager a:hover { background: var(--primary-soft); color: var(--primary-ink); }
 .pager-dir {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 10px; letter-spacing: 0.8px;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 10px; letter-spacing: 0.4px;
   text-transform: uppercase;
   color: var(--ink-3);
 }
@@ -587,6 +601,7 @@ img.real-photo { /* photographic images render with default smoothing */ }
   font-family: var(--font-display);
   font-weight: 500;
   font-size: 14px;
+  letter-spacing: -0.4px;
 }
 
 
@@ -597,7 +612,7 @@ img.real-photo { /* photographic images render with default smoothing */ }
   border: none;
   border-bottom: none;
   border-radius: var(--r-xl);
-  padding: 24px 18px 22px;
+  padding: 32px;
 }
 
 .profile-frame {
@@ -625,17 +640,18 @@ img.real-photo { /* photographic images render with default smoothing */ }
   justify-content: center;
 }
 .b-label {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 11px; letter-spacing: 1px;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 11px; letter-spacing: 0.4px;
   text-transform: uppercase;
   color: var(--ink-3);
 }
 .badge {
-  font-family: var(--font-display);
+  font-family: var(--font-label);
   font-weight: 500;
   font-size: 11px;
-  padding: 3px 10px;
+  letter-spacing: -0.1px;
+  padding: 4px 11px;
   background: var(--surface-2);
   color: var(--ink);
   border: none;
@@ -643,7 +659,9 @@ img.real-photo { /* photographic images render with default smoothing */ }
 }
 .about-bio {
   font-family: var(--font-body);
-  font-size: 14px; line-height: 1.65;
+  font-weight: 400;
+  font-size: 14px; line-height: 1.4;
+  letter-spacing: -0.07px;
   color: var(--ink-2);
   text-align: center;
   max-width: 460px;
@@ -661,7 +679,7 @@ img.real-photo { /* photographic images render with default smoothing */ }
   background: var(--surface);
   border: none;
   border-radius: var(--r-md);
-  padding: 16px 16px 18px;
+  padding: 20px 20px 22px;
 }
 .exp-meta {
   display: flex; flex-direction: column; gap: 4px;
@@ -672,19 +690,22 @@ img.real-photo { /* photographic images render with default smoothing */ }
   font-family: var(--font-display);
   font-weight: 500;
   font-size: 16px;
+  letter-spacing: -0.5px;
   color: var(--ink);
   line-height: 1.15;
 }
 .exp-date {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 11px; letter-spacing: 0.8px;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 11px; letter-spacing: 0.4px;
   text-transform: uppercase;
   color: var(--primary-ink);
 }
 .exp-desc {
   font-family: var(--font-body);
-  font-size: 13px; line-height: 1.65;
+  font-weight: 400;
+  font-size: 13px; line-height: 1.5;
+  letter-spacing: -0.07px;
   color: var(--ink-2);
 }
 
@@ -729,9 +750,10 @@ img.real-photo { /* photographic images render with default smoothing */ }
   color: var(--primary-ink);
   border: none;
   border-radius: var(--r-pill);
-  font-family: var(--font-display);
+  font-family: var(--font-label);
   font-weight: 500;
   font-size: 12px;
+  letter-spacing: -0.1px;
   text-decoration: none;
   transition: background .15s;
 }
@@ -746,12 +768,12 @@ img.real-photo { /* photographic images render with default smoothing */ }
   color: var(--ink);
   border: none;
   border-radius: var(--r-xl);
-  padding: 22px 18px;
+  padding: 32px;
   margin: 0;
 }
 .contact-kicker {
-  font-family: var(--font-display);
-  font-weight: 400;
+  font-family: var(--font-label);
+  font-weight: 500;
   font-size: 11px; letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--primary-ink);
@@ -759,7 +781,9 @@ img.real-photo { /* photographic images render with default smoothing */ }
 }
 .contact-text {
   font-family: var(--font-body);
-  font-size: 14px; line-height: 1.65;
+  font-weight: 400;
+  font-size: 14px; line-height: 1.4;
+  letter-spacing: -0.07px;
   color: var(--ink);
   margin-bottom: 16px;
 }
@@ -781,10 +805,10 @@ footer {
   border-top: none;
   border-radius: var(--r-md);
   padding: 14px 12px 16px;
-  font-family: var(--font-display);
-  font-weight: 400;
+  font-family: var(--font-label);
+  font-weight: 500;
   font-size: 10px;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.4px;
   text-align: center;
   text-transform: uppercase;
 }
