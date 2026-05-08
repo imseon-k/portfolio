@@ -1272,6 +1272,7 @@
     }
 
     function showPage() {
+      document.body.getAnimations().forEach(function(a){a.cancel();});
       document.body.style.animation = 'none';
       document.body.style.opacity   = '1';
       hideLoader();
@@ -1287,7 +1288,12 @@
     }
 
     // Always fire on any navigation (back/forward/initial)
-    window.addEventListener('pageshow', showPage);
+    window.addEventListener('pageshow', function(e){
+      showPage();
+      if(e.persisted){
+        document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
+      }
+    });
 
     // Nuclear fallback — never stay blank longer than 2s
     setTimeout(showPage, 2000);
