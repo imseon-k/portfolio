@@ -338,6 +338,19 @@
   .iface-img img { width: 100%; height: auto; display: block; }
   .iface-img picture { display: block; width: 100%; }
 
+  /* ── SIDE-BY-SIDE IMAGE ROW ── */
+  .img-row-side { display: flex; gap: var(--sp-8); align-items: stretch; margin-bottom: var(--sp-24); }
+  .img-row-side .img-left  { flex: 0 0 56%; border-radius: var(--radius-3xl); overflow: hidden; }
+  .img-row-side .img-right { flex: 1 1 0; border-radius: var(--radius-3xl); overflow: hidden; }
+  .img-row-side img  { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .img-row-side picture { display: block; width: 100%; height: 100%; }
+  @media (max-width: 860px) {
+    .img-row-side { flex-direction: column; }
+    .img-row-side .img-left,
+    .img-row-side .img-right { flex: none; width: 100%; }
+    .img-row-side img { height: auto; object-fit: contain; }
+  }
+
   /* ── BACK TO TOP ── */
   .back-to-top {
     position: fixed; bottom: 32px; right: 32px; z-index: 100;
@@ -817,8 +830,8 @@
   <div class="hero-wrap reveal">
     <div class="hero-img">
       <picture>
-        <source media="(max-width:860px)" srcset="ds/sg01_m.png">
-        <img loading="lazy" src="ds/sg01.png" alt="Unified Style Guide Hero">
+        <source media="(max-width:860px)" srcset="ds/00_summary_m.png">
+        <img loading="eager" src="ds/00_summary.png" alt="Unified Style Guide Hero">
       </picture>
     </div>
   </div>
@@ -840,32 +853,21 @@
   <section class="detail-section">
     <p class="section-eyebrow reveal">Initial Thought</p>
 
-        <!-- Full-width sg02 image above pain point -->
     <div class="media-block reveal">
       <picture>
-        <source media="(max-width:860px)" srcset="ds/sg02_m.png">
-        <img loading="lazy" src="ds/sg02.png" alt="Style guide reference" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+        <source media="(max-width:860px)" srcset="ds/01_overview_m.png">
+        <img loading="lazy" src="ds/01_overview.png" alt="Initial thought overview" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
       </picture>
     </div>
 
-    <!-- Text only row: pain point -->
     <div class="info-row reveal">
       <span class="info-label">pain point</span>
       <p class="info-body">Working across multiple concurrent projects exposed three recurring problems:<br><br>&bull; Inconsistent UI patterns across projects made handoffs slow and error-prone.<br>&bull; Each designer applied spacing, color, and typography differently with no shared reference.<br>&bull; Onboarding new team members required extensive manual explanation of undocumented conventions.</p>
     </div>
 
-    <!-- Content row: what we have -->
-    <div class="content-row reveal">
-      <div class="content-row-left">
-        <div class="content-number"><span>what we have?</span></div>
-        <p class="content-body">Since we&#39;ve run a creative academy, we had an educational system study document. All of the team members were aware of this documents. The document was a theoretical document, so It had not been used in a practical way ever.</p>
-      </div>
-      <div class="content-row-img">
-        <picture>
-          <source media="(max-width:860px)" srcset="ds/sg03_m.png">
-          <img loading="lazy" src="ds/sg03.png" alt="Educational document" style="width:100%;height:auto;display:block;border-radius:var(--radius-xl);">
-        </picture>
-      </div>
+    <div class="info-row reveal">
+      <span class="info-label">what we have?</span>
+      <p class="info-body">Since we&#39;ve run a creative academy, we had an educational system study document. All of the team members were aware of this documents. The document was a theoretical document, so It had not been used in a practical way ever.</p>
     </div>
   </section>
 
@@ -873,37 +875,29 @@
   <section class="detail-section">
     <p class="section-eyebrow reveal">Step 00. Foundation</p>
 
-    <!-- Full-width sg03 key image -->
     <div class="media-block reveal">
       <picture>
-        <source media="(max-width:860px)" srcset="ds/sg04_m.png">
-        <img loading="lazy" src="ds/sg04.png" alt="Foundation — component and element structure" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+        <source media="(max-width:860px)" srcset="ds/02_foundation_m.png">
+        <img loading="lazy" src="ds/02_foundation.png" alt="Foundation — component and element structure" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
       </picture>
     </div>
 
-    <!-- THE APPROACH -->
     <div class="info-row reveal">
       <span class="info-label">the approach</span>
       <div class="info-body">
-        <p>To address the pain points of inconsistent interfaces and inefficient team workflow, we adopted a token-based design system approach.</p>
-        <ul style="margin-top:var(--sp-16);padding-left:var(--sp-20);display:flex;flex-direction:column;gap:var(--sp-8);">
-          <li>All designers could work with the same predefined values, eliminating inconsistencies.</li>
-          <li>Developers could easily translate design specs into a reusable UI component library.</li>
-          <li>The team could scale design output without sacrificing quality or coherence.</li>
-        </ul>
+        <p>To address the pain points of inconsistent interfaces and inefficient team workflow, we adopted a token-based design system approach. All designers could work with the same predefined values, eliminating inconsistencies. Developers could easily translate design specs into a reusable UI component library. The team could scale design output without sacrificing quality or coherence.</p>
       </div>
     </div>
 
-    <!-- IDEA -->
     <div class="info-row reveal">
       <span class="info-label">idea</span>
       <div class="info-body" style="display:flex;flex-direction:column;gap:var(--sp-24);">
         <div>
-          <p style="font-weight:600;color:var(--sg-violet);margin-bottom:var(--sp-8);">Element</p>
+          <p style="font-weight:600;margin-bottom:var(--sp-8);">Element</p>
           <p>Element is the smallest atomic unit to build a page such as Font, Color, and Spacing. Think of it as preparing the basic ingredients before cooking.</p>
         </div>
         <div>
-          <p style="font-weight:600;color:var(--sg-violet);margin-bottom:var(--sp-8);">Component</p>
+          <p style="font-weight:600;margin-bottom:var(--sp-8);">Component</p>
           <p>Component is a module built by combining two or more elements. Just as ingredients come together to create a dish, elements combine to form reusable interface components that the entire team can rely on.</p>
         </div>
       </div>
@@ -915,34 +909,21 @@
     <p class="section-eyebrow reveal">Step 01. Element</p>
 
     <div class="media-block reveal">
-      <picture>
-        <source media="(max-width:860px)" srcset="ds/sg05_m.png">
-        <img loading="lazy" src="ds/sg05.png" alt="Element overview 1">
-      </picture>
+      <img loading="lazy" src="ds/03_element01.png" alt="Element overview 1" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
     </div>
     <div class="media-block reveal">
-      <picture>
-        <source media="(max-width:860px)" srcset="ds/sg06_m.png">
-        <img loading="lazy" src="ds/sg06.png" alt="Element overview 2">
-      </picture>
-    </div>
-    <div class="media-block reveal">
-      <picture>
-        <source media="(max-width:860px)" srcset="ds/sg07-1_m.png">
-        <img loading="lazy" src="ds/sg07-1.png" alt="Element detail 1">
-      </picture>
-    </div>
-    <div class="media-block reveal">
-      <picture>
-        <source media="(max-width:860px)" srcset="ds/sg07-2_m.png">
-        <img loading="lazy" src="ds/sg07-2.png" alt="Element detail 2">
-      </picture>
+      <img loading="lazy" src="ds/03_element02.png" alt="Element overview 2" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
     </div>
   </section>
 
   <!-- STEP 02. COMPONENT -->
   <section class="detail-section">
     <p class="section-eyebrow reveal">Step 02. Component</p>
+
+    <!-- Component overview image -->
+    <div class="media-block reveal">
+      <img loading="lazy" src="ds/04_component.png" alt="Component overview" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+    </div>
 
     <!-- Intro info row -->
     <div class="info-row reveal">
@@ -958,8 +939,8 @@
       </div>
       <div class="content-row-img">
         <picture>
-          <source media="(max-width:860px)" srcset="ds/sg-08_m.png">
-          <img loading="lazy" src="ds/sg-08.png" alt="Button component">
+          <source media="(max-width:860px)" srcset="ds/04_component01_m.png">
+          <img loading="lazy" src="ds/04_component01.png" alt="Button component">
         </picture>
       </div>
     </div>
@@ -972,8 +953,8 @@
       </div>
       <div class="content-row-img">
         <picture>
-          <source media="(max-width:860px)" srcset="ds/sg-09_m.png">
-          <img loading="lazy" src="ds/sg-09.png" alt="Input component">
+          <source media="(max-width:860px)" srcset="ds/04_component02_m.png">
+          <img loading="lazy" src="ds/04_component02.png" alt="Input component">
         </picture>
       </div>
     </div>
@@ -986,8 +967,8 @@
       </div>
       <div class="content-row-img">
         <picture>
-          <source media="(max-width:860px)" srcset="ds/sg-10_m.png">
-          <img loading="lazy" src="ds/sg-10.png" alt="Pop up component">
+          <source media="(max-width:860px)" srcset="ds/04_component03_m.png">
+          <img loading="lazy" src="ds/04_component03.png" alt="Pop up component">
         </picture>
       </div>
     </div>
@@ -1000,8 +981,8 @@
       </div>
       <div class="content-row-img">
         <picture>
-          <source media="(max-width:860px)" srcset="ds/sg-11_m.png">
-          <img loading="lazy" src="ds/sg-11.png" alt="Badge component">
+          <source media="(max-width:860px)" srcset="ds/04_component04_m.png">
+          <img loading="lazy" src="ds/04_component04.png" alt="Badge component">
         </picture>
       </div>
     </div>
@@ -1014,8 +995,8 @@
       </div>
       <div class="content-row-img">
         <picture>
-          <source media="(max-width:860px)" srcset="ds/sg-12_m.png">
-          <img loading="lazy" src="ds/sg-12.png" alt="Tab component">
+          <source media="(max-width:860px)" srcset="ds/04_component05_m.png">
+          <img loading="lazy" src="ds/04_component05.png" alt="Tab component">
         </picture>
       </div>
     </div>
@@ -1038,10 +1019,7 @@
         <p class="content-body">We&#39;ve set 2 styles, filled and lined. And also set each styles as a number to adjust on codes (CSS) and make these modify, when we need another color system.</p>
       </div>
       <div class="content-row-img">
-        <picture>
-          <source media="(max-width:860px)" srcset="ds/sg-result02_m.png">
-          <img loading="lazy" src="ds/sg-result02.png" alt="Core value usage">
-        </picture>
+        <img loading="lazy" src="ds/05_usage01.png" alt="Core value usage" style="width:100%;height:auto;display:block;border-radius:var(--radius-xl);">
       </div>
     </div>
 
@@ -1052,71 +1030,67 @@
         <p class="content-body">We&#39;ve also set layout features for responsible design. Clients offered us a responsible setting in general, So It&#39;s essential for our team. So we set this feature with &ldquo;Layout&rdquo; on each components.</p>
       </div>
       <div class="content-row-img">
-        <picture>
-          <source media="(max-width:860px)" srcset="ds/sg-usage00 summary.png">
-          <img loading="lazy" src="ds/sg-usage00 summary2.png" alt="Layout usage">
-        </picture>
+        <img loading="lazy" src="ds/05_usage02.png" alt="Layout usage" style="width:100%;height:auto;display:block;border-radius:var(--radius-xl);">
       </div>
     </div>
 
-    <!-- 3. adjusting into actual project -->
-    <div class="content-row reveal">
-      <div class="content-row-left">
-        <div class="content-number"><span>Adjusting into an actual project</span></div>
-        <p class="content-body">The first application was realizing it into a dashboard project, which is requiring making consistent frame-like pages. We developed the fundamental guide file, reflecting brand&#39;s features (e.g. color, font). We needed to make responsible web for every devices, including the brand&#39;s own tablet device. We was able to practice based in essential idea of setting consistent margin &amp; space that we&#39;d set in Elements.</p>
-      </div>
-      <div class="content-row-img">
-        <picture>
-          <source media="(max-width:860px)" srcset="ds/sg-usage01_m.png">
-          <img loading="lazy" src="ds/sg-usage01.png" alt="Adjusting into actual project">
-        </picture>
-      </div>
-    </div>
-
-    <!-- 3-column example images -->
-    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-16);margin-top:var(--sp-32);">
-      <img loading="lazy" src="ds/sg-usage02_m.png" style="width:100%;height:auto;border-radius:var(--radius-xl);" alt="Adjusting example 1">
+    <!-- Full-width usage images -->
+    <div class="media-block reveal">
       <picture>
-        <source media="(max-width:860px)" srcset="ds/sg-usage02_m.png">
-        <img loading="lazy" src="ds/sg-usage02.png" style="width:100%;height:auto;border-radius:var(--radius-xl);" alt="Adjusting example 2">
+        <source media="(max-width:860px)" srcset="ds/05_usage03_m.png">
+        <img loading="lazy" src="ds/05_usage03.png" alt="Usage example 1" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
       </picture>
-      <img loading="lazy" src="ds/sg-usage03_m.png" style="width:100%;height:auto;border-radius:var(--radius-xl);" alt="Adjusting example 3">
+    </div>
+    <div class="media-block reveal">
+      <img loading="lazy" src="ds/05_usage04.png" alt="Usage example 2" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+    </div>
+
+    <!-- Side-by-side usage05 -->
+    <div class="img-row-side reveal">
+      <div class="img-left">
+        <picture>
+          <source media="(max-width:860px)" srcset="ds/05_usage05-1_m.png">
+          <img loading="lazy" src="ds/05_usage05-1.png" alt="Usage example 3a">
+        </picture>
+      </div>
+      <div class="img-right">
+        <picture>
+          <source media="(max-width:860px)" srcset="ds/05_usage05-2_m.png">
+          <img loading="lazy" src="ds/05_usage05-2.png" alt="Usage example 3b">
+        </picture>
+      </div>
+    </div>
+
+    <!-- Adjusting into actual project -->
+    <div class="info-row reveal">
+      <span class="info-label">Adjusting into an actual project</span>
+      <p class="info-body">The first application was realizing it into a dashboard project, which is requiring making consistent frame-like pages. We developed the fundamental guide file, reflecting brand&#39;s features (e.g. color, font).<br><br>We needed to make responsible web for every devices, including the brand&#39;s own tablet device. We was able to practice based in essential idea of setting consistent margin &amp; space that we&#39;d set in Elements.</p>
     </div>
   </section>
 
   <!-- RESULT -->
   <section class="detail-section">
-    <p class="section-eyebrow reveal">Result</p>
+    <p class="section-eyebrow reveal">Result : What we achieved</p>
 
-    <!-- Full-width summary images -->
     <div class="media-block reveal">
-      <picture>
-        <source media="(max-width:860px)" srcset="ds/sg-usage03_m.png">
-        <img loading="lazy" src="ds/sg-usage03.png" alt="Style Guide Summary">
-      </picture>
-    </div>
-    <div class="media-block reveal">
-      <img loading="lazy" src="ds/adjusting-eg01.png" alt="Style Guide Summary 2">
+      <img loading="lazy" src="ds/06_result01.png" alt="Result overview" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
     </div>
 
-    <!-- What we achieved -->
     <div class="info-row reveal">
       <span class="info-label">what we achieved</span>
       <p class="info-body">In the conclusion, we could finish about 200 pages amount of task within 7 working days. Although we had unexpected revising, which is involving a lot of changes in policy, the modifying tasks weren&#39;t over 2 working days in total. Not only the working efficiency, the aligned-idea could reach to our clients since the guide displayed the consistency on the pages.</p>
     </div>
 
-    <!-- What's next -->
+    <div class="media-block reveal">
+      <picture>
+        <source media="(max-width:860px)" srcset="ds/06_result02_m.png">
+        <img loading="lazy" src="ds/06_result02.png" alt="Result detail" style="width:100%;height:auto;display:block;border-radius:var(--radius-3xl);">
+      </picture>
+    </div>
+
     <div class="info-row reveal">
       <span class="info-label">what&#39;s next?</span>
       <p class="info-body">I&#39;ve learned how to improve working efficiency and communicate with stakeholders, but not able to make the code-based actual system. The following step for the design system was making the genuine design system. Therefore, I could experience it in the in-house startup company.</p>
-    </div>
-
-    <!-- Final result image -->
-    <div class="media-block reveal">
-      <picture>
-        <source media="(max-width:860px)" srcset="ds/adjusting-eg02.png">
-        <img loading="lazy" src="ds/adjusting-eg03.png" alt="Result final">
-      </picture>
     </div>
   </section>
 
