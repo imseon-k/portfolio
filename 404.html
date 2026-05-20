@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+  (function(){var t=localStorage.getItem('imseon-theme-v2');if(t)document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Page Not Found · Imseon Kwon</title>
+<link rel="icon" type="image/png" href="favicon_imseon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --clr-bg:      #FAFAFA;
+    --txt-900:     #0D0D0D;
+    --txt-600:     #555555;
+    --txt-400:     #999999;
+    --txt-200:     #D4D4D4;
+    --clr-lime:    #C8FF4A;
+    --lg-blur:     blur(28px) saturate(180%);
+    --radius-full: 99999px;
+    --sp-24: 24px; --sp-16: 16px; --sp-8: 8px;
+  }
+  [data-theme="dark"] {
+    --clr-bg:   #111111;
+    --txt-900:  #EFEFEF;
+    --txt-600:  #9A9A9A;
+    --txt-400:  #7C7C7C;
+    --txt-200:  #2C2C2C;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Geist', system-ui, sans-serif;
+    background: var(--clr-bg);
+    color: var(--txt-900);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding: 40px 24px;
+    transition: background .3s, color .3s;
+    position: relative; overflow: hidden;
+  }
+
+  /* Ghost number */
+  .ghost-num {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(180px, 35vw, 320px);
+    font-weight: 800;
+    letter-spacing: -16px;
+    color: var(--txt-200);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 0;
+    transition: color .3s;
+  }
+
+  /* Content */
+  .content {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    gap: 14px;
+    max-width: 400px;
+  }
+  .eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--txt-400);
+  }
+  .title {
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-weight: 700; letter-spacing: -0.5px;
+    color: var(--txt-900); line-height: 1.2;
+  }
+  .desc {
+    font-size: 0.9rem; color: var(--txt-600);
+    line-height: 1.7; max-width: 300px;
+  }
+  .actions {
+    display: flex; gap: 10px; margin-top: 8px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .btn-primary {
+    background: var(--txt-900); color: var(--clr-bg);
+    border: none; padding: 11px 26px;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    transition: opacity .2s;
+    font-family: inherit;
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-secondary {
+    background: transparent; color: var(--txt-600);
+    border: 1px solid var(--txt-200);
+    padding: 11px 26px; border-radius: var(--radius-full);
+    font-size: 0.85rem; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    transition: border-color .2s, color .2s;
+    font-family: inherit;
+  }
+  .btn-secondary:hover { border-color: var(--txt-400); color: var(--txt-900); }
+
+  /* Top bar */
+  .top-bar {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 64px; padding: 0 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 10;
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 0.95rem;
+    color: var(--txt-900); text-decoration: none;
+    letter-spacing: -0.2px;
+  }
+
+  /* Theme toggle */
+  .theme-toggle {
+    display: flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: var(--radius-full);
+    background: none; border: 1px solid var(--txt-200);
+    cursor: pointer; color: var(--txt-600);
+    transition: border-color .2s, color .2s;
+  }
+  .theme-toggle:hover { border-color: var(--txt-400); color: var(--txt-900); }
+  .icon-sun, .icon-moon { width: 16px; height: 16px; }
+  [data-theme="light"] .icon-moon { display: none; }
+  [data-theme="dark"]  .icon-sun  { display: none; }
+</style>
+</head>
+<body>
+
+  <div class="ghost-num">404</div>
+
+  <div class="top-bar">
+    <a class="logo" href="index.html">Imseon Kwon</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="8" cy="8" r="3"/>
+        <line x1="8" y1="1" x2="8" y2="2.5"/><line x1="8" y1="13.5" x2="8" y2="15"/>
+        <line x1="1" y1="8" x2="2.5" y2="8"/><line x1="13.5" y1="8" x2="15" y2="8"/>
+        <line x1="3.05" y1="3.05" x2="4.1" y2="4.1"/><line x1="11.9" y1="11.9" x2="12.95" y2="12.95"/>
+        <line x1="12.95" y1="3.05" x2="11.9" y2="4.1"/><line x1="4.1" y1="11.9" x2="3.05" y2="12.95"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="content">
+    <span class="eyebrow">404 — Page not found</span>
+    <h1 class="title">Lost in the system.</h1>
+    <p class="desc">The page you're looking for doesn't exist or has been moved. Head back and try again.</p>
+    <div class="actions">
+      <a class="btn-primary" href="index.html">← Back to home</a>
+      <a class="btn-secondary" href="work.html">View work</a>
+    </div>
+  </div>
+
+<script>
+  document.getElementById('themeToggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('imseon-theme-v2', next);
+  });
+</script>
+</body>
+</html>
