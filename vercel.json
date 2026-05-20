@@ -1,8 +1,4 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false,
-  "errors": [
-    { "statusCode": 404, "redirect": "/404" },
-    { "statusCode": 500, "redirect": "/500" }
-  ]
+  "trailingSlash": false
 }
