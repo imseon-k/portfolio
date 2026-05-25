@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+  (function(){var t=localStorage.getItem('imseon-theme-v2');if(t)document.documentElement.setAttribute('data-theme',t);})();
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WKDK — Saving Photos UX · Imseon Kwon</title>
+  <link rel="icon" type="image/png" href="favicon_imseon.png"/>
+  <link rel="apple-touch-icon" href="favicon_imseon.png"/>
+  <meta property="og:title" content="WKDK — Saving Photos UX · Imseon Kwon"/>
+  <meta property="og:description" content="Improving UX Flow of Saving Photos on Hybrid Mobile App"/>
+  <meta property="og:image" content="og-thumb.png"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="og-thumb.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+
+  /* ── Design Tokens ── */
+  :root {
+    --clr-bg:        #FAFAFA;
+    --clr-surface:   #FFFFFF;
+    --txt-900:       #0D0D0D;
+    --txt-600:       #555555;
+    --txt-400:       #999999;
+    --txt-200:       #D4D4D4;
+    --txt-100:       #F0F0F0;
+    --clr-lime:      #C8FF4A;
+    --lg-blur:       blur(28px) saturate(180%);
+    --lg-shadow:     0 1px 0 rgba(255,255,255,0.55) inset, 0 8px 20px rgba(51,51,51,0.08);
+    --lg-shadow-float: 0 1px 0 rgba(255,255,255,0.80) inset, 0 24px 56px rgba(51,51,51,0.10), 0 6px 16px rgba(51,51,51,0.06);
+    --shadow-xs: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+    --radius-xs:4px; --radius-sm:8px; --radius-md:12px; --radius-lg:16px;
+    --radius-xl:20px; --radius-2xl:24px; --radius-3xl:28px; --radius-full:99999px;
+    --sp-4:4px; --sp-8:8px; --sp-12:12px; --sp-16:16px;
+    --sp-20:20px; --sp-24:24px; --sp-28:28px; --sp-32:32px;
+    --sp-40:40px; --sp-48:48px; --sp-64:64px; --sp-80:80px;
+    --dur-base:300ms; --ease-water:cubic-bezier(0.34,1.45,0.64,1);
+    --ease-spring:cubic-bezier(0.34,1.52,0.64,1);
+    --ease-out:cubic-bezier(0.2,0,0,1);
+    /* WKDK brand */
+    --wkdk-blue: #4F72E0;
+    --wkdk-bg:   #EEF2FF;
+  }
+  [data-theme="dark"] {
+    --clr-bg:      #111111; --clr-surface: #1C1C1C;
+    --txt-900:     #EFEFEF; --txt-600:     #9A9A9A;
+    --txt-400:     #7C7C7C; --txt-200:     #2C2C2C; --txt-100: #1C1C1C;
+    --lg-shadow:   inset 0 1px 0 rgba(79,114,224,0.06), 0 4px 16px rgba(0,0,0,0.35);
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.35); --shadow-md: 0 4px 16px rgba(0,0,0,0.40);
+    color-scheme: dark;
+    --wkdk-bg: rgba(79,114,224,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body {
+    font-family: 'Geist', system-ui, sans-serif;
+    background-color: var(--clr-bg); color: var(--txt-900);
+    background-image:
+      radial-gradient(ellipse 50% 40% at 90% 5%,  rgba(79,114,224,.10) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 35% at 10% 95%, rgba(79,114,224,.10) 0%, transparent 70%);
+    background-attachment: fixed;
+    animation: pageFadeIn 0.4s ease forwards;
+  }
+  @keyframes pageFadeIn { from { opacity:0; } to { opacity:1; } }
+
+  /* ── NAV BACK BUTTON ── */
+  .nav-back {
+    display: none; align-items: center; justify-content: center;
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: none; border: none; cursor: pointer;
+    color: var(--txt-900); border-radius: var(--radius-sm);
+    transition: background .2s; padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-back:hover { background: rgba(0,0,0,.05); }
+  [data-theme="dark"] .nav-back:hover { background: rgba(255,255,255,.07); }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: 64px; padding: 0 28px 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,0.06); border: 1px solid transparent;
+    border-bottom-color: rgba(255,255,255,0.22);
+    backdrop-filter: var(--lg-blur); -webkit-backdrop-filter: var(--lg-blur);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.40) inset, 0 1px 6px rgba(51,51,51,0.04);
+    transition: top .5s var(--ease-water), left .5s var(--ease-water),
+      right .5s var(--ease-water), border-radius .5s var(--ease-water),
+      background .3s, box-shadow .3s, border-color .3s;
+  }
+  nav.floating {
+    top: 12px; left: 12px; right: 12px; border-radius: 18px;
+    background: rgba(255,255,255,0.48); border-color: rgba(255,255,255,0.60);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.75) inset, 0 4px 16px rgba(51,51,51,0.06);
+  }
+  .nav-logo { color: var(--txt-900); text-decoration: none; flex-shrink: 0; display: flex; align-items: center; transition: opacity .25s; }
+  .nav-logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.95rem; letter-spacing: -0.2px; white-space: nowrap; }
+  .nav-logo-icon { display: none; color: var(--txt-900); }
+  nav.floating .nav-logo-text { display: none; }
+  nav.floating .nav-logo-icon { display: flex; align-items: center; }
+  .nav-right { display: flex; align-items: center; gap: 32px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: 1rem; font-weight: 400; color: var(--txt-600); transition: color .2s; white-space: nowrap; }
+  .nav-links a:hover { color: var(--txt-900); font-weight: 700; }
+  .nav-links a.active { color: var(--wkdk-blue); font-weight: 600; }
+  .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 6px; border-radius: var(--radius-sm); transition: background .2s; }
+  .nav-burger:hover { background: rgba(0,0,0,.05); }
+  .nav-burger span { display: block; width: 18px; height: 1.5px; background: var(--txt-900); border-radius: 2px; transition: transform .25s, opacity .25s; transform-origin: center; }
+  .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .nav-drawer {
+    display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 199;
+    background: rgba(255,255,255,0.80); border: 1px solid rgba(255,255,255,0.80); border-top: none;
+    backdrop-filter: var(--lg-blur); -webkit-backdrop-filter: var(--lg-blur);
+    padding: 20px var(--sp-24) 24px; flex-direction: column; gap: 0;
+    animation: slideDown .22s ease;
+  }
+  .nav-drawer.open { display: flex; }
+  nav.floating + .nav-drawer, .nav-drawer.floating { top: calc(12px + 64px); left: 12px; right: 12px; border-radius: 0 0 18px 18px; border-top: 1px solid rgba(255,255,255,0.40); }
+  @keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:none; } }
+  .nav-drawer a { text-decoration: none; font-size: 1rem; font-weight: 500; color: var(--txt-600); padding: 14px 0; border-bottom: 1px solid rgba(0,0,0,.05); transition: color .2s; }
+  .nav-drawer a:last-child { border-bottom: none; }
+  .nav-drawer a:hover { color: var(--txt-900); }
+
+  /* ── LAYOUT ── */
+  main { padding-top: 64px; }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb { padding: var(--sp-32) var(--sp-48) 0; max-width: 1200px; margin: 0 auto; }
+  .breadcrumb a { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 500; color: var(--txt-400); text-decoration: none; transition: color .2s; }
+  .breadcrumb a:hover { color: var(--txt-900); }
+  .breadcrumb a svg { transition: transform .25s var(--ease-water); }
+  .breadcrumb a:hover svg { transform: translateX(-3px); }
+
+  /* ── PROJECT HEADER ── */
+  .project-header { padding: var(--sp-32) var(--sp-48) var(--sp-48); max-width: 1200px; margin: 0 auto; border-bottom: 1px solid var(--txt-200); }
+  .project-eyebrow { font-size: 0.68rem; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: var(--wkdk-blue); margin-bottom: var(--sp-16); }
+  .project-title { font-family: 'Geist', sans-serif; font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 700; letter-spacing: -1px; line-height: 1.15; color: var(--txt-900); margin-bottom: var(--sp-32); }
+  .project-meta { display: flex; gap: var(--sp-48); flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--txt-400); }
+  .meta-value { font-size: 0.88rem; font-weight: 500; color: var(--txt-900); }
+  .meta-value a { color: var(--txt-900); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ── HERO IMAGE ── */
+  .hero-wrap { padding: var(--sp-48) var(--sp-48) 0; max-width: 1200px; margin: 0 auto; }
+  .hero-img { width: 100%; aspect-ratio: 16/7; border-radius: var(--radius-3xl); overflow: hidden; }
+  .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: var(--radius-3xl); }
+
+  /* ── SECTION ── */
+  .detail-section { max-width: 1200px; margin: 0 auto; padding: var(--sp-64) var(--sp-48); border-bottom: 1px solid var(--txt-200); }
+  .detail-section:last-of-type { border-bottom: none; }
+  .section-eyebrow { font-size: 0.68rem; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: var(--wkdk-blue); margin-bottom: var(--sp-40); }
+
+  /* ── INFO ROW ── */
+  .info-row { display: grid; grid-template-columns: 200px 1fr; gap: var(--sp-24); padding: var(--sp-24) 0; border-top: 1px solid var(--txt-100); }
+  .info-row:last-child { border-bottom: 1px solid var(--txt-100); }
+  .info-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--txt-400); padding-top: 3px; line-height: 1.6; }
+  .info-body { font-size: 0.95rem; font-weight: 400; line-height: 1.75; color: var(--txt-600); }
+
+  /* ── FULL-WIDTH IMAGE ── */
+  .full-img { width: 100%; border-radius: var(--radius-3xl); overflow: hidden; margin-bottom: var(--sp-24); }
+  .full-img:last-child { margin-bottom: 0; }
+  .full-img img { width: 100%; height: auto; display: block; border-radius: var(--radius-3xl); }
+
+  /* ── CONTEXT & BRIEF: 2-col ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-32); }
+  .context-item { display: flex; flex-direction: column; gap: var(--sp-24); }
+  .context-num {
+    font-size: 1.1rem; font-weight: 700; letter-spacing: -0.3px; text-transform: uppercase;
+    color: var(--txt-400); line-height: 1.2;
+  }
+  .context-body { font-size: 0.9rem; line-height: 1.75; color: var(--txt-600); }
+  .context-img { border-radius: var(--radius-3xl); overflow: hidden; }
+  .context-img img { width: 100%; height: auto; display: block; }
+
+  /* ── QUOTE PANEL ── */
+  .quote-panel {
+    background: var(--wkdk-bg);
+    border: 1px solid rgba(79,114,224,0.15);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-32) var(--sp-40);
+    text-align: center; margin-bottom: var(--sp-40);
+  }
+  .quote-text { font-size: 1.15rem; font-weight: 700; color: var(--txt-900); margin-bottom: var(--sp-12); line-height: 1.4; }
+  .quote-sub { font-size: 0.9rem; color: var(--txt-600); line-height: 1.65; }
+
+  /* ── PAINPOINT ITEM ── */
+  .pp-item { display: grid; grid-template-columns: 1fr 1.3fr; gap: var(--sp-40); align-items: start; padding: var(--sp-40) 0; border-top: 1px solid var(--txt-100); }
+  .pp-item:last-child { border-bottom: 1px solid var(--txt-100); }
+  .pp-left { display: flex; flex-direction: column; gap: var(--sp-12); }
+  .pp-quote-mark { font-size: 1.8rem; line-height: 1; color: var(--wkdk-blue); font-weight: 800; }
+  .pp-quote { font-size: 1rem; font-weight: 700; color: var(--txt-900); line-height: 1.4; margin-bottom: var(--sp-8); }
+  .pp-stat { font-size: 0.85rem; color: var(--txt-600); line-height: 1.65; }
+  .pp-img { border-radius: var(--radius-3xl); overflow: hidden; }
+  .pp-img img { width: 100%; height: auto; display: block; }
+
+  /* ── SOLUTION PANEL ── */
+  .solution-panel {
+    background: var(--clr-surface);
+    border: 1px solid var(--txt-100);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-40);
+    text-align: center;
+    margin-bottom: var(--sp-40);
+    box-shadow: var(--shadow-sm);
+  }
+  .solution-panel-title { font-size: 1.3rem; font-weight: 700; color: var(--txt-900); margin-bottom: var(--sp-12); }
+  .solution-panel-desc { font-size: 0.9rem; color: var(--txt-600); line-height: 1.7; }
+
+  /* ── SCENARIO CARDS ── */
+  .scenario-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-12); margin-top: var(--sp-32); }
+  .scenario-card { border: 1px solid var(--txt-200); border-radius: var(--radius-3xl); overflow: hidden; background: var(--clr-surface); }
+  .scenario-card img { width: 100%; height: auto; display: block; }
+  .scenario-info { padding: var(--sp-20) var(--sp-24) var(--sp-28); background: var(--txt-100); }
+  .scenario-label { display: inline-flex; padding: 3px 10px; border-radius: var(--radius-full); font-size: 0.72rem; font-weight: 700; margin-bottom: var(--sp-8); letter-spacing: 0.3px; }
+  .label-a { background: var(--txt-400); color: #fff; }
+  .label-b { background: var(--wkdk-blue); color: #fff; }
+  .scenario-desc { font-size: 0.88rem; color: var(--txt-600); line-height: 1.5; }
+
+  /* ── USABILITY PANEL ── */
+  .usability-panel {
+    background: var(--clr-surface);
+    border: 1px solid var(--txt-100);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-40);
+    margin-top: var(--sp-32);
+    box-shadow: var(--shadow-sm);
+  }
+  .up-section { text-align: center; margin-bottom: var(--sp-28); }
+  .up-tag {
+    display: inline-flex; padding: 4px 12px; border-radius: var(--radius-full);
+    background: var(--txt-900); color: var(--clr-bg);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+    margin-bottom: var(--sp-12);
+  }
+  .up-heading { font-size: 1rem; font-weight: 700; color: var(--txt-900); line-height: 1.4; margin-bottom: 4px; }
+  .up-note { font-size: 0.75rem; color: var(--txt-400); line-height: 1.5; }
+  .up-divider { border: none; border-top: 1px solid var(--txt-100); margin: var(--sp-24) 0; }
+
+  /* Survey grid */
+  .survey-grid { background: var(--txt-100); border-radius: var(--radius-xl); padding: var(--sp-32); display: flex; flex-direction: column; gap: var(--sp-28); margin: var(--sp-24) 0; }
+  .survey-row { display: grid; grid-template-columns: 1fr auto; gap: var(--sp-24); align-items: center; }
+  .survey-q-label { display: block; font-size: 0.68rem; font-weight: 700; color: var(--wkdk-blue); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .survey-q-text { font-size: 0.88rem; color: var(--txt-600); line-height: 1.5; }
+  .bar-chart { display: flex; align-items: flex-end; gap: var(--sp-12); height: 88px; padding: 0 4px var(--sp-4); background: white; border-radius: var(--radius-md); padding: var(--sp-16) var(--sp-20) var(--sp-8); min-width: 120px; }
+  .bar-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+  .bar-fill { border-radius: 4px 4px 0 0; width: 32px; }
+  .bar-fill.win { background: #BFFF00; }
+  .bar-fill.lose { background: var(--txt-200); }
+  .bar-name { font-size: 0.75rem; font-weight: 600; color: var(--txt-400); }
+  .bar-name.win { color: var(--txt-900); }
+
+  /* SVG chart replacements */
+  .question-svg { display: block; width: 244px; max-width: 100%; border-radius: var(--radius-md); flex-shrink: 0; }
+  .result-svg { display: block; width: 100%; border-radius: var(--radius-xl); }
+
+  /* Findings */
+  .findings-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-16); margin-top: var(--sp-24); background: var(--wkdk-bg); border-radius: var(--radius-xl); padding: var(--sp-24) var(--sp-28); }
+  .finding-item { display: flex; flex-direction: column; gap: var(--sp-12); }
+  .finding-num { width: 28px; height: 28px; border-radius: var(--radius-sm); background: var(--wkdk-blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; }
+  .finding-text { font-size: 0.88rem; font-weight: 500; color: var(--txt-600); line-height: 1.5; }
+
+  /* ── RESULT ITEMS ── */
+  .result-item { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-48); align-items: start; padding: var(--sp-40) 0; border-top: 1px solid var(--txt-100); }
+  .result-item:last-child { border-bottom: 1px solid var(--txt-100); }
+  .result-key { font-size: 1.05rem; font-weight: 700; color: var(--txt-900); margin-bottom: var(--sp-16); line-height: 1.35; }
+  .result-body { font-size: 0.9rem; color: var(--txt-600); line-height: 1.75; }
+
+  /* Before/After bar chart */
+  .before-after { background: var(--txt-100); border-radius: var(--radius-xl); padding: var(--sp-24) var(--sp-28); }
+  .ba-title { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--txt-400); letter-spacing: 0.8px; margin-bottom: var(--sp-20); }
+  .ba-chart { display: flex; gap: var(--sp-24); align-items: flex-end; height: 120px; }
+  .ba-col { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
+  .ba-bar-wrap { width: 100%; display: flex; align-items: flex-end; flex: 1; }
+  .ba-bar { width: 100%; border-radius: 6px 6px 0 0; }
+  .ba-bar.before { background: var(--txt-200); height: 50%; }
+  .ba-bar.after { background: var(--wkdk-blue); height: 95%; }
+  .ba-col-label { font-size: 0.8rem; font-weight: 600; color: var(--txt-600); }
+  .ba-col-label.after { color: var(--wkdk-blue); font-weight: 700; }
+  .ba-value { font-size: 1.1rem; font-weight: 800; color: var(--txt-900); }
+
+  /* B2B result visual */
+  .b2b-visual { background: var(--wkdk-bg); border-radius: var(--radius-xl); padding: var(--sp-28); display: flex; align-items: center; justify-content: center; gap: var(--sp-16); min-height: 140px; }
+  .b2b-emoji { font-size: 2.5rem; }
+  .b2b-label { font-size: 1rem; font-weight: 700; color: var(--wkdk-blue); line-height: 1.4; }
+
+  /* ── WHAT'S NEXT ROW ── */
+  .next-row { display: grid; grid-template-columns: 220px 1fr; gap: var(--sp-32); padding: var(--sp-24) 0; border-top: 1px solid var(--txt-100); }
+  .next-title { font-size: 1rem; font-weight: 700; color: var(--txt-900); line-height: 1.4; }
+  .next-body { font-size: 0.9rem; color: var(--txt-600); line-height: 1.75; }
+
+  /* ── BACK TO TOP ── */
+  .back-to-top {
+    position: fixed; bottom: 32px; right: 32px; z-index: 100;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--txt-900); color: white;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-md);
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease, transform .3s var(--ease-spring);
+    transform: translateY(8px);
+  }
+  .back-to-top.visible { opacity: 1; pointer-events: auto; transform: none; }
+  .back-to-top:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+  /* ── FOOTER ── */
+  footer { max-width: 1200px; margin: 0 auto; padding: 32px var(--sp-48); font-size: 0.75rem; color: var(--txt-400); border-top: 1px solid var(--txt-200); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  footer a { color: inherit; opacity: 0.55; text-decoration: none; font-size: 0.72rem; transition: opacity .2s; }
+  footer a:hover { opacity: 1; }
+
+  /* ── THEME TOGGLE ── */
+  .theme-toggle { position: relative; display: flex; align-items: center; justify-content: center; min-height: 48px; min-width: 48px; padding: 0 4px; background: none; border: none; cursor: pointer; flex-shrink: 0; -webkit-tap-highlight-color: transparent; outline: none; }
+  .toggle-track { position: relative; display: flex; align-items: center; gap: 4px; padding: 4px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); box-shadow: inset 0 1px 0 rgba(255,255,255,0.30), 0 2px 8px rgba(0,0,0,0.08); backdrop-filter: blur(12px); border-radius: var(--radius-full); }
+  .toggle-indicator { position: absolute; top: 4px; left: 4px; width: 32px; height: 32px; border-radius: 50%; background: radial-gradient(ellipse at 30% 20%, #00BFFF 0%, #0095FF 100%); box-shadow: 0 2px 4px rgba(0,191,255,0.30); pointer-events: none; transform: translateX(0px); transition: background .44s cubic-bezier(0.16,1,0.3,1), box-shadow .44s cubic-bezier(0.16,1,0.3,1); }
+  [data-theme="dark"] .toggle-indicator { transform: translateX(36px); background: radial-gradient(ellipse at 30% 20%, #DBFF88 0%, #C8FF4A 100%); box-shadow: 0 2px 4px rgba(200,255,74,0.30); }
+  .toggle-icon { position: relative; z-index: 1; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .toggle-icon svg { width: 18px; height: 18px; display: block; }
+  .toggle-icon-sun svg { color: #fff; }
+  .toggle-icon-moon svg { color: #AAAAAA; }
+  [data-theme="dark"] .toggle-track { background: #1A1A1A; border-color: rgba(255,255,255,0.06); }
+  [data-theme="dark"] .toggle-icon-sun svg { color: #555555; }
+  [data-theme="dark"] .toggle-icon-moon svg { color: #1A1A1A; }
+  @keyframes lb-drop-right { 0%{transform:translateX(0px) scaleX(1)} 30%{transform:translateX(18px) scaleX(1.32)} 62%{transform:translateX(36px) scaleX(0.84)} 100%{transform:translateX(36px) scaleX(1)} }
+  @keyframes lb-drop-left  { 0%{transform:translateX(36px) scaleX(1)} 30%{transform:translateX(18px) scaleX(1.32)} 62%{transform:translateX(0px) scaleX(0.84)} 100%{transform:translateX(0px) scaleX(1)} }
+  .toggle-indicator.drop-right { animation: lb-drop-right 560ms cubic-bezier(0.16,1,0.3,1) forwards; }
+  .toggle-indicator.drop-left  { animation: lb-drop-left  560ms cubic-bezier(0.16,1,0.3,1) forwards; }
+
+  /* ── VIEW TRANSITIONS ── */
+  @keyframes lb-bloom { from { opacity:0; transform:scale(1.012); } to { opacity:1; transform:scale(1); } }
+  @keyframes lb-dim   { from { opacity:1; } to   { opacity:0; } }
+  ::view-transition-new(root) { animation: lb-bloom 960ms cubic-bezier(0.16,1,0.3,1) both; transform-origin: var(--vt-x,50%) var(--vt-y,48px); }
+  ::view-transition-old(root) { animation: lb-dim   560ms cubic-bezier(0.37,0,0.63,1) both; }
+
+  /* ── SCROLL PROGRESS ── */
+  #scroll-progress { position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: linear-gradient(90deg, #4F72E0, #C8FF4A); z-index: 9999; transition: width 0.1s linear; pointer-events: none; }
+
+  /* ── DARK MODE OVERRIDES ── */
+  [data-theme="dark"] body { background-image: radial-gradient(ellipse 50% 40% at 90% 5%, rgba(79,114,224,.16) 0%, transparent 70%), radial-gradient(ellipse 40% 35% at 10% 95%, rgba(79,114,224,.16) 0%, transparent 70%); }
+  [data-theme="dark"] nav { background: rgba(17,17,17,0.10); border-bottom-color: rgba(255,255,255,0.08); box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 1px 6px rgba(0,0,0,0.30); }
+  [data-theme="dark"] nav.floating { background: rgba(17,17,17,0.80); border-color: rgba(255,255,255,0.08); }
+  [data-theme="dark"] .nav-drawer { background: rgba(17,17,17,0.92); border-color: rgba(255,255,255,0.08); }
+  [data-theme="dark"] .info-row { border-top-color: var(--txt-200); }
+  [data-theme="dark"] .back-to-top { background: #2C2C2C; }
+  [data-theme="dark"] .bar-chart { background: var(--clr-surface); }
+  [data-theme="dark"] .scenario-info { background: var(--clr-surface); }
+  [data-theme="dark"] .survey-grid { background: rgba(255,255,255,0.04); }
+
+  /* ── PAGE LOADER ── */
+  #page-loader { position: fixed; inset: 0; z-index: 9999; background: var(--clr-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; transition: opacity .4s var(--ease-out), visibility .4s var(--ease-out); }
+  .pg-spinner { width: 36px; height: 36px; border-radius: 50%; border: 2.5px solid var(--txt-200); border-top-color: var(--wkdk-blue); animation: pg-spin .72s linear infinite; }
+  @keyframes pg-spin { to { transform: rotate(360deg); } }
+  .pg-skeleton { display: flex; flex-direction: column; gap: 10px; width: 240px; }
+  .pg-skel-bar { height: 10px; border-radius: var(--radius-full); background: linear-gradient(90deg, var(--txt-100) 25%, var(--txt-200) 50%, var(--txt-100) 75%); background-size: 200% 100%; animation: pg-shimmer 1.5s ease-in-out infinite; }
+  .pg-skel-bar:nth-child(1){width:55%;animation-delay:0s} .pg-skel-bar:nth-child(2){width:100%;animation-delay:.1s} .pg-skel-bar:nth-child(3){width:75%;animation-delay:.2s}
+  @keyframes pg-shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    :root { --radius-3xl: 20px; --radius-2xl: 16px; }
+    .nav-back { display: flex; }
+    .nav-logo  { display: none; }
+    nav { padding: 0 20px; }
+    .nav-right { gap: 16px; }
+    .nav-links { display: none; }
+    .nav-burger { display: flex; }
+    nav.floating .nav-logo-icon { display: flex; }
+    .breadcrumb, .project-header, .hero-wrap, .detail-section { padding-left: var(--sp-24); padding-right: var(--sp-24); }
+    .project-meta { gap: var(--sp-24); }
+    .two-col { grid-template-columns: 1fr; }
+    .info-row { grid-template-columns: 1fr; gap: var(--sp-8); }
+    .pp-item { grid-template-columns: 1fr; }
+    .scenario-cards { grid-template-columns: 1fr; }
+    .survey-row { grid-template-columns: 1fr; }
+    .findings-grid { grid-template-columns: 1fr; }
+    .result-item { grid-template-columns: 1fr; }
+    .next-row { grid-template-columns: 1fr; }
+    .hero-img { aspect-ratio: unset; height: auto; }
+    .hero-img img { height: auto; object-fit: contain; }
+    footer { padding: 24px var(--sp-24); flex-direction: column; gap: 8px; text-align: center; }
+    .back-to-top { bottom: 20px; right: 20px; }
+  }
+  </style>
+</head>
+<body>
+  <!-- Page Loader -->
+  <div id="page-loader">
+    <div class="pg-spinner"></div>
+    <div class="pg-skeleton"><div class="pg-skel-bar"></div><div class="pg-skel-bar"></div><div class="pg-skel-bar"></div></div>
+  </div>
+
+<!-- NAV -->
+<div id="scroll-progress"></div>
+<nav id="nav">
+  <button class="nav-back" onclick="history.length > 1 ? history.back() : window.location.href='work.html'" aria-label="Go back">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-text">Imseon Kwon</span>
+    <span class="nav-logo-icon">
+      <svg width="22" height="22" viewBox="0 0 60 60" fill="none">
+        <rect x="6" y="16.4" width="48" height="6.4" fill="currentColor"/>
+        <rect x="6" y="26.8" width="21.6" height="6.4" fill="currentColor"/>
+        <rect x="32.4" y="26.8" width="21.6" height="6.4" fill="currentColor"/>
+        <rect x="6" y="37.2" width="48" height="6.4" fill="currentColor"/>
+      </svg>
+    </span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="work.html" class="active">Work</a></li>
+      <li><a href="https://drive.google.com/file/d/1LMkq3wI2V5Gc8tMhO90Nlio8MONEIWNk/view?usp=sharing" target="_blank" rel="noopener">Resume</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <div class="toggle-track">
+        <div class="toggle-indicator"></div>
+        <div class="toggle-icon toggle-icon-sun">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4.5"/>
+            <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </div>
+        <div class="toggle-icon toggle-icon-moon">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </div>
+      </div>
+    </button>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-drawer" id="drawer">
+  <a href="about.html">About</a>
+  <a href="work.html">Work</a>
+  <a href="https://drive.google.com/file/d/1LMkq3wI2V5Gc8tMhO90Nlio8MONEIWNk/view?usp=sharing" target="_blank" rel="noopener">Resume</a>
+</div>
+
+<main>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb reveal">
+    <a href="work.html">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All Work
+    </a>
+  </div>
+
+  <!-- PROJECT HEADER -->
+  <header class="project-header">
+    <p class="project-eyebrow reveal">UX Design · Mobile App · Hybrid App</p>
+    <h1 class="project-title reveal">WKDK — IMPROVING UX FLOW OF<br>SAVING PHOTOS ON HYBRID MOBILE APP</h1>
+    <div class="project-meta">
+      <div class="meta-item reveal">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">Product Designer, Visual Designer, UX Researcher</span>
+      </div>
+      <div class="meta-item reveal">
+        <span class="meta-label">Duration</span>
+        <span class="meta-value">April 2022 — June 2022</span>
+      </div>
+      <div class="meta-item reveal">
+        <span class="meta-label">Company</span>
+        <span class="meta-value"><a href="https://www.wkdk.kr/" target="_blank" rel="noopener">WKDK.kr</a></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO IMAGE -->
+  <div class="hero-wrap reveal">
+    <div class="hero-img">
+      <img loading="eager" src="wkdk01/thumb-wkdk01.png" alt="WKDK — Saving Photos UX hero image">
+    </div>
+  </div>
+
+  <!-- ── OVERVIEW ── -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Overview</p>
+    <div class="info-row reveal">
+      <span class="info-label">Overview</span>
+      <p class="info-body">WKDK is simplified store management mobile app with smart checklists by photo record. The product team aimed to focus on improving convenience in store managing for both managers and workers.</p>
+    </div>
+    <div class="info-row reveal">
+      <span class="info-label">Contribution</span>
+      <p class="info-body">Collaborated with the product team from brief to delivery, contributing UI decisions across brand, components, and screen design. And furthermore, executed UX research, casual user test.</p>
+    </div>
+  </section>
+
+  <!-- ── CONTEXT & BRIEF ── -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Context &amp; Brief</p>
+    <div class="two-col reveal">
+      <!-- Item 01 -->
+      <div class="context-item">
+        <div>
+          <p class="context-num">01<br>Better UX Flow<br>had been required</p>
+        </div>
+        <p class="context-body">As the number of users have been increased, new features were added and old UX flow was not properly fit on the app.<br><br>It caused following errors, such as misunderstanding of the features, and server errors from the misunderstanding.</p>
+        <div class="context-img">
+          <img src="wkdk01/01-01.png" alt="Context 01 — Better UX Flow" loading="lazy">
+        </div>
+      </div>
+      <!-- Item 02 -->
+      <div class="context-item">
+        <div>
+          <p class="context-num">02<br>Expanding<br>B2B Users</p>
+        </div>
+        <p class="context-body">The team was discussing with ADT Cap. to introduce our app to their security tasks.<br><br>That made us to optimize UX configurations for onsite personnel and subcontractors, prioritizing quick task completion and minimizing cognitive load in fast-paced work settings.</p>
+        <div class="context-img">
+          <img src="wkdk01/01-02.png" alt="Context 02 — Expanding B2B Users" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TIMELINE ── -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Timeline</p>
+    <div class="full-img reveal">
+      <img src="wkdk01/02.png" alt="Project timeline" loading="lazy">
+    </div>
+  </section>
+
+  <!-- ── PAINPOINT ── -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Painpoint</p>
+    <div class="quote-panel reveal">
+      <p class="quote-text">" Too long to complete my task in a minute! "</p>
+      <p class="quote-sub">The biggest problem lay in the disconnect between the actual field where the app is used and the app experience itself.</p>
+    </div>
+
+    <div class="pp-item reveal">
+      <div class="pp-left">
+        <p class="pp-quote-mark">"</p>
+        <p class="pp-quote">We need to attach multiple photos for 1 task.</p>
+        <p class="pp-stat">Multiple photos verification account for, approximately 40% in total cases.</p>
+      </div>
+      <div class="pp-img">
+        <img src="wkdk01/03-01.png" alt="Painpoint 01 — Multiple photos" loading="lazy">
+      </div>
+    </div>
+
+    <div class="pp-item reveal">
+      <div class="pp-left">
+        <p class="pp-quote-mark">"</p>
+        <p class="pp-quote">But I'm lost while I tried to attach photos.</p>
+        <p class="pp-stat">We received 3–5 VOCs about photo verification per a month. The bound rate on "Select attachment method" was recorded 70%.</p>
+      </div>
+      <div class="pp-img">
+        <img src="wkdk01/03-02.png" alt="Painpoint 02 — Lost in flow" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOLUTION ── -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Solution</p>
+
+    <!-- Panel -->
+    <div class="solution-panel reveal">
+      <p class="solution-panel-title">Shorten photo verification flow</p>
+      <p class="solution-panel-desc">Giving an easier user experience on photo verification flow is determined to a new solution.</p>
+    </div>
+
+    <!-- Main solution image -->
+    <div class="full-img reveal">
+      <img src="wkdk01/04.png" alt="Solution — Shortened photo verification flow" loading="lazy">
+    </div>
+
+    <!-- Comparative usability test -->
+    <div class="info-row reveal" style="margin-top: var(--sp-48);">
+      <span class="info-label">Comparative Usability Test</span>
+      <p class="info-body">Our team had a concern of usability on "how do users think attaching photos feature on a camera screen". So I made low-fidelity wireframe to implement a casual usability test to co-workers, who were not involved with this project.</p>
+    </div>
+
+    <!-- Scenario cards -->
+    <div class="scenario-cards reveal">
+      <div class="scenario-card">
+        <img src="wkdk01/04-01.png" alt="Scenario A wireframe" loading="lazy">
+        <div class="scenario-info">
+          <span class="scenario-label label-a">Scenario A</span>
+          <p class="scenario-desc">The similar draft that has an editing page after camera.</p>
+        </div>
+      </div>
+      <div class="scenario-card">
+        <img src="wkdk01/04-02.png" alt="Scenario B wireframe" loading="lazy">
+        <div class="scenario-info">
+          <span class="scenario-label label-b">Scenario B</span>
+          <p class="scenario-desc">Attaching photos on camera interface.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Usability panel -->
+    <div class="usability-panel reveal">
+      <div class="up-section">
+        <div class="up-tag">Purpose</div>
+        <p class="up-heading" style="margin-top: var(--sp-12);">Can users accept the 'image editing features' on the camera screen?</p>
+      </div>
+      <hr class="up-divider">
+      <div class="up-section">
+        <div class="up-tag">Testers</div>
+        <p class="up-heading" style="margin-top: var(--sp-12);">4 coworkers who are not involved with this project / 2 Brwnie* crews</p>
+        <p class="up-note">*Brwnie: unmanned store management service by Higher X (WKDK)</p>
+      </div>
+
+      <div class="survey-grid">
+        <div class="survey-row">
+          <div>
+            <span class="survey-q-label">Q1</span>
+            <p class="survey-q-text">Which one was the better option for processing tasks easier and faster?</p>
+          </div>
+          <img src="wkdk01/question01.svg" alt="Q1 results" class="question-svg">
+        </div>
+        <div class="survey-row">
+          <div>
+            <span class="survey-q-label">Q2</span>
+            <p class="survey-q-text">Did you feel awkward in the flow of B? Which part?</p>
+          </div>
+          <img src="wkdk01/question02.svg" alt="Q2 results" class="question-svg">
+        </div>
+        <div class="survey-row">
+          <div>
+            <span class="survey-q-label">Q3</span>
+            <p class="survey-q-text">How do you feel about editing photos on the camera screen — positive or negative?</p>
+          </div>
+          <img src="wkdk01/question03.svg" alt="Q3 results" class="question-svg">
+        </div>
+        <div class="survey-row">
+          <div>
+            <span class="survey-q-label">Q4</span>
+            <p class="survey-q-text">Is A's editing page, which appears after the camera, necessary?</p>
+          </div>
+          <img src="wkdk01/question04.svg" alt="Q4 results" class="question-svg">
+        </div>
+      </div>
+
+      <hr class="up-divider">
+      <div class="up-section">
+        <div class="up-tag">Results</div>
+        <p class="up-heading" style="margin-top: var(--sp-12);">Mostly positive about the new feature.<br>So we decided to shorten the photo verification flow.</p>
+      </div>
+      <div class="findings-grid">
+        <div class="finding-item">
+          <div class="finding-num">1</div>
+          <p class="finding-text">All testers found Scenario B easier and faster for task completion.</p>
+        </div>
+        <div class="finding-item">
+          <div class="finding-num">2</div>
+          <p class="finding-text">No one felt awkward in the flow of the camera-integrated editing.</p>
+        </div>
+        <div class="finding-item">
+          <div class="finding-num">3</div>
+          <p class="finding-text">Most testers responded positively to editing photos directly on camera screen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INTERFACES ── -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Interfaces</p>
+    <div class="info-row reveal">
+      <span class="info-label">Shorten flow supports hectic frontlines</span>
+      <p class="info-body">We decided to give integrated features, editing and taking photos on camera screen at the same time. This offers a faster flow while they're uploading photo verification to users, and it eventually leads to more frequent uploading on the app.</p>
+    </div>
+    <div class="full-img reveal" style="margin-top: var(--sp-40);">
+      <img src="wkdk01/05-02.png" alt="Interfaces — Camera with integrated editing" loading="lazy">
+    </div>
+    <div class="full-img reveal">
+      <img src="wkdk01/05-03.png" alt="Interfaces — Final screens" loading="lazy">
+    </div>
+  </section>
+
+  <!-- ── RESULT ── -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Result</p>
+    <div class="quote-panel reveal">
+      <p class="quote-text">" Activating core features &amp; expanding the user base "</p>
+      <p class="quote-sub">The new feature has been recorded as a successful update, even if it had been implemented in an unexpected local environment.</p>
+    </div>
+
+    <!-- Result 01 -->
+    <div class="result-item reveal">
+      <div>
+        <p class="result-key">25% increased of photo verification cases</p>
+        <p class="result-body">Following the update, the daily average of verification photos uploaded increased by over 120, a 25% jump from before. This serves as a positive indicator that users are engaging with the service more actively and flexibly.</p>
+      </div>
+      <img src="wkdk01/result01.svg" alt="Saved photos per day — before and after" class="result-svg">
+    </div>
+
+    <!-- Result 02 -->
+    <div class="result-item reveal">
+      <div>
+        <p class="result-key">A solid groundwork for B2B clients</p>
+        <p class="result-body">We successfully secured a new B2B client, ADT, following this update, which paved the way for expansion into various industries, such as property management and outsourced management. It laid a solid foundation for driving user growth in the second half of the year.</p>
+      </div>
+      <img src="wkdk01/result02.png" alt="B2B client secured — ADT Cap." class="result-svg">
+    </div>
+  </section>
+
+  <!-- ── WHAT'S NEXT ── -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">What's Next?</p>
+    <div class="next-row reveal">
+      <p class="next-title">Renewal the main feature,<br>To-do List</p>
+      <p class="next-body">Since target audiences were increased, renovating To-do list (the main feature) was urgently needed. The method of using the app had been diversified, that caused the requirement of renovating for UX improvement.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 12V4M4 8l4-4 4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Imseon Kwon</span>
+  <a href="mailto:kwon.ray0902@gmail.com">kwon.ray0902@gmail.com</a>
+</footer>
+
+<script>
+  const nav     = document.querySelector('nav');
+  const burger  = document.getElementById('burger');
+  const drawer  = document.getElementById('drawer');
+  const backTop = document.getElementById('backTop');
+
+  // Floating nav
+  function updateFloating() {
+    const s = window.scrollY > 24;
+    nav.classList.toggle('floating', s);
+    drawer.classList.toggle('floating', s);
+    backTop.classList.toggle('visible', window.scrollY > 400);
+  }
+  window.addEventListener('scroll', updateFloating, {passive:true});
+  updateFloating();
+
+  // Scroll progress
+  const pb = document.getElementById('scroll-progress');
+  if (pb) window.addEventListener('scroll', () => {
+    const d = document.documentElement.scrollHeight - window.innerHeight;
+    pb.style.width = d > 0 ? (window.scrollY / d * 100) + '%' : '0%';
+  }, {passive:true});
+
+  // Mobile burger
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    drawer.classList.toggle('open');
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+  }, {threshold: 0.08});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in'));
+  }, 400);
+
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const rect = themeToggle.getBoundingClientRect();
+      const x = Math.round(rect.left + rect.width / 2);
+      const y = Math.round(rect.top  + rect.height / 2);
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      const indicator = themeToggle.querySelector('.toggle-indicator');
+      if (indicator) {
+        indicator.classList.remove('drop-right','drop-left');
+        void indicator.offsetWidth;
+        indicator.classList.add(next === 'dark' ? 'drop-right' : 'drop-left');
+        setTimeout(() => indicator.classList.remove('drop-right','drop-left'), 580);
+      }
+      document.documentElement.style.setProperty('--vt-x', x + 'px');
+      document.documentElement.style.setProperty('--vt-y', y + 'px');
+      if (!document.startViewTransition) {
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('imseon-theme-v2', next);
+        return;
+      }
+      document.startViewTransition(() => {
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('imseon-theme-v2', next);
+      }).ready.catch(() => {});
+    });
+  }
+
+  // Page transitions
+  document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.body.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-6px)'}],
+        {duration:250,easing:'ease',fill:'forwards'}).onfinish = () => { window.location.href = href; };
+    });
+  });
+</script>
+
+<!-- Page Loader Script -->
+<script>
+(function(){
+  var loader = document.getElementById('page-loader');
+  function hideLoader() {
+    if (!loader) return;
+    loader.style.transition    = 'none';
+    loader.style.opacity       = '0';
+    loader.style.visibility    = 'hidden';
+    loader.style.pointerEvents = 'none';
+  }
+  function showPage() {
+    document.body.getAnimations().forEach(function(a){a.cancel();});
+    document.body.style.animation = 'none';
+    document.body.style.opacity   = '1';
+    hideLoader();
+  }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(showPage, 60);
+  } else {
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(showPage, 60); });
+  }
+  window.addEventListener('pageshow', function(e){
+    showPage();
+    if(e.persisted){ document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');}); }
+  });
+  setTimeout(showPage, 2000);
+})();
+</script>
+</body>
+</html>

@@ -727,6 +727,138 @@
     animation: pg-shimmer 1.5s ease-in-out infinite;
   }
 
+
+  /* ── WKDK Info Modal ── */
+  .wkdk-info-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px;
+    background: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.70);
+    border-radius: 99px;
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.3px; text-transform: none;
+    color: var(--txt-600);
+    cursor: pointer;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    user-select: none; -webkit-user-select: none;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+  .wkdk-info-btn:hover, .wkdk-info-btn:focus-visible {
+    background: #fff; color: var(--txt-900);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10); outline: none;
+  }
+
+  .wkdk-modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.50);
+    align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .wkdk-modal-overlay.open {
+    display: flex;
+    animation: wkdkOverlayIn 0.22s ease;
+  }
+  @keyframes wkdkOverlayIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .wkdk-modal-card {
+    background: #fff; border-radius: 24px;
+    width: 100%; max-width: 600px; max-height: 90vh;
+    overflow-y: auto; overflow-x: hidden;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.08);
+    animation: wkdkCardIn 0.32s cubic-bezier(0.16,1,0.3,1);
+  }
+  @keyframes wkdkCardIn {
+    from { opacity: 0; transform: scale(0.94) translateY(16px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .wkdk-modal-close-btn {
+    position: absolute; top: 14px; right: 14px; z-index: 10;
+    width: 36px; height: 36px;
+    background: rgba(0,0,0,0.08); border: none; border-radius: 99px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--txt-600);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .wkdk-modal-close-btn:hover { background: rgba(0,0,0,0.15); transform: scale(1.08); }
+  .wkdk-modal-cover {
+    width: 100%; overflow: hidden;
+    border-radius: 24px 24px 0 0; background: #fff;
+  }
+  .wkdk-modal-cover img { width: 90%; height: auto; display: block; margin: 0 auto; }
+  .wkdk-modal-body { padding: 24px 28px 32px; }
+  .wkdk-modal-eyebrow {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: #4F72E0; margin-bottom: 6px;
+  }
+  .wkdk-modal-heading {
+    font-size: 1.15rem; font-weight: 700; color: var(--txt-900);
+    letter-spacing: -0.2px; margin-bottom: 12px;
+  }
+  .wkdk-modal-desc {
+    font-size: 0.88rem; line-height: 1.7; color: var(--txt-600);
+    margin-bottom: 24px;
+  }
+  .wkdk-feature-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-bottom: 28px;
+  }
+  .wkdk-feat-card { border-radius: 14px; padding: 16px 16px 14px; }
+  .wkdk-feat-green  { background: #E6FAF3; }
+  .wkdk-feat-teal   { background: #DFF3F9; }
+  .wkdk-feat-purple { background: #EDE6FF; }
+  .wkdk-feat-pink   { background: #FFEBF4; }
+  .wkdk-feat-icon-wrap {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+  }
+  .wkdk-feat-green  .wkdk-feat-icon-wrap { background: #2DB98A; }
+  .wkdk-feat-teal   .wkdk-feat-icon-wrap { background: #17A8BD; }
+  .wkdk-feat-purple .wkdk-feat-icon-wrap { background: #7B52E8; }
+  .wkdk-feat-pink   .wkdk-feat-icon-wrap { background: #E03D98; }
+  .wkdk-feat-icon-wrap img { width: 20px; height: 20px; display: block; }
+  .wkdk-feat-card-title { font-size: 0.85rem; font-weight: 700; color: var(--txt-900); margin-bottom: 5px; }
+  .wkdk-feat-card-desc  { font-size: 0.76rem; line-height: 1.5; color: var(--txt-600); margin: 0; }
+  .wkdk-modal-footer { display: flex; align-items: center; }
+  .wkdk-modal-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 12px 24px; border-radius: 99px;
+    background: var(--txt-900); color: #fff;
+    font-size: 0.85rem; font-weight: 500; text-decoration: none; letter-spacing: 0.1px;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .wkdk-modal-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* Mobile: full-screen */
+  @media (max-width: 860px) {
+    .wkdk-modal-overlay { padding: 0; align-items: flex-start; background: rgba(0,0,0,0.30); }
+    .wkdk-modal-card {
+      border-radius: 0; max-width: 100%; width: 100%;
+      min-height: 100dvh; max-height: 100dvh;
+      animation: wkdkMobileIn 0.32s cubic-bezier(0.16,1,0.3,1);
+    }
+    @keyframes wkdkMobileIn {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .wkdk-modal-cover { border-radius: 0; }
+    .wkdk-feature-grid { grid-template-columns: 1fr; }
+    .wkdk-modal-close-btn { background: rgba(0,0,0,0.06); }
+  }
+
+  /* Dark mode */
+  [data-theme="dark"] .wkdk-info-btn {
+    background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.14); color: var(--txt-400);
+  }
+  [data-theme="dark"] .wkdk-info-btn:hover { background: rgba(255,255,255,0.16); color: var(--txt-900); }
+  [data-theme="dark"] .wkdk-modal-card { background: #1C1C1E; }
+  [data-theme="dark"] .wkdk-modal-close-btn { background: rgba(255,255,255,0.10); color: var(--txt-400); }
+  [data-theme="dark"] .wkdk-modal-close-btn:hover { background: rgba(255,255,255,0.18); }
+  [data-theme="dark"] .wkdk-modal-cover { background: #fff; }
+  [data-theme="dark"] .wkdk-feat-green  { background: rgba(45,185,138,0.14); }
+  [data-theme="dark"] .wkdk-feat-teal   { background: rgba(23,168,189,0.14); }
+  [data-theme="dark"] .wkdk-feat-purple { background: rgba(123,82,232,0.14); }
+  [data-theme="dark"] .wkdk-feat-pink   { background: rgba(224,61,152,0.14); }
+
   </style>
 </head>
 <body>
@@ -832,11 +964,18 @@
               <span class="work-tag">UX Design</span>
               <span class="work-tag">Mobile App</span>
               <span class="work-tag">Hybrid App</span>
+              <div role="button" tabindex="0" class="wkdk-info-btn"
+                   onclick="event.stopPropagation();event.preventDefault();openWKDKModal();"
+                   onkeydown="if(event.key==='Enter'||event.key===' '){event.stopPropagation();event.preventDefault();openWKDKModal();}">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8h.01M12 12v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                What is WKDK?
+              </div>
             </div>
           </div>
           <div class="work-card-thumb"><picture><source media="(max-width:860px)" srcset="work_thumb/thumb-wkdk01_m.png"><img loading="lazy" src="work_thumb/thumb-wkdk01.png" alt="WKDK photo saving UX" style="width:100%;height:100%;object-fit:cover;display:block;"></picture></div>
         </a>
 
+        <!-- HIDDEN: WKDK02 not ready yet
         <a class="work-card reveal" href="wkdk02.html">
           <div>
             <div class="work-card-top">
@@ -851,6 +990,7 @@
           </div>
           <div class="work-card-thumb"><picture><source media="(max-width:860px)" srcset="work_thumb/thumb-wkdk02_m.png"><img loading="lazy" src="work_thumb/thumb-wkdk02.png" alt="WKDK gig worker platform" style="width:100%;height:100%;object-fit:cover;display:block;"></picture></div>
         </a>
+        -->
 
         <a class="work-card reveal" href="lkt.html">
           <div>
@@ -867,6 +1007,7 @@
           <div class="work-card-thumb"><img loading="lazy" src="work_thumb/thumb-lkt.png" alt="LK Territory project" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
         </a>
 
+        <!-- HIDDEN: Naver temporarily hidden
         <a class="work-card reveal" href="naver.html">
           <div>
             <div class="work-card-top">
@@ -881,6 +1022,7 @@
           </div>
           <div class="work-card-thumb"><img loading="lazy" src="work_thumb/thumb-naver.jpg" alt="Naver dashboard study" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
         </a>
+        -->
 
         <a class="work-card reveal" href="ds.html">
           <div>
@@ -931,6 +1073,48 @@
       </div>
     </div>
   </main>
+
+  <!-- WKDK Info Modal -->
+  <div id="wkdk-modal" class="wkdk-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="wkdk-modal-heading">
+    <div class="wkdk-modal-card">
+      <button class="wkdk-modal-close-btn" onclick="closeWKDKModal()" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="wkdk-modal-cover">
+        <img src="wkdk01/mockup-wkdk.png" alt="WKDK App — desktop and mobile mockup">
+      </div>
+      <div class="wkdk-modal-body">
+        <p class="wkdk-modal-eyebrow">About the Product</p>
+        <h2 class="wkdk-modal-heading" id="wkdk-modal-heading">What is WKDK?</h2>
+        <p class="wkdk-modal-desc">WKDK (Wokie dokie) is a Korean mobile app for store-operation managing, focused on part-time staff management for restaurants, cafés, convenience stores, retail shops, and franchise businesses.</p>
+        <div class="wkdk-feature-grid">
+          <div class="wkdk-feat-card wkdk-feat-green">
+            <div class="wkdk-feat-icon-wrap"><img src="wkdk01/check-circle.svg" alt=""></div>
+            <p class="wkdk-feat-card-title">Task &amp; Checklist</p>
+            <p class="wkdk-feat-card-desc">Enable to manage daily tasks with photo verification.</p>
+          </div>
+          <div class="wkdk-feat-card wkdk-feat-teal">
+            <div class="wkdk-feat-icon-wrap"><img src="wkdk01/clock-three.svg" alt=""></div>
+            <p class="wkdk-feat-card-title">Shift &amp; Schedule</p>
+            <p class="wkdk-feat-card-desc">Organize shift for workers and coordinate handovers.</p>
+          </div>
+          <div class="wkdk-feat-card wkdk-feat-purple">
+            <div class="wkdk-feat-icon-wrap"><img src="wkdk01/rocket.svg" alt=""></div>
+            <p class="wkdk-feat-card-title">Recruitment</p>
+            <p class="wkdk-feat-card-desc">Hire workers in the app and add them by system flow automatically.</p>
+          </div>
+          <div class="wkdk-feat-card wkdk-feat-pink">
+            <div class="wkdk-feat-icon-wrap"><img src="wkdk01/comment-dots.svg" alt=""></div>
+            <p class="wkdk-feat-card-title">Internal Communication</p>
+            <p class="wkdk-feat-card-desc">Announcements and chat for store workers.</p>
+          </div>
+        </div>
+        <div class="wkdk-modal-footer">
+          <a class="wkdk-modal-cta" href="wkdk01.html">View Case Study →</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- SVG filter for glass refraction distortion -->
   <svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
@@ -1057,6 +1241,25 @@
       });
       btn.addEventListener('mouseleave', () => btn.style.transform = '');
     });
+
+  /* ── WKDK Info Modal ── */
+  function openWKDKModal() {
+    const modal = document.getElementById('wkdk-modal');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => modal.querySelector('.wkdk-modal-close-btn').focus(), 60);
+  }
+  function closeWKDKModal() {
+    const modal = document.getElementById('wkdk-modal');
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('wkdk-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeWKDKModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.getElementById('wkdk-modal').classList.contains('open')) closeWKDKModal();
+  });
 
   /* ── Cursor lens (desktop only) ── */
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
