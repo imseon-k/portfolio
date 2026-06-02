@@ -762,12 +762,24 @@
     .section { padding: 64px 20px; }
     .divider { margin: 0 20px; }
 
-    /* Work */
+    /* Work — thumb on top */
     .work-item {
       grid-template-columns: 40px 1fr;
-      padding: 22px 20px;
-      gap: 16px;
+      grid-template-rows: auto auto;
+      grid-template-areas: "thumb thumb" "num   body";
+      padding: 0;
+      gap: 0;
+      align-items: start;
     }
+    .work-thumb-sm {
+      display: block;
+      grid-area: thumb;
+      width: 100%; height: auto;
+      border-radius: 0;
+    }
+    .work-thumb-sm img { width: 100%; height: auto; object-fit: unset; display: block; }
+    .work-num  { grid-area: num;  padding: 18px 0 18px 20px; align-self: start; }
+    .work-body { grid-area: body; padding: 18px 20px 28px 0; }
     .work-name  { font-size: 1.05rem; }
     .work-blurb { font-size: 0.80rem; }
 
@@ -1419,7 +1431,7 @@
           <div class="work-name">Alain — Making a MVP AI-assist Dining App</div>
           <div class="work-blurb">Making an AI dining recommendation app for a food-tech startup.</div>
         </div>
-        <div class="work-thumb-sm t-pink"><img loading="lazy" src="01.png" alt="Alain project thumbnail" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+        <div class="work-thumb-sm t-pink"><img loading="lazy" src="work_thumb/thumb-alain.png" alt="Alain project thumbnail" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
       </a>
 
       <a href="samsung.html" class="work-item reveal reveal-d2" style="text-decoration:none;color:inherit;cursor:pointer;">
@@ -1429,7 +1441,7 @@
           <div class="work-name">Samsung Buying Guide 2025–2026</div>
           <div class="work-blurb">An offline promotional interface designed for Smart TV screens.</div>
         </div>
-        <div class="work-thumb-sm t-lime"><img loading="lazy" src="02.png" alt="Samsung project thumbnail" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+        <div class="work-thumb-sm t-lime"><img loading="lazy" src="work_thumb/thumb-samsung.png" alt="Samsung project thumbnail" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
       </a>
 
       <a href="ds.html" class="work-item reveal reveal-d3" style="text-decoration:none;color:inherit;cursor:pointer;">
@@ -1439,7 +1451,7 @@
           <div class="work-name">RemainCo., Ltd — Unified Style Guide for Designers</div>
           <div class="work-blurb">Establishing a unified style guide to ensure consistent work across all projects.</div>
         </div>
-        <div class="work-thumb-sm t-mixed"><img loading="lazy" src="03.png" alt="RemainCo project thumbnail" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+        <div class="work-thumb-sm t-mixed"><img loading="lazy" src="work_thumb/thumb-ds.png" alt="RemainCo project thumbnail" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
       </a>
 
     </div>
