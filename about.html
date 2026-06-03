@@ -356,6 +356,24 @@
     padding: 2px 8px; border-radius: 99px;
     background: rgba(0,0,0,0.05); color: var(--txt-600);
   }
+  .exp-highlight {
+    display: block;
+    font-size: 0.93rem; font-weight: 600;
+    color: var(--txt-900);
+    margin-bottom: 10px;
+  }
+  .exp-bullets {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .exp-bullets li {
+    display: flex; gap: 10px;
+    font-size: 0.93rem; line-height: 1.7; color: var(--txt-600);
+  }
+  .exp-bullets li::before {
+    content: '·'; font-size: 1.1rem; line-height: 1.6;
+    color: var(--txt-400); flex-shrink: 0;
+  }
   .exp-desc {
     font-size: 0.93rem; line-height: 1.75;
     color: var(--txt-600);
@@ -902,14 +920,23 @@
 
         <div class="exp-row reveal">
           <div class="exp-meta">
-            <div class="exp-title">Freelance<br>Product Designer</div>
+            <div class="exp-title">Independent<br>Product Designer</div>
             <div class="exp-date">
-              Aug 2024 – Current
+              Aug 2024 – Present
               <span class="dot"></span>
               <span class="exp-type">Freelance</span>
             </div>
           </div>
-          <p class="exp-desc">As a freelance product designer, I've worked across a wide range of clients — from global tech brands to early-stage startups, delivering product design, branding, and enterprise UI systems. My focus has consistently been on onboarding quickly, aligning with each client's needs, and producing high-quality design outcomes.</p>
+          <div class="exp-desc">
+            <strong class="exp-highlight">Notable clients: Samsung, LG Energy Solution, CLASS101, LKT.</strong>
+            <ul class="exp-bullets">
+              <li>Samsung — Designed responsive UX for SmartThings promotional web campaign (mobile, tablet, TV) deployed across 8 countries.</li>
+              <li>LG Energy Solution × Fastcampus — Built a scalable presentation design system for a corporate training programme; delivered 7 decks (200 pages) in 4 weeks using AI-assisted visual asset generation.</li>
+              <li><a href="https://www.clubmetis.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">Metis</a> (Google Play) — 0-to-1 product designer for a live mobile commerce app; led end-to-end UX/UI from concept to App Store release.</li>
+              <li><a href="http://lkterritory.com/?ckattempt=1" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">LKT</a> — Designed B2B fulfillment dashboard (WCS/WMS SaaS); delivered component kit and interface guidelines, extended to HD Autoever.</li>
+              <li><a href="https://class101.net/en" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">CLASS101</a> — Designed an AI-assisted thumbnail system for South Korea's leading EdTech platform, establishing GPT prompt guidelines for visual consistency at scale.</li>
+            </ul>
+          </div>
         </div>
 
         <div class="exp-row reveal">
@@ -926,26 +953,41 @@
 
         <div class="exp-row reveal">
           <div class="exp-meta">
-            <div class="exp-title">Senior Product Designer<br>at HIGHERX Co., Ltd.</div>
+            <div class="exp-title">Senior Product Designer<br>at <a href="https://www.wkdk.kr/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">HIGHERX Co., Ltd.</a></div>
             <div class="exp-date">
               Mar 2022 – Mar 2024
               <span class="dot"></span>
               <span class="exp-type">Full-time</span>
             </div>
           </div>
-          <p class="exp-desc">As a product designer at a B2B SaaS startup, I was involved in the end-to-end design of two platforms, WKDK (offline store management) and Brwnie (unmanned store management). I worked within a squad-based team structure — balancing UX strategy, UI execution, and close collaboration with product and engineering teams.</p>
+          <div class="exp-desc">
+            <strong class="exp-highlight">Sole product designer; drove 150%+ user growth over 2 years through end-to-end UX ownership across the full product lifecycle.</strong>
+            <ul class="exp-bullets">
+              <li>Improved photo-saving UX via A/B testing, achieving a 25% increase in daily photo uploads — directly contributed to securing a new B2B client (ADT Cap.).</li>
+              <li>Architected HDS WEB design system from brand identity tokens up — built 19 components and integrated design tokens with GitHub via Figma plugin (pre-native token era), enabling consistent design-to-dev handoff across the team.</li>
+              <li>Managed and delegated work to a junior designer within the design system build, overseeing quality and delivery.</li>
+            </ul>
+          </div>
         </div>
 
         <div class="exp-row reveal">
           <div class="exp-meta">
-            <div class="exp-title">UXUI Designer<br>at RemainCo., Ltd.</div>
+            <div class="exp-title">UXUI Designer<br>at <a href="https://www.remain.co.kr/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">RemainCo., Ltd.</a></div>
             <div class="exp-date">
               Nov 2020 – Feb 2022
               <span class="dot"></span>
               <span class="exp-type">Full-time</span>
             </div>
           </div>
-          <p class="exp-desc">As a UXUI designer at a digital agency, I partnered with major enterprise clients to deliver high-quality web experiences. I built strong foundations in user scenario planning, style guide development, and multi-vendor collaboration.</p>
+          <div class="exp-desc">
+            <strong class="exp-highlight">Notable clients: LG U+, WECA, Logisall.</strong>
+            <ul class="exp-bullets">
+              <li><a href="https://remainlayer.com/work/2008%EB%85%84%EB%94%94%EC%9E%90%EC%9D%B8%EC%8A%A4%ED%83%80%EC%9D%BC%EB%A1%9C%EA%B5%AC%ED%98%84%ED%95%9CLG%ED%99%80%EB%A7%A8%EB%B8%8C%EB%9E%9C%EB%93%9C%EC%82%AC%EC%9D%B4%ED%8A%B8.html" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">LG U+ "Holeman is Back!"</a> — Designed mobile web promotional event; all campaign gifts claimed within 4 hours of launch, exceeding event targets.</li>
+              <li>Managed 2–3 client projects in parallel monthly; took on client communication and project management from year one.</li>
+              <li>Led design direction on 5–6 projects as primary designer, including intern and junior designer oversight — covering moodboard through to shipped interface.</li>
+              <li>Delivered responsive web and mobile UI across NGO, e-commerce, and enterprise sectors (LG U+, WECA, Logisall).</li>
+            </ul>
+          </div>
         </div>
 
         <div class="exp-row reveal">
