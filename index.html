@@ -797,6 +797,8 @@
       padding: 20px;
       flex-direction: column; gap: 8px; text-align: center;
     }
+    .idx-card-title { font-size: 0.95rem; }
+    .idx-card-body { padding: 16px; }
   }
 
   /* ── Small mobile ≤ 400px ── */
@@ -1133,6 +1135,48 @@
     transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
   }
 
+  /* ── Index Work Grid ── */
+  .idx-work-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 860px) { .idx-work-grid { grid-template-columns: 1fr 1fr; } }
+  .idx-work-card {
+    display: flex; flex-direction: column;
+    background: rgba(255,255,255,0.60);
+    border: 1px solid rgba(255,255,255,0.80);
+    border-radius: 20px; overflow: hidden;
+    text-decoration: none; color: inherit; cursor: pointer;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 4px 16px rgba(0,0,0,0.04);
+    transition: transform 0.4s var(--ease-spring), box-shadow 0.4s ease;
+  }
+  .idx-work-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 20px 48px rgba(51,51,51,0.10), 0 4px 12px rgba(51,51,51,0.06);
+  }
+  .idx-card-thumb { width: 100%; aspect-ratio: 16/10; overflow: hidden; background: linear-gradient(135deg,#BAE8FF,#7ACCF0); flex-shrink: 0; }
+  .idx-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s cubic-bezier(0.16,1,0.3,1); }
+  .idx-work-card:hover .idx-card-thumb img { transform: scale(1.04) translateY(-3px); }
+  .idx-card-body { padding: 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .idx-card-meta { display: flex; align-items: center; gap: 10px; }
+  .idx-card-num { font-family: 'Geist', monospace; font-size: 0.68rem; font-weight: 500; color: var(--txt-300); letter-spacing: 1px; }
+  .idx-card-cat { font-size: 0.62rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--txt-400); }
+  .idx-card-title { font-family: 'Varent','Syne',sans-serif; font-size: 1.05rem; font-weight: 700; line-height: 1.3; letter-spacing: -0.3px; color: var(--txt-900); }
+  .idx-card-blurb { font-size: 0.82rem; line-height: 1.6; color: var(--txt-600); font-weight: 300; }
+  .idx-card-thumb-lk { background: linear-gradient(135deg,#C8F5A0,#A4EF60); }
+  .idx-cs-thumb {
+    width: 100%; aspect-ratio: 16/10; flex-shrink: 0;
+    background: linear-gradient(180deg,#EEF1FC,#EEF1FC);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Crect width='100%25' height='100%25' fill='url(%23csg)'/%3E%3Cdefs%3E%3CradialGradient id='csg' cx='50%25' cy='100%25' r='70%25'%3E%3Cstop stop-color='rgba(170,186,242,0.64)' offset='0'/%3E%3Cstop stop-color='rgba(170,186,242,0)' offset='1'/%3E%3C/radialGradient%3E%3C/defs%3E%3C/svg%3E"), linear-gradient(180deg,#EEF1FC,#EEF1FC);
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;
+  }
+  .cs-star { width: 64px; height: 64px; animation: starPulse 2.8s ease-in-out infinite; transform-origin: center; }
+  @keyframes starPulse { 0%,100%{ transform:scale(0.85);opacity:0.55; } 50%{ transform:scale(1.15);opacity:1; } }
+  .idx-cs-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #8A9BD4; }
+  .idx-work-card.idx-coming-soon { cursor: default; }
+  .idx-work-card.idx-coming-soon:hover { transform: none; box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 4px 16px rgba(0,0,0,0.04); }
+  [data-theme="dark"] .idx-work-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.07); }
+  [data-theme="dark"] .idx-card-thumb { background: linear-gradient(135deg,#0A2030,#0E2840); }
+  [data-theme="dark"] .idx-card-thumb-lk { background: linear-gradient(135deg,#152510,#1C3218); }
+  [data-theme="dark"] .idx-cs-thumb { background: linear-gradient(135deg,#1E1E1E,#282828); }
+
   /* ── PAGE LOADER + SKELETON ── */
   #page-loader {
     position: fixed; inset: 0; z-index: 9999;
@@ -1340,7 +1384,6 @@
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="about.html">About</a></li>
-        <li><a href="work.html">Work</a></li>
         <li><a href="https://drive.google.com/file/d/1XxGR5leZ2zUodozmAO7PDx2dXAGlayoR/view?usp=sharing" target="_blank" rel="noopener">Resume</a></li>
       </ul>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
@@ -1372,7 +1415,6 @@
   <!-- Mobile drawer -->
   <div class="nav-drawer" id="drawer">
     <a href="about.html"   onclick="closeMenu()">About</a>
-    <a href="work.html"    onclick="closeMenu()">Work</a>
     <a href="https://drive.google.com/file/d/1XxGR5leZ2zUodozmAO7PDx2dXAGlayoR/view?usp=sharing" target="_blank" rel="noopener" onclick="closeMenu()">Resume</a>
   </div>
 
@@ -1423,42 +1465,65 @@
     <p class="eyebrow" data-n="01">Selected work</p>
     <h2 class="section-title reveal">Projects I'm<br/>proud of</h2>
 
-    <div class="work-list">
+    <div class="idx-work-grid">
 
-      <a href="alain.html" class="work-item reveal reveal-d1" style="text-decoration:none;color:inherit;cursor:pointer;">
-        <span class="work-num">01</span>
-        <div class="work-body">
-          <div class="work-cat">Product Design</div>
-          <div class="work-name">Alain — Making a MVP AI-assist Dining App</div>
-          <div class="work-blurb">Making an AI dining recommendation app for a food-tech startup.</div>
+      <a class="idx-work-card reveal" href="alain.html">
+        <div class="idx-card-thumb"><img loading="lazy" src="work_thumb/thumb-alain.png" alt="Alain"></div>
+        <div class="idx-card-body">
+          <div class="idx-card-meta"><span class="idx-card-num">01</span><span class="idx-card-cat">Product Design</span></div>
+          <div class="idx-card-title">Alain — Making a MVP AI-assist Dining App</div>
+          <div class="idx-card-blurb">Making an AI dining recommendation app for a food-tech startup.</div>
         </div>
-        <div class="work-thumb-sm t-pink"><img loading="lazy" src="work_thumb/thumb-alain.png" alt="Alain project thumbnail" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
       </a>
 
-      <a href="samsung.html" class="work-item reveal reveal-d2" style="text-decoration:none;color:inherit;cursor:pointer;">
-        <span class="work-num">02</span>
-        <div class="work-body">
-          <div class="work-cat">Responsive Web</div>
-          <div class="work-name">Samsung Buying Guide 2025–2026</div>
-          <div class="work-blurb">An offline promotional interface designed for Smart TV screens.</div>
+      <a class="idx-work-card reveal" href="samsung.html">
+        <div class="idx-card-thumb"><img loading="lazy" src="work_thumb/thumb-samsung.png" alt="Samsung"></div>
+        <div class="idx-card-body">
+          <div class="idx-card-meta"><span class="idx-card-num">02</span><span class="idx-card-cat">Responsive Web</span></div>
+          <div class="idx-card-title">Samsung — SmartThings Buying Guide 2025–2026</div>
+          <div class="idx-card-blurb">An offline promotional interface designed for Smart TV screens.</div>
         </div>
-        <div class="work-thumb-sm t-lime"><img loading="lazy" src="work_thumb/thumb-samsung.png" alt="Samsung project thumbnail" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
       </a>
 
-      <a href="ds.html" class="work-item reveal reveal-d3" style="text-decoration:none;color:inherit;cursor:pointer;">
-        <span class="work-num">03</span>
-        <div class="work-body">
-          <div class="work-cat">Design System</div>
-          <div class="work-name">RemainCo., Ltd — Unified Style Guide for Designers</div>
-          <div class="work-blurb">Establishing a unified style guide to ensure consistent work across all projects.</div>
+      <a class="idx-work-card reveal" href="wkdk01.html">
+        <div class="idx-card-thumb"><img loading="lazy" src="work_thumb/thumb-wkdk01.png" alt="WKDK"></div>
+        <div class="idx-card-body">
+          <div class="idx-card-meta"><span class="idx-card-num">03</span><span class="idx-card-cat">UX Design</span></div>
+          <div class="idx-card-title">WKDK — Improving UX Flow of Saving Photos on Hybrid Mobile App</div>
+          <div class="idx-card-blurb">Redesigning the photo-saving flow for a store management app used in real workplaces.</div>
         </div>
-        <div class="work-thumb-sm t-mixed"><img loading="lazy" src="work_thumb/thumb-ds.png" alt="RemainCo project thumbnail" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
       </a>
 
-    </div>
+      <a class="idx-work-card reveal" href="lkt.html">
+        <div class="idx-card-thumb idx-card-thumb-lk"><img loading="lazy" src="work_thumb/thumb-lkt.png" alt="LKT"></div>
+        <div class="idx-card-body">
+          <div class="idx-card-meta"><span class="idx-card-num">04</span><span class="idx-card-cat">Dashboard · B2B</span></div>
+          <div class="idx-card-title">LK Territory — Dashboard Framework for Fulfillment Industry</div>
+          <div class="idx-card-blurb">B2B SaaS dashboard design for warehouse control and management systems.</div>
+        </div>
+      </a>
 
-    <div style="margin-top: var(--sp-40); display:flex; justify-content:center;">
-      <a href="work.html" class="btn-secondary">View all work →</a>
+      <a class="idx-work-card reveal" href="ds.html">
+        <div class="idx-card-thumb"><img loading="lazy" src="work_thumb/thumb-ds.png" alt="RemainCo DS"></div>
+        <div class="idx-card-body">
+          <div class="idx-card-meta"><span class="idx-card-num">05</span><span class="idx-card-cat">Design System</span></div>
+          <div class="idx-card-title">RemainCo., Ltd — Unified Style Guide for Designers</div>
+          <div class="idx-card-blurb">Establishing a unified style guide to ensure consistent work across all projects.</div>
+        </div>
+      </a>
+
+      <div class="idx-work-card idx-coming-soon reveal">
+        <div class="idx-cs-thumb">
+          <svg class="cs-star" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 50.0,5.0 L 52.7,43.5 L 64.1,35.9 L 56.5,47.3 L 95.0,50.0 L 56.5,52.7 L 64.1,64.1 L 52.7,56.5 L 50.0,95.0 L 47.3,56.5 L 35.9,64.1 L 43.5,52.7 L 5.0,50.0 L 43.5,47.3 L 35.9,35.9 L 47.3,43.5 Z" fill="#9AABD8"/></svg>
+          <span class="idx-cs-label">Coming Soon</span>
+        </div>
+        <div class="idx-card-body">
+          <div class="idx-card-meta"><span class="idx-card-num">06</span><span class="idx-card-cat">Mobile App · Healthcare</span></div>
+          <div class="idx-card-title">Clify — Mental Health Care Mobile App</div>
+          <div class="idx-card-blurb">Designing a compassionate counseling experience for Korean mental health platform.</div>
+        </div>
+      </div>
+
     </div>
   </div>
 
