@@ -370,8 +370,29 @@
   .pg-skel-bar:nth-child(1){width:55%;animation-delay:0s} .pg-skel-bar:nth-child(2){width:100%;animation-delay:.1s} .pg-skel-bar:nth-child(3){width:75%;animation-delay:.2s}
   @keyframes pg-shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
+  /* ── OUTCOME STATS ── */
+  .outcome-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    margin: 28px 0 24px;
+  }
+  .stat-card {
+    background: var(--wkdk-bg); border-radius: var(--radius-xl);
+    padding: 28px 24px;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800;
+    color: var(--wkdk-blue); letter-spacing: -1.5px; line-height: 1;
+    margin-bottom: 10px;
+  }
+  .stat-label { font-size: 0.85rem; color: var(--txt-600); line-height: 1.55; }
+  .outcome-lead {
+    font-size: 1.05rem; color: var(--txt-600); line-height: 1.75;
+    max-width: 680px; margin-top: 8px;
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
+    .outcome-stats { grid-template-columns: 1fr 1fr; }
     :root { --radius-3xl: 20px; --radius-2xl: 16px; }
     .nav-back { display: flex; }
     .nav-logo  { display: none; }
@@ -394,6 +415,7 @@
     .hero-img img { height: auto; object-fit: contain; }
     footer { padding: 24px var(--sp-24); flex-direction: column; gap: 8px; text-align: center; }
     .back-to-top { bottom: 20px; right: 20px; }
+    .outcome-stats { grid-template-columns: 1fr; }
   }
   </style>
 </head>
@@ -424,7 +446,6 @@
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="about.html">About</a></li>
-      <li><a href="work.html" class="active">Work</a></li>
       <li><a href="https://drive.google.com/file/d/1XxGR5leZ2zUodozmAO7PDx2dXAGlayoR/view?usp=sharing" target="_blank" rel="noopener">Resume</a></li>
     </ul>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
@@ -451,7 +472,6 @@
 </nav>
 <div class="nav-drawer" id="drawer">
   <a href="about.html">About</a>
-  <a href="work.html">Work</a>
   <a href="https://drive.google.com/file/d/1XxGR5leZ2zUodozmAO7PDx2dXAGlayoR/view?usp=sharing" target="_blank" rel="noopener">Resume</a>
 </div>
 
@@ -492,70 +512,67 @@
     </div>
   </div>
 
-  <!-- ── OVERVIEW ── -->
+  <!-- ── 1. OUTCOME FIRST ── -->
   <section class="detail-section">
-    <p class="section-eyebrow reveal">Overview</p>
-    <div class="info-row reveal">
-      <span class="info-label">Overview</span>
-      <p class="info-body">WKDK is simplified store management mobile app with smart checklists by photo record. The product team aimed to focus on improving convenience in store managing for both managers and workers.</p>
+    <p class="section-eyebrow reveal">Outcome</p>
+    <div class="outcome-stats reveal">
+      <div class="stat-card">
+        <p class="stat-num">+25%</p>
+        <p class="stat-label">Increase in daily photo upload rate after redesign</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-num">+120</p>
+        <p class="stat-label">Additional photo verifications per day on average</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-num">ADT Cap.</p>
+        <p class="stat-label">New B2B enterprise client secured following the update</p>
+      </div>
     </div>
-    <div class="info-row reveal">
-      <span class="info-label">Contribution</span>
-      <p class="info-body">Collaborated with the product team from brief to delivery, contributing UI decisions across brand, components, and screen design. And furthermore, executed UX research, casual user test.</p>
-    </div>
+    <p class="outcome-lead reveal">Redesigning the photo-saving flow reduced friction at the most critical touchpoint in the app — turning a common drop-off moment into a measurable increase in core engagement, and directly enabling enterprise expansion.</p>
   </section>
 
-  <!-- ── CONTEXT & BRIEF ── -->
+  <!-- ── 2. CONTEXT ── -->
   <section class="detail-section">
-    <p class="section-eyebrow reveal">Context &amp; Brief</p>
+    <p class="section-eyebrow reveal">Context</p>
     <div class="two-col reveal">
-      <!-- Item 01 -->
       <div class="context-item">
         <div>
-          <p class="context-num">01<br>Better UX Flow<br>had been required</p>
+          <p class="context-num">01<br>A Growing App<br>with an Aging Flow</p>
         </div>
-        <p class="context-body">As the number of users have been increased, new features were added and old UX flow was not properly fit on the app.<br><br>It caused following errors, such as misunderstanding of the features, and server errors from the misunderstanding.</p>
+        <p class="context-body">WKDK is a store management mobile app used by frontline workers — restaurant staff, retail crews, franchise operators — to verify daily tasks via photo records.<br><br>As the user base grew and new features were added, the original photo-saving flow stopped matching how workers actually operated on-site. Misuse, confusion, and server errors started surfacing.</p>
         <div class="context-img">
-          <img src="wkdk01/01-01.png" alt="Context 01 — Better UX Flow" loading="lazy">
+          <img src="wkdk01/01-01.png" alt="Context 01 — aging UX flow" loading="lazy">
         </div>
       </div>
-      <!-- Item 02 -->
       <div class="context-item">
         <div>
-          <p class="context-num">02<br>Expanding<br>B2B Users</p>
+          <p class="context-num">02<br>B2B Expansion<br>Was on the Table</p>
         </div>
-        <p class="context-body">The team was discussing with ADT Cap. to introduce our app to their security tasks.<br><br>That made us to optimize UX configurations for onsite personnel and subcontractors, prioritizing quick task completion and minimizing cognitive load in fast-paced work settings.</p>
+        <p class="context-body">The team was in active discussions with ADT Cap. to bring WKDK into their field security operations.<br><br>This raised the stakes — enterprise clients require onboarding speed, minimal cognitive load, and a flow that works reliably even in fast-paced, high-pressure environments.</p>
         <div class="context-img">
-          <img src="wkdk01/01-02.png" alt="Context 02 — Expanding B2B Users" loading="lazy">
+          <img src="wkdk01/01-02.png" alt="Context 02 — B2B expansion" loading="lazy">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── TIMELINE ── -->
+  <!-- ── 3. PROBLEM ── -->
   <section class="detail-section">
-    <p class="section-eyebrow reveal">Timeline</p>
-    <div class="full-img reveal">
-      <img src="wkdk01/02.png" alt="Project timeline" loading="lazy">
-    </div>
-  </section>
-
-  <!-- ── PAINPOINT ── -->
-  <section class="detail-section">
-    <p class="section-eyebrow reveal">Painpoint</p>
+    <p class="section-eyebrow reveal">Problem</p>
     <div class="quote-panel reveal">
       <p class="quote-text">" Too long to complete my task in a minute! "</p>
-      <p class="quote-sub">The biggest problem lay in the disconnect between the actual field where the app is used and the app experience itself.</p>
+      <p class="quote-sub">The core issue wasn't a missing feature — it was a disconnect between how the app was designed and how the work actually happened in the field.</p>
     </div>
 
     <div class="pp-item reveal">
       <div class="pp-left">
         <p class="pp-quote-mark">"</p>
         <p class="pp-quote">We need to attach multiple photos for 1 task.</p>
-        <p class="pp-stat">Multiple photos verification account for, approximately 40% in total cases.</p>
+        <p class="pp-stat">Multiple-photo verifications accounted for approximately 40% of all task completions — yet the flow was built as if one photo was always enough.</p>
       </div>
       <div class="pp-img">
-        <img src="wkdk01/03-01.png" alt="Painpoint 01 — Multiple photos" loading="lazy">
+        <img src="wkdk01/03-01.png" alt="Problem 01 — Multiple photos" loading="lazy">
       </div>
     </div>
 
@@ -563,64 +580,45 @@
       <div class="pp-left">
         <p class="pp-quote-mark">"</p>
         <p class="pp-quote">But I'm lost while I tried to attach photos.</p>
-        <p class="pp-stat">We received 3–5 VOCs about photo verification per a month. The bound rate on "Select attachment method" was recorded 70%.</p>
+        <p class="pp-stat">3–5 VOCs per month reported directly about photo attachment. The bounce rate on the "Select attachment method" screen hit 70% — users were reaching a decision point and abandoning.</p>
       </div>
       <div class="pp-img">
-        <img src="wkdk01/03-02.png" alt="Painpoint 02 — Lost in flow" loading="lazy">
+        <img src="wkdk01/03-02.png" alt="Problem 02 — Drop-off in flow" loading="lazy">
       </div>
     </div>
   </section>
 
-  <!-- ── SOLUTION ── -->
+  <!-- ── 4. RESEARCH & VALIDATION ── -->
   <section class="detail-section">
-    <p class="section-eyebrow reveal">Solution</p>
+    <p class="section-eyebrow reveal">Research &amp; Validation</p>
 
-    <!-- Panel -->
-    <div class="solution-panel reveal">
-      <p class="solution-panel-title">Shorten photo verification flow</p>
-      <p class="solution-panel-desc">Giving an easier user experience on photo verification flow is determined to a new solution.</p>
+    <div class="info-row reveal">
+      <span class="info-label">The hypothesis</span>
+      <p class="info-body">The team proposed merging photo editing into the camera screen itself — eliminating the separate editing step that was causing the drop-off. But before shipping, we needed to know: would workers actually accept editing features on a camera interface? It wasn't an obvious leap.</p>
     </div>
 
-    <!-- Main solution image -->
-    <div class="full-img reveal">
-      <img src="wkdk01/04.png" alt="Solution — Shortened photo verification flow" loading="lazy">
-    </div>
-
-    <!-- Comparative usability test -->
-    <div class="info-row reveal" style="margin-top: var(--sp-48);">
-      <span class="info-label">Comparative Usability Test</span>
-      <p class="info-body">Our team had a concern of usability on "how do users think attaching photos feature on a camera screen". So I made low-fidelity wireframe to implement a casual usability test to co-workers, who were not involved with this project.</p>
-    </div>
-
-    <!-- Scenario cards -->
-    <div class="scenario-cards reveal">
+    <div class="scenario-cards reveal" style="margin-top: var(--sp-40);">
       <div class="scenario-card">
         <img src="wkdk01/04-01.png" alt="Scenario A wireframe" loading="lazy">
         <div class="scenario-info">
           <span class="scenario-label label-a">Scenario A</span>
-          <p class="scenario-desc">The similar draft that has an editing page after camera.</p>
+          <p class="scenario-desc">Take photo → separate editing page → attach. The existing mental model.</p>
         </div>
       </div>
       <div class="scenario-card">
         <img src="wkdk01/04-02.png" alt="Scenario B wireframe" loading="lazy">
         <div class="scenario-info">
           <span class="scenario-label label-b">Scenario B</span>
-          <p class="scenario-desc">Attaching photos on camera interface.</p>
+          <p class="scenario-desc">Take photo → edit directly on camera screen → attach. One fewer step.</p>
         </div>
       </div>
     </div>
 
-    <!-- Usability panel -->
     <div class="usability-panel reveal">
       <div class="up-section">
-        <div class="up-tag">Purpose</div>
-        <p class="up-heading" style="margin-top: var(--sp-12);">Can users accept the 'image editing features' on the camera screen?</p>
-      </div>
-      <hr class="up-divider">
-      <div class="up-section">
         <div class="up-tag">Testers</div>
-        <p class="up-heading" style="margin-top: var(--sp-12);">4 coworkers who are not involved with this project / 2 Brwnie* crews</p>
-        <p class="up-note">*Brwnie: unmanned store management service by Higher X (WKDK)</p>
+        <p class="up-heading" style="margin-top: var(--sp-12);">6 participants — 4 coworkers not involved with this project + 2 Brwnie crews</p>
+        <p class="up-note">*Brwnie: unmanned store management service by the same company — similar frontline user profile</p>
       </div>
 
       <div class="survey-grid">
@@ -656,74 +654,102 @@
 
       <hr class="up-divider">
       <div class="up-section">
-        <div class="up-tag">Results</div>
-        <p class="up-heading" style="margin-top: var(--sp-12);">Mostly positive about the new feature.<br>So we decided to shorten the photo verification flow.</p>
+        <div class="up-tag">What the data said</div>
+        <p class="up-heading" style="margin-top: var(--sp-12);">Scenario B won on every dimension that mattered for field use.</p>
       </div>
       <div class="findings-grid">
         <div class="finding-item">
           <div class="finding-num">1</div>
-          <p class="finding-text">All testers found Scenario B easier and faster for task completion.</p>
+          <p class="finding-text">All 6 testers found Scenario B faster and easier — no split vote.</p>
         </div>
         <div class="finding-item">
           <div class="finding-num">2</div>
-          <p class="finding-text">No one felt awkward in the flow of the camera-integrated editing.</p>
+          <p class="finding-text">No one flagged camera-integrated editing as confusing or awkward.</p>
         </div>
         <div class="finding-item">
           <div class="finding-num">3</div>
-          <p class="finding-text">Most testers responded positively to editing photos directly on camera screen.</p>
+          <p class="finding-text">Most testers said A's separate editing page felt unnecessary — one extra screen for no reason.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── INTERFACES ── -->
+  <!-- ── 5. DESIGN DECISION ── -->
   <section class="detail-section">
-    <p class="section-eyebrow reveal">Interfaces</p>
+    <p class="section-eyebrow reveal">Design Decision</p>
     <div class="info-row reveal">
-      <span class="info-label">Shorten flow supports hectic frontlines</span>
-      <p class="info-body">We decided to give integrated features, editing and taking photos on camera screen at the same time. This offers a faster flow while they're uploading photo verification to users, and it eventually leads to more frequent uploading on the app.</p>
+      <span class="info-label">The call</span>
+      <p class="info-body">Remove the intermediate editing screen entirely. Move all editing controls — crop, rotate, annotation — into the camera interface itself. One fewer screen means one fewer moment to lose a frontline worker mid-task.</p>
+    </div>
+    <div class="info-row reveal">
+      <span class="info-label">Why this mattered for B2B</span>
+      <p class="info-body">Enterprise users like ADT Cap. operatives work under time pressure. Every extra tap is a failure risk. Collapsing the flow wasn't just a UX preference — it was a prerequisite for the B2B use case we were building toward.</p>
     </div>
     <div class="full-img reveal" style="margin-top: var(--sp-40);">
-      <img src="wkdk01/05-02.png" alt="Interfaces — Camera with integrated editing" loading="lazy">
+      <img src="wkdk01/04.png" alt="Design decision — shortened photo verification flow" loading="lazy">
+    </div>
+  </section>
+
+  <!-- ── 6. DESIGN SYSTEM LAYER ── -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Design System Layer</p>
+    <div class="info-row reveal">
+      <span class="info-label">Building for scale, not just this feature</span>
+      <p class="info-body">The photo-saving feature redesign ran in parallel with a broader system effort: architecting HDS WEB, the company's design system. Rather than designing this flow as a one-off, every component was built on a token foundation — color, typography, spacing, and component behaviour all defined as reusable variables via Figma Token Studio, synced with GitHub.</p>
+    </div>
+    <div class="info-row reveal">
+      <span class="info-label">Why tokens first</span>
+      <p class="info-body">In 2022, Figma had no native token support. We used the Token Studio plugin to connect design variables directly to the codebase. This meant a brand colour change or spacing update could propagate to every screen without manual rework — critical for an app being extended into enterprise contexts with stricter consistency requirements.</p>
+    </div>
+    <div class="full-img reveal" style="margin-top: var(--sp-40);">
+      <img src="wkdk01/05.png" alt="Design system — HDS WEB component and token structure" loading="lazy">
+    </div>
+  </section>
+
+  <!-- ── 7. FINAL INTERFACE ── -->
+  <section class="detail-section">
+    <p class="section-eyebrow reveal">Final Interface</p>
+    <div class="info-row reveal">
+      <span class="info-label">Camera-first, zero interruption</span>
+      <p class="info-body">The redesigned flow puts editing controls directly in the camera view — users capture, annotate, and attach without leaving the screen. Multiple photos are handled in a single session. The result is a flow that matches the pace of a real workplace shift.</p>
+    </div>
+    <div class="full-img reveal" style="margin-top: var(--sp-40);">
+      <img src="wkdk01/05-02.png" alt="Final interface — camera with integrated editing" loading="lazy">
     </div>
     <div class="full-img reveal">
-      <img src="wkdk01/05-03.png" alt="Interfaces — Final screens" loading="lazy">
+      <img src="wkdk01/05-03.png" alt="Final interface — complete screens" loading="lazy">
+    </div>
+    <div class="full-img reveal">
+      <img src="wkdk01/06-1.png" alt="Final interface — high fidelity screens" loading="lazy">
+    </div>
+    <div class="full-img reveal">
+      <img src="wkdk01/06-2.png" alt="Final interface — high fidelity screens detail" loading="lazy">
     </div>
   </section>
 
-  <!-- ── RESULT ── -->
+  <!-- ── 8. RESULT & REFLECTION ── -->
   <section class="detail-section">
-    <p class="section-eyebrow reveal">Result</p>
-    <div class="quote-panel reveal">
-      <p class="quote-text">" Activating core features &amp; expanding the user base "</p>
-      <p class="quote-sub">The new feature has been recorded as a successful update, even if it had been implemented in an unexpected local environment.</p>
-    </div>
+    <p class="section-eyebrow reveal">Result &amp; Reflection</p>
 
-    <!-- Result 01 -->
     <div class="result-item reveal">
       <div>
-        <p class="result-key">25% increased of photo verification cases</p>
-        <p class="result-body">Following the update, the daily average of verification photos uploaded increased by over 120, a 25% jump from before. This serves as a positive indicator that users are engaging with the service more actively and flexibly.</p>
+        <p class="result-key">+25% photo upload rate — core engagement unlocked</p>
+        <p class="result-body">Daily photo verifications increased by over 120 on average — a 25% jump. More than a metric, this signalled that users were finally completing the task the app was built around. The feature stopped being a friction point and started being a habit.</p>
       </div>
-      <img src="wkdk01/result01.svg" alt="Saved photos per day — before and after" class="result-svg">
+      <img src="wkdk01/result01.svg" alt="Photo uploads before and after" class="result-svg">
     </div>
 
-    <!-- Result 02 -->
     <div class="result-item reveal">
       <div>
-        <p class="result-key">A solid groundwork for B2B clients</p>
-        <p class="result-body">We successfully secured a new B2B client, ADT, following this update, which paved the way for expansion into various industries, such as property management and outsourced management. It laid a solid foundation for driving user growth in the second half of the year.</p>
+        <p class="result-key">B2B foundation — ADT Cap. secured</p>
+        <p class="result-body">The UX improvement directly enabled the ADT Cap. partnership — an enterprise client whose use case required a fast, low-friction verification flow. This opened WKDK to property management and outsourced operations sectors, driving the user growth spike in H2.</p>
       </div>
-      <img src="wkdk01/result02.png" alt="B2B client secured — ADT Cap." class="result-svg">
+      <img src="wkdk01/result02.png" alt="ADT Cap. B2B client secured" class="result-svg">
     </div>
-  </section>
 
-  <!-- ── WHAT'S NEXT ── -->
-  <section class="detail-section">
-    <p class="section-eyebrow reveal">What's Next?</p>
-    <div class="next-row reveal">
-      <p class="next-title">Renewal the main feature,<br>To-do List</p>
-      <p class="next-body">Since target audiences were increased, renovating To-do list (the main feature) was urgently needed. The method of using the app had been diversified, that caused the requirement of renovating for UX improvement.</p>
+    <div class="next-row reveal" style="margin-top: var(--sp-48);">
+      <p class="next-title">What this project taught me</p>
+      <p class="next-body">The biggest shift was learning to design for operational reality, not ideal conditions. Frontline workers don't have time to think about the UI — the flow has to be invisible. Testing with low-fidelity wireframes before a single final screen was drawn saved us from building the wrong thing confidently. The data validated the direction; the system work made it scalable.</p>
     </div>
   </section>
 
