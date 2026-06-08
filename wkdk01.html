@@ -158,8 +158,44 @@
 
   /* ── HERO IMAGE ── */
   .hero-wrap { padding: var(--sp-48) var(--sp-48) 0; max-width: 1200px; margin: 0 auto; }
-  .hero-img { width: 100%; aspect-ratio: 16/7; border-radius: var(--radius-3xl); overflow: hidden; }
+  .hero-img { width: 100%; aspect-ratio: 16/7; border-radius: var(--radius-3xl); overflow: hidden; position: relative; }
   .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: var(--radius-3xl); }
+
+  /* WKDK INFO TAG */
+  .wkdk-info-tag{position:absolute;bottom:16px;left:16px;display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;background:#FFFFFF;color:#555;font-size:0.72rem;font-weight:500;letter-spacing:0;border:1px solid #CCCCCC;cursor:pointer;font-family:inherit;transition:background 0.2s,border-color 0.2s;}
+  .wkdk-info-tag:hover{background:#F5F5F5;}
+  [data-theme="dark"] .wkdk-info-tag{background:rgba(30,30,30,0.85);border-color:rgba(255,255,255,0.20);color:#CCC;}
+  [data-theme="dark"] .wkdk-info-tag:hover{background:rgba(50,50,50,0.90);}
+  /* WKDK MODAL */
+  .wkdk-modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.50);align-items:center;justify-content:center;padding:24px;}
+  .wkdk-modal-overlay.open{display:flex;animation:wkdkFadeIn 0.22s ease;}
+  @keyframes wkdkFadeIn{from{opacity:0}to{opacity:1}}
+  .wkdk-modal-card{background:#fff;border-radius:24px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;overflow-x:hidden;position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.22),0 4px 16px rgba(0,0,0,0.08);animation:wkdkCardIn 0.32s cubic-bezier(0.16,1,0.3,1);}
+  @keyframes wkdkCardIn{from{opacity:0;transform:scale(0.94) translateY(16px)}to{opacity:1;transform:none}}
+  .wkdk-modal-close{position:absolute;top:14px;right:14px;z-index:10;width:34px;height:34px;background:rgba(0,0,0,0.07);border:none;border-radius:99px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#555;transition:background 0.2s,transform 0.2s;}
+  .wkdk-modal-close:hover{background:rgba(0,0,0,0.13);transform:scale(1.08);}
+  .wkdk-modal-body{padding:28px 28px 32px;}
+  .wkdk-modal-eyebrow{font-size:0.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#4F72E0;margin-bottom:6px;}
+  .wkdk-modal-heading{font-size:1.1rem;font-weight:700;color:#0D0D0D;letter-spacing:-0.2px;margin-bottom:10px;}
+  .wkdk-modal-desc{font-size:0.88rem;line-height:1.7;color:#555;margin-bottom:20px;}
+  .wkdk-feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
+  .wkdk-feat-card{border-radius:14px;padding:14px 14px 12px;}
+  .wkdk-feat-green{background:#E6FAF3;}.wkdk-feat-teal{background:#DFF3F9;}.wkdk-feat-purple{background:#EDE6FF;}.wkdk-feat-pink{background:#FFEBF4;}
+  .wkdk-feat-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+  .wkdk-feat-green .wkdk-feat-icon{background:#2DB98A;}.wkdk-feat-teal .wkdk-feat-icon{background:#17A8BD;}.wkdk-feat-purple .wkdk-feat-icon{background:#7B52E8;}.wkdk-feat-pink .wkdk-feat-icon{background:#F074A8;}
+  .wkdk-feat-icon img{width:16px;height:16px;}
+  .wkdk-feat-title{font-size:0.82rem;font-weight:700;color:#0D0D0D;margin-bottom:4px;}
+  .wkdk-feat-desc{font-size:0.74rem;line-height:1.5;color:#555;margin:0;}
+  [data-theme="dark"] .wkdk-modal-card{background:#1C1C1E;}
+  [data-theme="dark"] .wkdk-modal-heading,[data-theme="dark"] .wkdk-feat-title{color:#EFEFEF;}
+  [data-theme="dark"] .wkdk-modal-desc,[data-theme="dark"] .wkdk-feat-desc{color:#9A9A9A;}
+  [data-theme="dark"] .wkdk-modal-close{background:rgba(255,255,255,0.10);color:#9A9A9A;}
+  @media(max-width:860px){
+    .wkdk-feat-grid{grid-template-columns:1fr;}
+    .wkdk-modal-overlay{padding:0;align-items:flex-end;}
+    .wkdk-modal-card{border-radius:24px 24px 0 0;max-width:100%;width:100%;max-height:85dvh;animation:wkdkMobileIn 0.32s cubic-bezier(0.16,1,0.3,1);}
+    @keyframes wkdkMobileIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  }
 
   /* ── SECTION ── */
   .detail-section { max-width: 1200px; margin: 0 auto; padding: var(--sp-64) var(--sp-48); border-bottom: 1px solid var(--txt-200); }
@@ -512,6 +548,46 @@
         <source media="(max-width:860px)" srcset="wkdk01/thumb-wkdk01_m.png">
         <img loading="eager" src="wkdk01/thumb-wkdk01.png" alt="WKDK — Saving Photos UX hero image">
       </picture>
+      <button class="wkdk-info-tag" onclick="openWKDKModal()">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="7.25" y="7" width="1.5" height="4.5" rx="0.75"/><circle cx="8" cy="5" r="0.9"/></svg>
+        What is WKDK?
+      </button>
+    </div>
+  </div>
+
+  <!-- WKDK MODAL -->
+  <div id="wkdk-modal" class="wkdk-modal-overlay" onclick="if(event.target===this)closeWKDKModal()">
+    <div class="wkdk-modal-card">
+      <button class="wkdk-modal-close" onclick="closeWKDKModal()" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="wkdk-modal-body">
+        <p class="wkdk-modal-eyebrow">About the Product</p>
+        <h2 class="wkdk-modal-heading">What is WKDK?</h2>
+        <p class="wkdk-modal-desc">WKDK (Wokie Dokie) is a Korean mobile app for store management, focused on part-time staff management for restaurants, cafés, convenience stores, retail shops, and franchise businesses.</p>
+        <div class="wkdk-feat-grid">
+          <div class="wkdk-feat-card wkdk-feat-green">
+            <div class="wkdk-feat-icon"><img src="wkdk01/check-circle.svg" alt=""></div>
+            <p class="wkdk-feat-title">Task &amp; Checklist</p>
+            <p class="wkdk-feat-desc">Daily tasks with photo verification.</p>
+          </div>
+          <div class="wkdk-feat-card wkdk-feat-teal">
+            <div class="wkdk-feat-icon"><img src="wkdk01/clock-three.svg" alt=""></div>
+            <p class="wkdk-feat-title">Shift &amp; Schedule</p>
+            <p class="wkdk-feat-desc">Organize shifts and coordinate handovers.</p>
+          </div>
+          <div class="wkdk-feat-card wkdk-feat-purple">
+            <div class="wkdk-feat-icon"><img src="wkdk01/rocket.svg" alt=""></div>
+            <p class="wkdk-feat-title">Recruitment</p>
+            <p class="wkdk-feat-desc">Hire workers and onboard via system flow.</p>
+          </div>
+          <div class="wkdk-feat-card wkdk-feat-pink">
+            <div class="wkdk-feat-icon"><img src="wkdk01/comment-dots.svg" alt=""></div>
+            <p class="wkdk-feat-title">Internal Communication</p>
+            <p class="wkdk-feat-desc">Announcements and chat for store workers.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -837,6 +913,10 @@
   }
 
   // Page transitions
+  function openWKDKModal(){document.getElementById('wkdk-modal').classList.add('open');document.body.style.overflow='hidden';}
+  function closeWKDKModal(){document.getElementById('wkdk-modal').classList.remove('open');document.body.style.overflow='';}
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeWKDKModal();});
+
   document.querySelectorAll('a[href]').forEach(link => {
     const href = link.getAttribute('href');
     if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
