@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>
+  (function(){var t=localStorage.getItem('imseon-theme-v2');if(t)document.documentElement.setAttribute('data-theme',t);})();
+</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <title>Project Inquiry — Imseon Kwon</title>
+  <link rel="icon" type="image/png" href="favicon_imseon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <script async src="https://tally.so/widgets/embed.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --txt-900: #0d0d0d;
+      --txt-600: #555;
+      --txt-400: #999;
+      --bg: #f5f5f3;
+      --nav-bg: rgba(245,245,243,0.82);
+      --border: rgba(0,0,0,0.08);
+    }
+    [data-theme="dark"] {
+      --txt-900: #f0f0ee;
+      --txt-600: #aaa;
+      --txt-400: #666;
+      --bg: #0f0f0f;
+      --nav-bg: rgba(15,15,15,0.88);
+      --border: rgba(255,255,255,0.08);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Geist', sans-serif;
+      background: var(--bg);
+      color: var(--txt-900);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--txt-600);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+    .nav-back:hover { color: var(--txt-900); }
+    .nav-back svg { flex-shrink: 0; }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #00BFFF 0%, #C8FF4A 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    /* theme toggle */
+    .theme-toggle {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--txt-600);
+      transition: color 0.18s, border-color 0.18s;
+    }
+    .theme-toggle:hover { color: var(--txt-900); }
+    .icon-sun  { display: none; }
+    .icon-moon { display: block; }
+    [data-theme="dark"] .icon-sun  { display: block; }
+    [data-theme="dark"] .icon-moon { display: none; }
+
+    /* ── Tally iframe ── */
+    .tally-wrap {
+      position: fixed;
+      top: 52px; left: 0; right: 0; bottom: 0;
+    }
+    .tally-wrap iframe {
+      width: 100%; height: 100%;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-back" href="index.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+      Back
+    </a>
+    <a class="nav-logo" href="index.html">IK</a>
+    <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="tally-wrap">
+    <iframe
+      data-tally-src="https://tally.so/r/QKERMX?transparentBackground=1"
+      width="100%" height="100%"
+      frameborder="0" marginheight="0" marginwidth="0"
+      title="Project Inquiry for Imseon!">
+    </iframe>
+  </div>
+
+  <script>
+    const btn = document.getElementById('themeBtn');
+    btn.addEventListener('click', () => {
+      const html = document.documentElement;
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('imseon-theme-v2', next);
+    });
+  </script>
+</body>
+</html>
