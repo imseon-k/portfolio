@@ -5,83 +5,102 @@
   (function(){var t=localStorage.getItem('imseon-theme-v2');if(t)document.documentElement.setAttribute('data-theme',t);})();
 </script>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Project Inquiry — Imseon Kwon</title>
   <link rel="icon" type="image/png" href="favicon_imseon.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <script async src="https://tally.so/widgets/embed.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     :root {
-      --txt-900: #0d0d0d;
-      --txt-600: #555;
-      --txt-400: #999;
-      --bg: #f5f5f3;
-      --nav-bg: rgba(245,245,243,0.82);
-      --border: rgba(0,0,0,0.08);
+      --clr-bg:      #FAFAFA;
+      --txt-900:     #0D0D0D;
+      --txt-600:     #555555;
+      --txt-400:     #999999;
+      --txt-200:     #D4D4D4;
+      --clr-border:  rgba(0,0,0,0.09);
+      --clr-surface: #FFFFFF;
+      --input-bg:    rgba(255,255,255,0.72);
+      --input-border:rgba(0,0,0,0.12);
+      --input-focus: #00BFFF;
+      --clr-error:   #EF4444;
+      --radius-md:   12px;
+      --radius-lg:   16px;
+      --radius-full: 99999px;
     }
     [data-theme="dark"] {
-      --txt-900: #f0f0ee;
-      --txt-600: #aaa;
-      --txt-400: #666;
-      --bg: #0f0f0f;
-      --nav-bg: rgba(15,15,15,0.88);
-      --border: rgba(255,255,255,0.08);
+      --clr-bg:      #111111;
+      --txt-900:     #EFEFEF;
+      --txt-600:     #9A9A9A;
+      --txt-400:     #666666;
+      --txt-200:     #2C2C2C;
+      --clr-border:  rgba(255,255,255,0.08);
+      --clr-surface: #1C1C1C;
+      --input-bg:    rgba(255,255,255,0.04);
+      --input-border:rgba(255,255,255,0.10);
+      --input-focus: #00BFFF;
+      color-scheme: dark;
     }
 
-    html, body {
-      height: 100%;
-      font-family: 'Geist', sans-serif;
-      background: var(--bg);
+    body {
+      font-family: 'Geist', system-ui, sans-serif;
+      background-color: var(--clr-bg);
       color: var(--txt-900);
-      transition: background 0.2s, color 0.2s;
+      min-height: 100dvh;
+      background-image:
+        radial-gradient(ellipse 55% 48% at 88%  8%, rgba(0,191,255,.10) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 42% at 12% 92%, rgba(200,255,74,.12) 0%, transparent 65%);
+      background-attachment: fixed;
+      transition: background-color 0.25s, color 0.25s;
     }
 
-    /* ── Nav ── */
+    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: 52px;
+      height: 64px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 24px;
-      background: var(--nav-bg);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border-bottom: 1px solid var(--border);
+      padding: 0 28px 0 40px;
+      background: rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(28px) saturate(200%);
+      -webkit-backdrop-filter: blur(28px) saturate(200%);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.40) inset, 0 1px 6px rgba(51,51,51,0.04);
+    }
+    [data-theme="dark"] nav {
+      background: rgba(17,17,17,0.72);
+      border-bottom-color: rgba(255,255,255,0.06);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset;
     }
 
     .nav-back {
       display: inline-flex; align-items: center; gap: 6px;
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.82rem; font-weight: 500;
+      font-size: 0.84rem; font-weight: 500;
       color: var(--txt-600);
       text-decoration: none;
       transition: color 0.18s;
     }
     .nav-back:hover { color: var(--txt-900); }
-    .nav-back svg { flex-shrink: 0; }
 
     .nav-logo {
       font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700; font-size: 1rem;
-      letter-spacing: -0.5px;
+      font-weight: 700; font-size: 1rem; letter-spacing: -0.5px;
       background: linear-gradient(135deg, #00BFFF 0%, #C8FF4A 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       text-decoration: none;
     }
 
-    /* theme toggle */
     .theme-toggle {
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 1px solid var(--border);
-      background: transparent;
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid var(--clr-border);
+      background: var(--input-bg);
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; color: var(--txt-600);
-      transition: color 0.18s, border-color 0.18s;
+      transition: color 0.18s, border-color 0.18s, background 0.18s;
     }
     .theme-toggle:hover { color: var(--txt-900); }
     .icon-sun  { display: none; }
@@ -89,14 +108,247 @@
     [data-theme="dark"] .icon-sun  { display: block; }
     [data-theme="dark"] .icon-moon { display: none; }
 
-    /* ── Tally iframe ── */
-    .tally-wrap {
-      position: fixed;
-      top: 52px; left: 0; right: 0; bottom: 0;
+    /* ── LAYOUT ── */
+    main {
+      min-height: 100dvh;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding: 96px 24px 80px;
     }
-    .tally-wrap iframe {
-      width: 100%; height: 100%;
-      border: 0;
+
+    .form-container {
+      width: 100%; max-width: 560px;
+    }
+
+    /* ── HEADER ── */
+    .form-header { margin-bottom: 40px; }
+
+    .form-monogram {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 2.4rem; letter-spacing: -2px; line-height: 1;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #00BFFF 0%, #C8FF4A 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      display: inline-block;
+    }
+
+    .form-header h1 {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: clamp(1.6rem, 4vw, 2rem);
+      letter-spacing: -0.8px; line-height: 1.15;
+      color: var(--txt-900); margin-bottom: 10px;
+    }
+
+    .form-header p {
+      font-size: 0.9rem; color: var(--txt-600);
+      line-height: 1.7; font-weight: 300;
+    }
+
+    /* ── FORM ── */
+    form { display: flex; flex-direction: column; gap: 20px; }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+
+    label {
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--txt-600); letter-spacing: 0.01em;
+    }
+
+    .required-star { color: #00BFFF; margin-left: 2px; }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-family: 'Geist', system-ui, sans-serif;
+      font-size: 0.9rem; font-weight: 400;
+      color: var(--txt-900);
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+      -webkit-appearance: none; appearance: none;
+    }
+
+    input::placeholder, textarea::placeholder { color: var(--txt-400); }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 0 3px rgba(0,191,255,0.14);
+    }
+
+    input:invalid:not(:placeholder-shown),
+    textarea:invalid:not(:placeholder-shown) {
+      border-color: var(--clr-error);
+    }
+
+    textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+    /* Select arrow */
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '';
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid var(--txt-400);
+      pointer-events: none;
+    }
+    select { padding-right: 36px; cursor: pointer; }
+    select option {
+      background: var(--clr-surface);
+      color: var(--txt-900);
+    }
+
+    /* Row: two fields side by side */
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* ── CHIP GROUP (project type) ── */
+    .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .chip input[type="checkbox"] {
+      position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+    }
+
+    .chip label {
+      display: inline-flex; align-items: center;
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--txt-600);
+      cursor: pointer;
+      transition: border-color 0.18s, color 0.18s, background 0.18s, box-shadow 0.18s;
+      user-select: none;
+    }
+
+    .chip input:checked + label {
+      border-color: #00BFFF;
+      color: #00BFFF;
+      background: rgba(0,191,255,0.08);
+      box-shadow: 0 0 0 1px rgba(0,191,255,0.30);
+    }
+
+    .chip label:hover { border-color: var(--txt-400); color: var(--txt-900); }
+    .chip input:checked + label:hover { border-color: #00BFFF; color: #00BFFF; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px; background: var(--clr-border); margin: 4px 0;
+    }
+
+    /* ── SUBMIT ── */
+    .btn-submit {
+      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.30);
+      border-top-color: rgba(255,255,255,0.90);
+      border-radius: var(--radius-full);
+      padding: 14px 32px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.92rem; font-weight: 600;
+      color: var(--txt-900);
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,.55) inset, 0 8px 20px rgba(51,51,51,0.08);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.2s;
+      width: 100%;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 50%;
+      background: linear-gradient(to bottom, rgba(255,255,255,.52), rgba(255,255,255,0));
+      border-radius: 100px 100px 0 0; pointer-events: none;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 1px 0 rgba(255,255,255,.99) inset, 0 16px 44px rgba(0,0,0,.10);
+    }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    [data-theme="dark"] .btn-submit {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.10);
+      border-top-color: rgba(0,191,255,0.15);
+      box-shadow: inset 0 1px 0 rgba(0,191,255,0.06), 0 4px 16px rgba(0,0,0,0.35);
+    }
+    [data-theme="dark"] .btn-submit:hover {
+      box-shadow: inset 0 1px 0 rgba(0,191,255,0.12), 0 12px 32px rgba(0,0,0,0.50);
+    }
+
+    /* ── SUCCESS STATE ── */
+    .success-state {
+      display: none;
+      flex-direction: column; align-items: center;
+      text-align: center; padding: 60px 24px;
+      gap: 16px;
+    }
+    .success-state.visible { display: flex; }
+
+    .success-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(0,191,255,0.12);
+      border: 1px solid rgba(0,191,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: #00BFFF;
+    }
+
+    .success-state h2 {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 1.5rem; letter-spacing: -0.5px; color: var(--txt-900);
+    }
+    .success-state p { font-size: 0.88rem; color: var(--txt-600); line-height: 1.7; }
+
+    .btn-back-home {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.84rem; font-weight: 500;
+      color: var(--txt-600); text-decoration: none;
+      margin-top: 8px; transition: color 0.18s;
+    }
+    .btn-back-home:hover { color: var(--txt-900); }
+
+    /* ── ERROR MESSAGE ── */
+    .form-error {
+      display: none;
+      font-size: 0.82rem; color: var(--clr-error);
+      padding: 10px 14px;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.20);
+      border-radius: var(--radius-md);
+    }
+    .form-error.visible { display: block; }
+
+    /* ── SPINNER ── */
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(0,0,0,0.15);
+      border-top-color: var(--txt-900);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-label { opacity: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── HELPER TEXT ── */
+    .field-hint {
+      font-size: 0.76rem; color: var(--txt-400); line-height: 1.5;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      nav { padding: 0 20px; }
+      main { padding: 84px 20px 64px; }
+      .field-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -104,17 +356,17 @@
 
   <nav>
     <a class="nav-back" href="index.html">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polyline points="15 18 9 12 15 6"/>
       </svg>
       Back
     </a>
-    <a class="nav-logo" href="index.html">IK</a>
-    <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
-      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <a class="nav-logo" href="index.html" aria-label="Imseon Kwon — home">IK</a>
+    <button class="theme-toggle" id="themeBtn" aria-label="Toggle dark mode">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
       </svg>
-      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="5"/>
         <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
         <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
@@ -124,22 +376,153 @@
     </button>
   </nav>
 
-  <div class="tally-wrap">
-    <iframe
-      data-tally-src="https://tally.so/r/QKERMX?transparentBackground=1"
-      width="100%" height="100%"
-      frameborder="0" marginheight="0" marginwidth="0"
-      title="Project Inquiry for Imseon!">
-    </iframe>
-  </div>
+  <main>
+    <div class="form-container">
+
+      <!-- Header -->
+      <div class="form-header">
+        <div class="form-monogram" aria-hidden="true">IK</div>
+        <h1>Let's build something together</h1>
+        <p>Tell me about your project and I'll get back to you within 1–2 business days.</p>
+      </div>
+
+      <!-- Success state -->
+      <div class="success-state" id="successState" role="status" aria-live="polite">
+        <div class="success-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h2>Message sent!</h2>
+        <p>Thanks for reaching out. I'll review your project brief and reply to your email shortly.</p>
+        <a class="btn-back-home" href="index.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back to portfolio
+        </a>
+      </div>
+
+      <!-- Form -->
+      <form id="inquiryForm" novalidate>
+        <!-- Web3Forms access key — routes submission to kwon.ray0902@gmail.com -->
+        <input type="hidden" name="access_key" value="00ad13f0-d909-4dbf-b75a-932f9519c97d">
+        <input type="hidden" name="subject" value="New Project Inquiry — imseon.com">
+        <input type="hidden" name="from_name" value="imseon.com Inquiry Form">
+        <input type="checkbox" name="botcheck" style="display:none">
+
+        <div class="field-row">
+          <div class="field">
+            <label for="name">Name <span class="required-star" aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="email">Email <span class="required-star" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="company">Company / Organization</label>
+          <input type="text" id="company" name="company" placeholder="Where are you from?">
+        </div>
+
+        <div class="field">
+          <label id="type-label">Project type</label>
+          <div class="chip-group" role="group" aria-labelledby="type-label">
+            <span class="chip"><input type="checkbox" id="t-product" name="type_product" value="Product Design"><label for="t-product">Product Design</label></span>
+            <span class="chip"><input type="checkbox" id="t-brand" name="type_brand" value="Brand / Identity"><label for="t-brand">Brand / Identity</label></span>
+            <span class="chip"><input type="checkbox" id="t-ds" name="type_ds" value="Design System"><label for="t-ds">Design System</label></span>
+            <span class="chip"><input type="checkbox" id="t-research" name="type_research" value="UX Research"><label for="t-research">UX Research</label></span>
+            <span class="chip"><input type="checkbox" id="t-other" name="type_other" value="Other"><label for="t-other">Other</label></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="budget">Budget range</label>
+          <div class="select-wrap">
+            <select id="budget" name="budget" aria-label="Budget range">
+              <option value="" disabled selected>Select a range</option>
+              <option>Under $5k</option>
+              <option>$5k – $15k</option>
+              <option>$15k – $30k</option>
+              <option>$30k+</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="message">Tell me about your project <span class="required-star" aria-hidden="true">*</span></label>
+          <textarea id="message" name="message" placeholder="What are you building, what's the timeline, and what kind of help do you need?" required></textarea>
+        </div>
+
+        <div class="divider" aria-hidden="true"></div>
+
+        <div class="form-error" id="formError" role="alert"></div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span class="btn-label">Send message →</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+
+        <p class="field-hint" style="text-align:center">
+          Your info is only used to respond to your inquiry — never shared or sold.
+        </p>
+      </form>
+
+    </div>
+  </main>
 
   <script>
-    const btn = document.getElementById('themeBtn');
-    btn.addEventListener('click', () => {
+    // ── Theme toggle ──
+    document.getElementById('themeBtn').addEventListener('click', () => {
       const html = document.documentElement;
       const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
       localStorage.setItem('imseon-theme-v2', next);
+    });
+
+    // ── Form submit ──
+    document.getElementById('inquiryForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form   = e.target;
+      const btn    = document.getElementById('submitBtn');
+      const errBox = document.getElementById('formError');
+
+      // Basic client-side validation
+      if (!form.name.value.trim() || !form.email.value.trim() || !form.message.value.trim()) {
+        errBox.textContent = 'Please fill in the required fields (name, email, and message).';
+        errBox.classList.add('visible');
+        return;
+      }
+      errBox.classList.remove('visible');
+
+      btn.classList.add('loading');
+      btn.disabled = true;
+
+      try {
+        const data = Object.fromEntries(new FormData(form));
+        const res  = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          form.style.display = 'none';
+          document.querySelector('.form-header').style.display = 'none';
+          document.getElementById('successState').classList.add('visible');
+        } else {
+          throw new Error(json.message || 'Submission failed');
+        }
+      } catch (err) {
+        errBox.textContent = 'Something went wrong. Please try emailing me directly at kwon.ray0902@gmail.com';
+        errBox.classList.add('visible');
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
     });
   </script>
 </body>
