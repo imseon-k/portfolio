@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HDS Token Reference · Imseon Kwon</title>
+<link rel="icon" type="image/png" href="favicon_imseon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --clr-bg:#FAFAFA;--clr-surface:#FFFFFF;
+  --txt-900:#0D0D0D;--txt-600:#555555;--txt-400:#999999;--txt-200:#D4D4D4;--txt-100:#F0F0F0;
+  --lg-blur:blur(28px) saturate(180%);
+  --shadow-sm:0 2px 8px rgba(0,0,0,0.07);
+  --radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:20px;--radius-2xl:24px;--radius-3xl:28px;--radius-full:99999px;
+  --acc:#4F72E0;--acc-bg:#EEF2FF;
+  --ease-spring:cubic-bezier(0.34,1.52,0.64,1);
+}
+[data-theme="dark"]{
+  --clr-bg:#111111;--clr-surface:#1C1C1C;
+  --txt-900:#EFEFEF;--txt-600:#9A9A9A;--txt-400:#7C7C7C;--txt-200:#2C2C2C;--txt-100:#1C1C1C;
+  --acc-bg:rgba(79,114,224,0.12);color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{overflow-x:hidden;}
+body{font-family:'Geist',system-ui,sans-serif;background:var(--clr-bg);color:var(--txt-900);
+  background-image:radial-gradient(ellipse 50% 40% at 90% 5%,rgba(79,114,224,.07) 0%,transparent 70%),
+  radial-gradient(ellipse 40% 35% at 10% 95%,rgba(79,114,224,.07) 0%,transparent 70%);
+  background-attachment:fixed;animation:fadeIn .4s ease forwards;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;padding:0 28px 0 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.06);border:1px solid transparent;border-bottom-color:rgba(255,255,255,0.22);backdrop-filter:var(--lg-blur);-webkit-backdrop-filter:var(--lg-blur);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 1px 6px rgba(51,51,51,.04);transition:top .5s,left .5s,right .5s,border-radius .5s,background .3s;}
+nav.floating{top:12px;left:12px;right:12px;border-radius:18px;background:rgba(255,255,255,0.48);border-color:rgba(255,255,255,.60);box-shadow:0 1px 0 rgba(255,255,255,.75) inset,0 4px 16px rgba(51,51,51,.06);}
+[data-theme="dark"] nav{background:rgba(17,17,17,.10);border-bottom-color:rgba(255,255,255,.08);}
+[data-theme="dark"] nav.floating{background:rgba(17,17,17,.80);border-color:rgba(255,255,255,.08);}
+.nav-back{display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:none;border:none;cursor:pointer;color:var(--txt-900);border-radius:var(--radius-sm);transition:background .2s;padding:0;}
+.nav-back:hover{background:rgba(0,0,0,.05);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:var(--txt-900);text-decoration:none;}
+.nav-right{display:flex;align-items:center;gap:16px;}
+.theme-toggle{position:relative;display:flex;align-items:center;justify-content:center;min-height:48px;min-width:48px;padding:0 4px;background:none;border:none;cursor:pointer;outline:none;}
+.toggle-track{position:relative;display:flex;align-items:center;gap:4px;padding:4px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.30),0 2px 8px rgba(0,0,0,.08);backdrop-filter:blur(12px);border-radius:var(--radius-full);}
+.toggle-indicator{position:absolute;top:4px;left:4px;width:32px;height:32px;border-radius:50%;background:radial-gradient(ellipse at 30% 20%,#00BFFF 0%,#0095FF 100%);pointer-events:none;transition:transform .44s,background .44s;}
+[data-theme="dark"] .toggle-indicator{transform:translateX(36px);background:radial-gradient(ellipse at 30% 20%,#DBFF88 0%,#C8FF4A 100%);}
+.toggle-icon{position:relative;z-index:1;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.toggle-icon svg{width:18px;height:18px;}
+.toggle-icon-sun svg{color:#fff;}[data-theme="dark"] .toggle-icon-sun svg{color:#555;}
+.toggle-icon-moon svg{color:#AAA;}[data-theme="dark"] .toggle-icon-moon svg{color:#1A1A1A;}
+
+/* LAYOUT */
+main{padding-top:64px;max-width:1100px;margin:0 auto;padding-left:48px;padding-right:48px;}
+@media(max-width:860px){main{padding-left:24px;padding-right:24px;}}
+
+/* PAGE HEADER */
+.page-header{padding:var(--sp-top, 48px) 0 40px;}
+.page-eyebrow{font-size:.68rem;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--acc);margin-bottom:12px;}
+.page-title{font-family:'Geist',sans-serif;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:700;letter-spacing:-1px;line-height:1.2;margin-bottom:12px;}
+.page-desc{font-size:.9rem;color:var(--txt-600);line-height:1.7;max-width:600px;}
+.download-btn{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:8px 16px;border-radius:var(--radius-full);background:var(--acc-bg);color:var(--acc);font-size:.78rem;font-weight:600;text-decoration:none;border:1px solid rgba(79,114,224,.2);transition:background .2s;}
+.download-btn:hover{background:rgba(79,114,224,.18);}
+
+/* TABS */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--txt-200);margin-bottom:40px;}
+.tab-btn{padding:10px 18px;background:none;border:none;cursor:pointer;font-family:'Geist',sans-serif;font-size:.82rem;font-weight:500;color:var(--txt-400);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s;}
+.tab-btn.active{color:var(--acc);border-bottom-color:var(--acc);}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+
+/* SECTION */
+.tok-section{margin-bottom:48px;}
+.tok-section-title{font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--txt-400);margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--txt-100);}
+
+/* COLOR SWATCHES */
+.swatch-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+.swatch-item{display:flex;flex-direction:column;align-items:center;gap:6px;width:68px;}
+.swatch-box{width:48px;height:48px;border-radius:10px;border:1px solid rgba(0,0,0,.08);flex-shrink:0;}
+.swatch-label{font-family:'Geist Mono',monospace;font-size:.62rem;color:var(--txt-400);text-align:center;line-height:1.3;}
+
+.palette-group{margin-bottom:28px;}
+.palette-name{font-size:.75rem;font-weight:600;color:var(--txt-600);margin-bottom:10px;text-transform:capitalize;}
+.palette-strip{display:flex;border-radius:12px;overflow:hidden;height:48px;}
+.palette-strip-item{flex:1;position:relative;cursor:default;transition:flex .2s;}
+.palette-strip-item:hover{flex:2;}
+.palette-strip-item::after{content:attr(data-step);position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-family:'Geist Mono',monospace;font-size:.55rem;color:rgba(0,0,0,.35);opacity:0;transition:opacity .2s;white-space:nowrap;}
+.palette-strip-item:hover::after{opacity:1;}
+.palette-hex{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.palette-hex span{font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--txt-400);}
+
+/* SPACING */
+.spacing-table{display:flex;flex-direction:column;gap:0;}
+.spacing-row{display:grid;grid-template-columns:130px 60px 1fr;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--txt-100);}
+.spacing-name{font-family:'Geist Mono',monospace;font-size:.75rem;color:var(--txt-600);}
+.spacing-val{font-family:'Geist Mono',monospace;font-size:.72rem;color:var(--acc);font-weight:500;}
+.spacing-bar{height:8px;background:var(--acc);border-radius:4px;opacity:.6;}
+
+/* FONT SIZES */
+.fontsize-table{display:flex;flex-direction:column;gap:0;}
+.fontsize-row{display:grid;grid-template-columns:160px 60px 1fr;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--txt-100);}
+.fontsize-specimen{font-family:'Pretendard',system-ui,sans-serif;line-height:1.2;color:var(--txt-900);white-space:nowrap;overflow:hidden;}
+
+/* TYPOGRAPHY */
+.typo-table{display:flex;flex-direction:column;gap:0;}
+.typo-row{padding:18px 0;border-bottom:1px solid var(--txt-100);display:grid;grid-template-columns:140px 1fr 200px;gap:16px;align-items:start;}
+.typo-name{font-family:'Geist Mono',monospace;font-size:.72rem;color:var(--acc);font-weight:500;padding-top:4px;}
+.typo-specimen{font-family:'Pretendard',system-ui,sans-serif;color:var(--txt-900);}
+.typo-meta{font-family:'Geist Mono',monospace;font-size:.62rem;color:var(--txt-400);line-height:1.8;}
+
+/* BORDER RADIUS */
+.radius-grid{display:flex;gap:12px;flex-wrap:wrap;}
+.radius-item{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.radius-box{width:56px;height:56px;background:var(--acc-bg);border:2px solid var(--acc);opacity:.7;}
+.radius-label{font-family:'Geist Mono',monospace;font-size:.62rem;color:var(--txt-400);text-align:center;line-height:1.4;}
+
+/* COMPONENT TOKEN */
+.comp-table{display:flex;flex-direction:column;gap:0;}
+.comp-row{display:grid;grid-template-columns:220px 1fr 120px;gap:16px;padding:12px 0;border-bottom:1px solid var(--txt-100);align-items:center;}
+.comp-key{font-family:'Geist Mono',monospace;font-size:.72rem;color:var(--txt-600);}
+.comp-ref{font-family:'Geist Mono',monospace;font-size:.7rem;color:var(--txt-400);}
+.comp-type{font-size:.65rem;font-weight:600;padding:2px 8px;border-radius:var(--radius-full);background:var(--txt-100);color:var(--txt-400);}
+
+/* OTHER tokens (fontWeights etc.) */
+.pill-group{display:flex;gap:8px;flex-wrap:wrap;}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--radius-full);background:var(--txt-100);font-size:.75rem;color:var(--txt-600);}
+.pill code{font-family:'Geist Mono',monospace;font-size:.7rem;color:var(--acc);}
+
+/* COMPONENT SHOWCASE */
+.comp-showcase{display:grid;grid-template-columns:1fr 320px;gap:24px;margin-bottom:48px;align-items:start;}
+@media(max-width:860px){.comp-showcase{grid-template-columns:1fr;}}
+.comp-showcase-label{font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--txt-400);margin-bottom:16px;}
+.comp-preview-area{background:var(--clr-surface);border:1px solid var(--txt-200);border-radius:var(--radius-2xl);padding:32px;display:flex;flex-direction:column;gap:0;}
+.comp-size-row{display:grid;grid-template-columns:80px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--txt-100);align-items:center;}
+.comp-size-row:last-child{border-bottom:none;}
+.comp-size-tag{font-size:.65rem;font-weight:700;letter-spacing:.5px;color:var(--txt-400);text-transform:uppercase;}
+
+/* WKDK Button */
+.wkdk-btn{display:inline-flex;align-items:center;justify-content:center;font-family:'Pretendard',system-ui,sans-serif;font-weight:600;letter-spacing:-0.4px;line-height:1.25;cursor:pointer;border:none;transition:background .15s,transform .1s;user-select:none;}
+.wkdk-btn:active{transform:scale(.97);}
+.wkdk-btn-lg{font-size:16px;padding:0 24px;height:52px;border-radius:12px;}
+.wkdk-btn-md{font-size:16px;padding:0 20px;height:44px;border-radius:12px;}
+.wkdk-btn-sm{font-size:16px;padding:0 16px;height:36px;border-radius:8px;}
+.wkdk-btn-primary{background:#FEDE00;color:#212121;}
+.wkdk-btn-primary:hover{background:#F2D40A;}
+
+/* WKDK Input */
+.wkdk-input-wrap{display:flex;flex-direction:column;gap:6px;width:100%;}
+.wkdk-input-label{font-family:'Pretendard',system-ui,sans-serif;font-size:14px;font-weight:600;color:var(--txt-900);letter-spacing:-0.4px;}
+.wkdk-input{font-family:'Pretendard',system-ui,sans-serif;font-size:16px;font-weight:400;letter-spacing:-0.4px;line-height:1.5;padding:0 16px;height:52px;border-radius:12px;border:1.5px solid #C8C8C8;background:#FFFFFF;color:#212121;width:100%;outline:none;transition:border-color .15s;}
+.wkdk-input:focus{border-color:#FEDE00;}
+.wkdk-input::placeholder{color:#ACACAC;}
+
+/* Accordion */
+.wkdk-accordion{width:100%;border:1.5px solid #E1E1E1;border-radius:12px;overflow:hidden;background:#FFFFFF;}
+.wkdk-acc-item{border-bottom:1px solid #EEEEEE;}
+.wkdk-acc-item:last-child{border-bottom:none;}
+.wkdk-acc-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px;font-family:'Pretendard',system-ui,sans-serif;font-size:14px;font-weight:600;color:#212121;background:none;border:none;cursor:pointer;text-align:left;letter-spacing:-0.3px;transition:background .15s;}
+.wkdk-acc-trigger:hover{background:#F6F6F6;}
+.wkdk-acc-trigger svg{transition:transform .22s;flex-shrink:0;color:#8E8E8E;}
+.wkdk-acc-trigger.open svg{transform:rotate(180deg);}
+.wkdk-acc-body{max-height:0;overflow:hidden;transition:max-height .28s ease;}
+.wkdk-acc-body.open{max-height:200px;}
+.wkdk-acc-content{padding:0 16px 16px;font-family:'Pretendard',system-ui,sans-serif;font-size:14px;color:#6E6E6E;line-height:1.6;letter-spacing:-0.3px;}
+
+/* Token Studio Panel */
+.ts-panel{background:#1E1E2E;border-radius:var(--radius-xl);overflow:hidden;overflow-x:auto;font-family:'Geist Mono',monospace;}
+.ts-panel-header{background:#16162A;padding:10px 16px;font-size:.7rem;color:#8888AA;letter-spacing:.5px;}
+.ts-panel-rows{display:flex;flex-direction:column;}
+.ts-row{display:flex;gap:8px;padding:7px 16px;border-bottom:1px solid rgba(255,255,255,.04);align-items:baseline;}
+.ts-row:last-child{border-bottom:none;}
+.ts-row-num{font-size:.65rem;color:#555577;min-width:16px;text-align:right;flex-shrink:0;user-select:none;}
+.ts-prop{font-size:.72rem;color:#C8C8E8;flex-shrink:0;}
+.ts-colon{font-size:.72rem;color:#666688;margin:0 4px;}
+.ts-token{font-size:.72rem;color:#7B9EFF;word-break:break-all;min-width:0;}
+.ts-panel-sep{border-top:1px solid rgba(255,255,255,.07);margin:2px 0;}
+.ts-ref-rows{display:flex;flex-direction:column;}
+.ts-ref-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 16px;border-bottom:1px solid rgba(255,255,255,.04);gap:8px;}
+.ts-ref-row:last-child{border-bottom:none;}
+.ts-ref-key{font-family:'Geist Mono',monospace;font-size:.64rem;color:rgba(180,180,210,.45);flex-shrink:0;}
+.ts-ref-val{font-family:'Geist Mono',monospace;font-size:.64rem;font-weight:500;text-align:right;}
+
+/* Token resolution chain */
+.tok-chain{display:flex;flex-direction:column;gap:3px;margin-top:10px;}
+.tok-chain-row{display:flex;justify-content:space-between;align-items:center;font-size:.67rem;font-family:'Geist Mono',monospace;color:var(--txt-400);padding:4px 0;border-bottom:1px solid var(--txt-100);}
+.tok-chain-row:last-child{border-bottom:none;}
+.tok-chain-key{flex-shrink:0;}
+.tok-chain-val{font-weight:500;}
+
+/* Checkbox & Radio */
+.wkdk-check-wrap,.wkdk-radio-wrap{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;font-family:'Pretendard',system-ui,sans-serif;font-size:14px;color:#212121;letter-spacing:-0.3px;}
+.wkdk-check-input,.wkdk-radio-input{position:absolute;opacity:0;width:0;height:0;}
+.wkdk-check-box{width:20px;height:20px;border:1.5px solid #C8C8C8;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;background:#FFFFFF;}
+.wkdk-check-input:checked~.wkdk-check-box{background:#FEDE00;border-color:#FEDE00;}
+.wkdk-check-box::after{content:'';display:block;width:5px;height:9px;border:2px solid #212121;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);opacity:0;transition:opacity .1s;}
+.wkdk-check-input:checked~.wkdk-check-box::after{opacity:1;}
+.wkdk-radio-circle{width:20px;height:20px;border:1.5px solid #C8C8C8;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .15s;background:#FFFFFF;}
+.wkdk-radio-circle::after{content:'';width:10px;height:10px;border-radius:50%;background:#FEDE00;opacity:0;transition:opacity .15s;}
+.wkdk-radio-input:checked~.wkdk-radio-circle{border-color:#FEDE00;}
+.wkdk-radio-input:checked~.wkdk-radio-circle::after{opacity:1;}
+.select-group{display:flex;flex-direction:column;gap:12px;}
+
+/* Text Field */
+.wkdk-tf-wrap{display:flex;flex-direction:column;gap:5px;width:100%;}
+.wkdk-tf-label{font-family:'Pretendard',system-ui,sans-serif;font-size:12px;font-weight:600;color:var(--txt-600);letter-spacing:-0.3px;}
+.wkdk-tf{font-family:'Pretendard',system-ui,sans-serif;font-size:16px;font-weight:400;letter-spacing:-0.4px;line-height:1.5;padding:0 16px;height:52px;border-radius:12px;border:1.5px solid #C8C8C8;background:#FFFFFF;color:#212121;width:100%;outline:none;transition:border-color .15s,box-shadow .15s;}
+.wkdk-tf:focus{border-color:#FEDE00;box-shadow:0 0 0 3px rgba(254,222,0,.18);}
+.wkdk-tf::placeholder{color:#ACACAC;}
+.wkdk-tf.error{border-color:#F14E48;}
+.wkdk-tf.error:focus{box-shadow:0 0 0 3px rgba(241,78,72,.15);}
+.wkdk-tf-helper{font-family:'Pretendard',system-ui,sans-serif;font-size:12px;color:var(--txt-400);letter-spacing:-0.3px;}
+.wkdk-tf-helper.error-msg{color:#F14E48;}
+.tf-states{display:flex;flex-direction:column;gap:16px;}
+
+/* Tabs */
+.wkdk-tabs{display:flex;border-bottom:2px solid #EEEEEE;gap:0;}
+.wkdk-tab-item{padding:12px 16px;font-family:'Pretendard',system-ui,sans-serif;font-size:14px;font-weight:600;color:#ACACAC;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;transition:color .15s,border-color .15s;letter-spacing:-0.3px;white-space:nowrap;}
+.wkdk-tab-item:hover{color:#585858;}
+.wkdk-tab-item.active{color:#212121;border-bottom-color:#FEDE00;}
+.wkdk-tab-content{padding:20px 0;font-family:'Pretendard',system-ui,sans-serif;font-size:14px;color:#6E6E6E;line-height:1.6;}
+
+/* Switch */
+.wkdk-switch-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #EEEEEE;}
+.wkdk-switch-row:last-child{border-bottom:none;}
+.wkdk-switch-meta{display:flex;flex-direction:column;gap:2px;}
+.wkdk-switch-title{font-family:'Pretendard',system-ui,sans-serif;font-size:14px;font-weight:600;color:#212121;letter-spacing:-0.3px;}
+.wkdk-switch-sub{font-family:'Pretendard',system-ui,sans-serif;font-size:12px;color:#8E8E8E;}
+.wkdk-switch{position:relative;display:inline-block;width:48px;height:26px;flex-shrink:0;}
+.wkdk-switch input{opacity:0;width:0;height:0;}
+.wkdk-switch-track{position:absolute;inset:0;background:#E1E1E1;border-radius:99px;transition:background .2s;}
+.wkdk-switch-track::before{content:'';position:absolute;height:20px;width:20px;left:3px;bottom:3px;background:#FFFFFF;border-radius:50%;transition:transform .22s cubic-bezier(.34,1.5,.64,1);box-shadow:0 1px 4px rgba(0,0,0,.2);}
+.wkdk-switch input:checked+.wkdk-switch-track{background:#FEDE00;}
+.wkdk-switch input:checked+.wkdk-switch-track::before{transform:translateX(22px);}
+
+/* Toast */
+.toast-stack{display:flex;flex-direction:column;gap:10px;}
+.wkdk-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;font-family:'Pretendard',system-ui,sans-serif;font-size:14px;font-weight:400;letter-spacing:-0.3px;line-height:1.4;}
+.wkdk-toast-success{background:#212121;color:#FFFFFF;}
+.wkdk-toast-warning{background:#212121;color:#FFFFFF;}
+.wkdk-toast-error{background:#212121;color:#FFFFFF;}
+.wkdk-toast-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;font-weight:700;}
+.toast-icon-success{background:#51CF66;color:#FFFFFF;}
+.toast-icon-warning{background:#FEDE00;color:#212121;}
+.toast-icon-error{background:#F14E48;color:#FFFFFF;}
+.toast-close{margin-left:auto;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5);font-size:16px;padding:0 0 0 8px;line-height:1;}
+
+/* Bottom Sheet */
+.bottom-sheet-demo{position:relative;height:300px;background:#F6F6F6;border-radius:var(--radius-xl);overflow:hidden;border:1px solid var(--txt-200);}
+.bs-overlay{position:absolute;inset:0;background:rgba(0,0,0,.32);}
+.bs-sheet{position:absolute;bottom:0;left:0;right:0;background:#FFFFFF;border-radius:20px 20px 0 0;padding:0 0 16px;}
+.bs-handle{width:36px;height:4px;background:#C8C8C8;border-radius:99px;margin:12px auto 16px;}
+.bs-title{font-family:'Pretendard',system-ui,sans-serif;font-size:16px;font-weight:700;color:#212121;padding:0 16px 12px;letter-spacing:-0.3px;border-bottom:1px solid #EEEEEE;}
+.bs-item{display:flex;align-items:center;gap:12px;padding:14px 16px;font-family:'Pretendard',system-ui,sans-serif;font-size:14px;color:#212121;letter-spacing:-0.3px;border-bottom:1px solid #EEEEEE;cursor:pointer;transition:background .15s;}
+.bs-item:last-child{border-bottom:none;}
+.bs-item:hover{background:#F6F6F6;}
+.bs-item-icon{width:20px;height:20px;border-radius:6px;background:#F6F6F6;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;}
+
+/* Bottom Navigation */
+.bottom-nav-demo{background:#FFFFFF;border-radius:var(--radius-xl);border:1px solid var(--txt-200);overflow:hidden;}
+.bottom-nav-bar{display:flex;align-items:center;justify-content:space-around;padding:8px 0 12px;background:#FFFFFF;border-top:1px solid #EEEEEE;}
+.bn-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 12px;cursor:pointer;flex:1;}
+.bn-icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:background .15s;}
+.bn-item.active .bn-icon{background:rgba(254,222,0,.2);}
+.bn-label{font-family:'Pretendard',system-ui,sans-serif;font-size:11px;color:#ACACAC;letter-spacing:-0.3px;}
+.bn-item.active .bn-label{color:#212121;font-weight:600;}
+.bn-cta-wrap{padding:12px 16px;border-bottom:1px solid #EEEEEE;}
+.bn-cta{width:100%;height:52px;border-radius:12px;background:#FEDE00;border:none;font-family:'Pretendard',system-ui,sans-serif;font-size:16px;font-weight:600;color:#212121;cursor:pointer;letter-spacing:-0.4px;transition:background .15s;}
+.bn-cta:hover{background:#F2D40A;}
+
+/* ── iPhone 17 Pro Mockup ── */
+.iphone-wrap{display:flex;justify-content:center;padding:12px 0 0;}
+.iphone-frame{position:relative;width:264px;height:554px;background:#1C1C1C;border-radius:46px;padding:10px;box-shadow:0 0 0 1.5px #3D3D3D,0 0 0 3px #1A1A1A,inset 0 0 0 1px #444,0 28px 80px rgba(0,0,0,.5);}
+/* volume buttons */
+.iphone-frame::before{content:'';position:absolute;left:-3.5px;top:88px;width:3.5px;height:30px;background:#3A3A3A;border-radius:2px 0 0 2px;box-shadow:0 44px 0 #3A3A3A,0 80px 0 #3A3A3A;}
+/* power button */
+.iphone-frame::after{content:'';position:absolute;right:-3.5px;top:108px;width:3.5px;height:58px;background:#3A3A3A;border-radius:0 2px 2px 0;}
+.iphone-screen{width:100%;height:100%;background:#FFFFFF;border-radius:38px;overflow:hidden;position:relative;display:flex;flex-direction:column;}
+.iphone-di{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:88px;height:26px;background:#1C1C1C;border-radius:20px;z-index:30;}
+.iphone-statusbar{height:46px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 20px 7px;flex-shrink:0;background:#FFFFFF;}
+.isb-time{font-family:'Geist',sans-serif;font-size:13px;font-weight:600;color:#000;letter-spacing:0;}
+.isb-icons{display:flex;align-items:center;gap:5px;color:#000;}
+/* Top Nav */
+.iphone-topnav{height:50px;background:#FFFFFF;border-bottom:1px solid #EEEEEE;display:flex;align-items:center;padding:0 12px;gap:6px;flex-shrink:0;}
+.itn-left{width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#212121;}
+.itn-title{flex:1;font-family:'Pretendard',system-ui,sans-serif;font-size:16px;font-weight:700;color:#212121;letter-spacing:-0.4px;text-align:center;}
+.itn-right{display:flex;align-items:center;gap:4px;color:#212121;flex-shrink:0;}
+/* Content */
+.iphone-content{flex:1;background:#F6F6F6;overflow:hidden;position:relative;}
+/* Bottom area inside iPhone */
+.iphone-bottom{flex-shrink:0;background:#FFFFFF;}
+.iphone-bottom .bn-cta-wrap{display:none;}
+.bn-float-cta{display:none;}
+.iphone-cta-bar{background:transparent;padding:10px 16px 6px;flex-shrink:0;}
+.iphone-cta-bar .bn-cta{height:46px;font-size:14px;border-radius:99px;width:100%;padding:0;}
+.iphone-bottom .bottom-nav-bar{padding:6px 0 4px;border-top:1px solid #EEEEEE;}
+.iphone-bottom .bn-label{font-size:10px;}
+.iphone-bottom .bn-icon{width:22px;height:22px;border-radius:6px;}
+/* home indicator */
+.iphone-home-indicator{height:22px;display:flex;align-items:center;justify-content:center;background:#FFFFFF;flex-shrink:0;}
+.iphone-home-bar{width:96px;height:4px;background:#222;border-radius:99px;}
+.iphone-bottom .bn-item.active .bn-icon{background:none;}
+.iphone-bottom .bn-icon img{width:22px;height:22px;display:block;}
+/* content cards */
+.iphone-card{background:#FFFFFF;border-radius:12px;margin:10px 10px 0;padding:12px;}
+.iphone-card-label{font-family:'Pretendard',system-ui,sans-serif;font-size:10px;font-weight:600;color:#ACACAC;letter-spacing:-0.2px;margin-bottom:6px;}
+.iphone-card-title{font-family:'Pretendard',system-ui,sans-serif;font-size:13px;font-weight:700;color:#212121;letter-spacing:-0.3px;margin-bottom:8px;}
+.shift-badge{display:inline-flex;align-items:center;gap:4px;background:#FFF6DA;border-radius:6px;padding:3px 8px;font-family:'Pretendard',system-ui,sans-serif;font-size:10px;font-weight:600;color:#C7AE00;}
+.staff-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #F6F6F6;}
+.staff-avatar{width:28px;height:28px;border-radius:50%;background:#EEEEEE;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
+.staff-name{font-family:'Pretendard',system-ui,sans-serif;font-size:12px;font-weight:600;color:#212121;letter-spacing:-0.3px;}
+.staff-time{font-family:'Pretendard',system-ui,sans-serif;font-size:10px;color:#ACACAC;letter-spacing:-0.3px;margin-left:auto;}
+
+/* Mobile Bottom Sheet (inside iPhone) */
+.mbs-container{position:relative;width:100%;height:100%;}
+.mbs-trigger-area{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;}
+.mbs-trigger-hint{font-family:'Pretendard',system-ui,sans-serif;font-size:10px;color:#ACACAC;text-align:center;letter-spacing:-0.2px;padding:0 16px;}
+.mobile-trigger-btn{background:#212121;color:#fff;border:none;border-radius:10px;padding:9px 16px;font-family:'Pretendard',system-ui,sans-serif;font-size:11px;font-weight:600;cursor:pointer;letter-spacing:-0.3px;}
+.mobile-trigger-btn:hover{background:#333;}
+.mbs-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);pointer-events:none;transition:background .3s;z-index:20;}
+.mbs-overlay.open{background:rgba(0,0,0,.45);pointer-events:auto;}
+.mbs-sheet{position:absolute;bottom:0;left:0;right:0;background:#FFFFFF;border-radius:20px 20px 0 0;z-index:21;transform:translateY(100%);transition:transform .36s cubic-bezier(.25,.46,.45,.94);padding-bottom:12px;touch-action:none;}
+.mbs-sheet.open{transform:translateY(0);}
+.mbs-handle-wrap{display:flex;justify-content:center;padding:10px 0 8px;cursor:grab;-webkit-user-select:none;user-select:none;}
+.mbs-drag-handle{width:36px;height:4px;background:#C8C8C8;border-radius:99px;}
+.mbs-title{font-family:'Pretendard',system-ui,sans-serif;font-size:14px;font-weight:700;color:#212121;padding:0 16px 10px;letter-spacing:-0.3px;border-bottom:1px solid #EEEEEE;}
+.mbs-item{display:flex;align-items:center;gap:10px;padding:12px 16px;font-family:'Pretendard',system-ui,sans-serif;font-size:12px;color:#212121;letter-spacing:-0.3px;border-bottom:1px solid #EEEEEE;cursor:pointer;transition:background .15s;}
+.mbs-item:last-child{border-bottom:none;}
+.mbs-item:hover{background:#F6F6F6;}
+.mbs-item.mbs-danger{color:#F14E48;}
+.mbs-item-icon{width:26px;height:26px;border-radius:7px;background:#F6F6F6;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+
+/* ===== Button Playground ===== */
+.btn-pg-wrap{display:flex;border:1px solid var(--txt-200);border-radius:14px;overflow:hidden;margin-top:4px;min-height:200px;}
+.btn-pg-canvas{flex:1;background:#F6F6F6;display:flex;align-items:center;justify-content:center;padding:28px 16px;}
+.btn-pg-panel{width:210px;background:#FFFFFF;border-left:1px solid #EEEEEE;display:flex;flex-direction:column;flex-shrink:0;}
+.pg-panel-head{padding:10px 13px 9px;font-family:'Pretendard',system-ui,sans-serif;font-size:13px;font-weight:700;color:#212121;border-bottom:1px solid #EEEEEE;display:flex;align-items:center;justify-content:space-between;}
+.pg-reset-btn{background:none;border:none;cursor:pointer;color:#C0C0C0;padding:0;display:flex;align-items:center;transition:color .15s;}
+.pg-reset-btn:hover{color:#555;}
+.pg-ctrl-row{display:flex;align-items:center;justify-content:space-between;padding:6px 13px;border-bottom:1px solid #F6F6F6;}
+.pg-ctrl-row:last-child{border-bottom:none;}
+.pg-ctrl-lbl{font-family:'Pretendard',system-ui,sans-serif;font-size:11px;color:#999;white-space:nowrap;}
+.pg-sel{border:1px solid #E8E8E8;border-radius:6px;padding:4px 22px 4px 8px;font-family:'Pretendard',system-ui,sans-serif;font-size:11.5px;color:#212121;background:#FFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 6px center;-webkit-appearance:none;appearance:none;cursor:pointer;outline:none;min-width:104px;}
+.pg-sel:focus{border-color:#ACACAC;}
+.pg-tgl{position:relative;display:inline-block;width:34px;height:19px;cursor:pointer;flex-shrink:0;}
+.pg-tgl input{opacity:0;width:0;height:0;}
+.pg-tgl-track{position:absolute;inset:0;background:#D5D5D5;border-radius:10px;transition:background .18s;}
+.pg-tgl-track::after{content:'';position:absolute;left:2px;top:2px;width:15px;height:15px;background:#fff;border-radius:50%;transition:transform .18s;box-shadow:0 1px 3px rgba(0,0,0,.18);}
+.pg-tgl input:checked~.pg-tgl-track{background:#4CAF50;}
+.pg-tgl input:checked~.pg-tgl-track::after{transform:translateX(15px);}
+.pg-lbl-input{border:1px solid #E8E8E8;border-radius:6px;padding:4px 8px;font-family:'Pretendard',system-ui,sans-serif;font-size:11.5px;color:#212121;width:104px;outline:none;}
+.pg-lbl-input:focus{border-color:#ACACAC;}
+@keyframes pg-spin{to{transform:rotate(360deg);}}
+.pg-spin{display:inline-block;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:pg-spin .6s linear infinite;vertical-align:middle;}
+footer{max-width:1100px;margin:0 auto;padding:32px 48px;font-size:.75rem;color:var(--txt-400);border-top:1px solid var(--txt-200);display:flex;justify-content:space-between;align-items:center;}
+@media(max-width:860px){footer{padding:24px;flex-direction:column;gap:8px;text-align:center;}}
+
+/* ─── RESPONSIVE / MOBILE ─────────────────────────────────────────── */
+html,body{overflow-x:hidden;}
+main{overflow-x:hidden;}
+
+/* Spacing on tablet/mobile stacked layout */
+@media(max-width:860px){
+  .comp-showcase{row-gap:36px;}
+  .tok-section{margin-bottom:64px;}
+  .comp-showcase-label{margin-bottom:20px;letter-spacing:1.6px;}
+  .iphone-wrap{padding:20px 0 12px;}
+  .comp-preview-area{padding:24px;}
+  .tabs{margin-bottom:32px;}
+  .comp-size-row{padding:22px 0;}
+  .tok-section-title{margin-bottom:24px;padding-bottom:12px;}
+  /* inline margin-top overrides for sub-labels inside showcase */
+  .comp-showcase > div > .comp-showcase-label + *,
+  .comp-showcase > div > .comp-showcase-label{margin-top:0;}
+  .comp-showcase > div > *+.comp-showcase-label{margin-top:32px;}
+}
+
+/* Tables: collapse fixed columns at ≤640px */
+@media(max-width:640px){
+  nav{padding:0 16px;}
+
+  /* Typography table → 2-column: drop meta column */
+  .typo-row{grid-template-columns:110px 1fr;gap:10px;}
+  .typo-meta{display:none;}
+
+  /* Component token table → 2-column: drop type badge */
+  .comp-row{grid-template-columns:1fr auto;gap:8px;}
+  .comp-key{font-size:.65rem;word-break:break-all;}
+  .comp-ref{display:none;}
+  .comp-type{font-size:.6rem;padding:2px 6px;}
+
+  /* Spacing table */
+  .spacing-row{grid-template-columns:100px 48px 1fr;gap:10px;}
+  .spacing-name{font-size:.68rem;}
+
+  /* Font size table */
+  .fontsize-row{grid-template-columns:120px 48px 1fr;gap:10px;}
+
+  /* comp-size-row inside showcase */
+  .comp-size-row{grid-template-columns:56px 1fr;gap:12px;}
+
+  /* Token studio panel: allow long monospace to wrap */
+  .ts-token,.ts-ref-val{word-break:break-all;text-align:left;}
+  .ts-ref-row{flex-wrap:wrap;gap:4px;}
+
+  /* Page header */
+  .page-header{padding-top:32px;}
+  .page-title{font-size:1.4rem;}
+  .page-desc{font-size:.82rem;}
+
+  /* Tabs — smaller touch targets */
+  .tab-btn{padding:9px 12px;font-size:.78rem;}
+
+  /* Palette strip labels */
+  .palette-hex span{font-size:.58rem;}
+
+  /* Swatch items */
+  .swatch-item{width:56px;}
+  .swatch-box{width:40px;height:40px;}
+}
+
+/* Playground: stack at ≤560px */
+@media(max-width:560px){
+  .btn-pg-wrap{flex-direction:column;}
+  .btn-pg-canvas{min-height:140px;padding:24px 16px;}
+  .btn-pg-panel{width:100%;border-left:none;border-top:1px solid #EEEEEE;flex-shrink:unset;}
+  /* Panel controls: allow selects to stretch */
+  .pg-sel{min-width:0;width:100%;max-width:160px;}
+  .pg-lbl-input{width:100%;max-width:160px;}
+}
+
+/* Very small phones */
+@media(max-width:380px){
+  main{padding-left:14px;padding-right:14px;}
+  .tabs{gap:0;}
+  .tab-btn{padding:8px 9px;font-size:.74rem;}
+  .typo-row{grid-template-columns:90px 1fr;gap:8px;}
+  .comp-row{grid-template-columns:1fr;}
+  .comp-ref,.comp-type{display:none;}
+  .spacing-row,.fontsize-row{grid-template-columns:90px 40px 1fr;gap:8px;}
+  .comp-showcase{gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <button class="nav-back" onclick="history.length>1?history.back():window.location.href='hds.html'" aria-label="Back">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <a href="index.html" class="nav-logo">Imseon Kwon</a>
+</nav>
+
+<main>
+  <div class="page-header">
+    <p class="page-eyebrow">HDS WEB · Design System</p>
+    <h1 class="page-title">Token Reference</h1>
+    <p class="page-desc">The actual token file exported from Token Studio for Figma. Tokens are structured across three layers — ref → system → component — and synced automatically to code via GitHub integration.</p>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="components">Components <span style="opacity:.45;font-size:.7em">live</span></button>
+    <button class="tab-btn" data-tab="light">wkdk_light <span style="opacity:.45;font-size:.7em">system colors</span></button>
+    <button class="tab-btn" data-tab="base">wkdk <span style="opacity:.45;font-size:.7em">ref</span></button>
+  </div>
+
+  <!-- TAB: BASE -->
+  <div class="tab-panel" id="tab-base">
+
+    <!-- REF: Colors -->
+    <div class="tok-section">
+      <p class="tok-section-title">ref · Colors</p>
+      <div class="swatch-row" id="ref-colors"></div>
+    </div>
+
+    <!-- REF: Spacing -->
+    <div class="tok-section">
+      <p class="tok-section-title">ref · Spacing</p>
+      <div class="spacing-table" id="ref-spacing"></div>
+    </div>
+
+    <!-- REF: Font Sizes -->
+    <div class="tok-section">
+      <p class="tok-section-title">ref · Font Sizes</p>
+      <div class="fontsize-table" id="ref-fontsizes"></div>
+    </div>
+
+    <!-- REF: Border Radius -->
+    <div class="tok-section">
+      <p class="tok-section-title">ref · Border Radius</p>
+      <div class="radius-grid" id="ref-radius"></div>
+    </div>
+
+    <!-- REF: Other -->
+    <div class="tok-section">
+      <p class="tok-section-title">ref · Font Weights &amp; Line Heights &amp; Letter Spacing</p>
+      <div id="ref-other"></div>
+    </div>
+
+    <!-- SYSTEM: Typography -->
+    <div class="tok-section">
+      <p class="tok-section-title">system · Typography</p>
+      <div class="typo-table" id="sys-typo"></div>
+    </div>
+
+    <!-- SYSTEM: Other -->
+    <div class="tok-section">
+      <p class="tok-section-title">system · Spacing &amp; Border Radius</p>
+      <div class="comp-table" id="sys-other"></div>
+    </div>
+
+    <!-- COMPONENT -->
+    <div class="tok-section">
+      <p class="tok-section-title">component · button</p>
+      <div class="comp-table" id="comp-button"></div>
+    </div>
+  </div>
+
+  <!-- TAB: COMPONENTS -->
+  <div class="tab-panel active" id="tab-components">
+
+    <!-- 1. BUTTON PLAYGROUND + CHECKBOX + RADIO -->
+    <div class="tok-section">
+      <p class="tok-section-title">Button — Primary &amp; Selection Controls</p>
+      <div class="comp-showcase">
+        <div>
+          <p class="comp-showcase-label">Component Playground</p>
+          <!-- Playground -->
+          <div class="btn-pg-wrap">
+            <!-- Canvas -->
+            <div class="btn-pg-canvas">
+              <button id="pg-btn" style="display:inline-flex;align-items:center;letter-spacing:-0.3px;font-family:'Pretendard',system-ui,sans-serif;">
+                <span id="pg-licon" style="display:flex;align-items:center;"></span>
+                <span id="pg-label">레이블</span>
+                <span id="pg-ricon" style="display:flex;align-items:center;"></span>
+              </button>
+            </div>
+            <!-- Control panel -->
+            <div class="btn-pg-panel">
+              <div class="pg-panel-head">
+                <span>Button</span>
+                <button class="pg-reset-btn" id="pg-reset" title="Reset to defaults">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                </button>
+              </div>
+              <div class="pg-ctrl-row">
+                <span class="pg-ctrl-lbl">Semantic</span>
+                <select id="pg-semantic" class="pg-sel">
+                  <option value="primary">Primary</option>
+                  <option value="secondary">Secondary</option>
+                  <option value="negative">Negative</option>
+                  <option value="neutral">Neutral</option>
+                </select>
+              </div>
+              <div class="pg-ctrl-row">
+                <span class="pg-ctrl-lbl">Variant</span>
+                <select id="pg-variant" class="pg-sel">
+                  <option value="fill">Fill</option>
+                  <option value="line">Line</option>
+                  <option value="text">Text</option>
+                </select>
+              </div>
+              <div class="pg-ctrl-row">
+                <span class="pg-ctrl-lbl">Size</span>
+                <select id="pg-size" class="pg-sel">
+                  <option value="lg" selected>Large</option>
+                  <option value="md">Medium</option>
+                  <option value="sm">Small</option>
+                  <option value="xs">Xsmall</option>
+                </select>
+              </div>
+              <div class="pg-ctrl-row">
+                <span class="pg-ctrl-lbl">Shape</span>
+                <select id="pg-shape" class="pg-sel">
+                  <option value="square">Square</option>
+                  <option value="round">Round</option>
+                </select>
+              </div>
+              <div class="pg-ctrl-row">
+                <span class="pg-ctrl-lbl">Left Icon</span>
+                <label class="pg-tgl"><input type="checkbox" id="pg-licon-chk" checked><span class="pg-tgl-track"></span></label>
+              </div>
+              <div class="pg-ctrl-row">
+                <span class="pg-ctrl-lbl">Right Icon</span>
+                <label class="pg-tgl"><input type="checkbox" id="pg-ricon-chk" checked><span class="pg-tgl-track"></span></label>
+              </div>
+              <div class="pg-ctrl-row">
+                <span class="pg-ctrl-lbl">Label</span>
+                <input type="text" id="pg-lbl-txt" class="pg-lbl-input" value="button">
+              </div>
+            </div>
+          </div><!-- /btn-pg-wrap -->
+
+          <p class="comp-showcase-label" style="margin-top:24px;">Checkbox &amp; Radio</p>
+          <div class="comp-preview-area" style="gap:20px;">
+            <div class="select-group">
+              <label class="wkdk-check-wrap"><input type="checkbox" class="wkdk-check-input" checked><span class="wkdk-check-box"></span>Enable push notifications</label>
+              <label class="wkdk-check-wrap"><input type="checkbox" class="wkdk-check-input"><span class="wkdk-check-box"></span>Agree to terms and conditions</label>
+              <label class="wkdk-check-wrap"><input type="checkbox" class="wkdk-check-input"><span class="wkdk-check-box"></span>Receive marketing emails</label>
+            </div>
+            <div class="select-group" style="margin-top:4px;">
+              <label class="wkdk-radio-wrap"><input type="radio" name="demo-radio" class="wkdk-radio-input" checked><span class="wkdk-radio-circle"></span>Store owner</label>
+              <label class="wkdk-radio-wrap"><input type="radio" name="demo-radio" class="wkdk-radio-input"><span class="wkdk-radio-circle"></span>Part-time staff</label>
+              <label class="wkdk-radio-wrap"><input type="radio" name="demo-radio" class="wkdk-radio-input"><span class="wkdk-radio-circle"></span>Manager</label>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="comp-showcase-label">Applied tokens (token studio)</p>
+          <div class="ts-panel">
+            <div class="ts-panel-header" id="pg-tok-header">component.button · large · fill</div>
+            <div class="ts-panel-rows" id="pg-tok-rows">
+              <div class="ts-row"><span class="ts-row-num">1</span><span class="ts-prop">paddingRight</span><span class="ts-colon">:</span><span class="ts-token">"component.button.large-padding-horizontal"</span></div>
+              <div class="ts-row"><span class="ts-row-num">2</span><span class="ts-prop">paddingLeft</span><span class="ts-colon">:</span><span class="ts-token">"component.button.large-padding-horizontal"</span></div>
+              <div class="ts-row"><span class="ts-row-num">3</span><span class="ts-prop">borderRadius</span><span class="ts-colon">:</span><span class="ts-token">"component.button.large-border-radius"</span></div>
+              <div class="ts-row"><span class="ts-row-num">4</span><span class="ts-prop">fill</span><span class="ts-colon">:</span><span class="ts-token">"component.button.primary-brand-background"</span></div>
+              <div class="ts-row"><span class="ts-row-num">5</span><span class="ts-prop">fill:press</span><span class="ts-colon">:</span><span class="ts-token">"component.button.primary-brand-background-press"</span></div>
+              <div class="ts-row"><span class="ts-row-num">6</span><span class="ts-prop">color</span><span class="ts-colon">:</span><span class="ts-token">"component.button.primary-neutral-text"</span></div>
+              <div class="ts-row"><span class="ts-row-num">7</span><span class="ts-prop">typography</span><span class="ts-colon">:</span><span class="ts-token">"component.button.large-text"</span></div>
+            </div>
+            <div class="ts-panel-sep"></div>
+            <div class="ts-ref-rows" id="pg-tok-chain">
+              <div class="ts-ref-row"><span class="ts-ref-key">large-padding-horizontal</span><span class="ts-ref-val" style="color:#8888CC;">ref.spacing-xl · 24px</span></div>
+              <div class="ts-ref-row"><span class="ts-ref-key">primary-brand-background</span><span class="ts-ref-val" style="color:#E6CC00;">ref.yellow.500 · #FEDE00</span></div>
+              <div class="ts-ref-row"><span class="ts-ref-key">large-border-radius</span><span class="ts-ref-val" style="color:#8888CC;">ref.border-radius-l · 12px</span></div>
+              <div class="ts-ref-row"><span class="ts-ref-key">large-text</span><span class="ts-ref-val" style="color:#8888CC;">system.label-l · 16px SemiBold</span></div>
+            </div>
+          </div>
+          <div class="ts-panel" style="margin-top:10px;">
+            <div class="ts-panel-header">component.checkbox &amp; radio</div>
+            <div class="ts-panel-rows">
+              <div class="ts-row"><span class="ts-row-num">1</span><span class="ts-prop">size</span><span class="ts-colon">:</span><span class="ts-token">"ref.spacing-l"</span></div>
+              <div class="ts-row"><span class="ts-row-num">2</span><span class="ts-prop">borderRadius (checkbox)</span><span class="ts-colon">:</span><span class="ts-token">"ref.border-radius-xs"</span></div>
+              <div class="ts-row"><span class="ts-row-num">3</span><span class="ts-prop">borderColor</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.300"</span></div>
+              <div class="ts-row"><span class="ts-row-num">4</span><span class="ts-prop">fill:checked</span><span class="ts-colon">:</span><span class="ts-token">"component.button.primary-brand-background"</span></div>
+              <div class="ts-row"><span class="ts-row-num">5</span><span class="ts-prop">label-typography</span><span class="ts-colon">:</span><span class="ts-token">"system.body-m"</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. TEXT FIELD -->
+    <div class="tok-section">
+      <p class="tok-section-title">Text Field — States</p>
+      <div class="comp-showcase">
+        <div>
+          <p class="comp-showcase-label">Component Preview</p>
+          <div class="comp-preview-area" style="gap:20px;">
+            <div class="tf-states">
+              <div class="wkdk-tf-wrap">
+                <span class="wkdk-tf-label">Store name</span>
+                <input class="wkdk-tf" type="text" placeholder="Enter store name" />
+                <span class="wkdk-tf-helper">Visible to all staff members</span>
+              </div>
+              <div class="wkdk-tf-wrap">
+                <span class="wkdk-tf-label">Phone number</span>
+                <input class="wkdk-tf" type="text" value="010-1234-" />
+                <span class="wkdk-tf-helper">Used for shift notifications</span>
+              </div>
+              <div class="wkdk-tf-wrap">
+                <span class="wkdk-tf-label">Password</span>
+                <input class="wkdk-tf error" type="password" value="pass" />
+                <span class="wkdk-tf-helper error-msg">Password must be at least 8 characters</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:.72rem;color:var(--txt-400);margin-top:10px;">Click any field to see focus state · 3rd field shows error state</p>
+        </div>
+        <div>
+          <p class="comp-showcase-label">Applied tokens (token studio)</p>
+          <div class="ts-panel">
+            <div class="ts-panel-header">component.text-field · default / focus / error</div>
+            <div class="ts-panel-rows">
+              <div class="ts-row"><span class="ts-row-num">1</span><span class="ts-prop">paddingRight</span><span class="ts-colon">:</span><span class="ts-token">"ref.spacing-m"</span></div>
+              <div class="ts-row"><span class="ts-row-num">2</span><span class="ts-prop">paddingLeft</span><span class="ts-colon">:</span><span class="ts-token">"ref.spacing-m"</span></div>
+              <div class="ts-row"><span class="ts-row-num">3</span><span class="ts-prop">borderRadius</span><span class="ts-colon">:</span><span class="ts-token">"ref.border-radius-l"</span></div>
+              <div class="ts-row"><span class="ts-row-num">4</span><span class="ts-prop">borderColor</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.300"</span></div>
+              <div class="ts-row"><span class="ts-row-num">5</span><span class="ts-prop">borderColor:focus</span><span class="ts-colon">:</span><span class="ts-token">"ref.yellow.500"</span></div>
+              <div class="ts-row"><span class="ts-row-num">6</span><span class="ts-prop">borderColor:error</span><span class="ts-colon">:</span><span class="ts-token">"ref.red.400"</span></div>
+              <div class="ts-row"><span class="ts-row-num">7</span><span class="ts-prop">background</span><span class="ts-colon">:</span><span class="ts-token">"system.neutral-background-main"</span></div>
+              <div class="ts-row"><span class="ts-row-num">8</span><span class="ts-prop">input-typography</span><span class="ts-colon">:</span><span class="ts-token">"system.body-l"</span></div>
+              <div class="ts-row"><span class="ts-row-num">9</span><span class="ts-prop">label-typography</span><span class="ts-colon">:</span><span class="ts-token">"system.label-s"</span></div>
+              <div class="ts-row"><span class="ts-row-num">10</span><span class="ts-prop">helper-typography</span><span class="ts-colon">:</span><span class="ts-token">"system.caption-m"</span></div>
+            </div>
+          </div>
+          <div class="tok-chain">
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.spacing-m</span><span class="tok-chain-val" style="color:var(--acc);">16px</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.border-radius-l</span><span class="tok-chain-val" style="color:var(--acc);">12px</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.gray.300</span><span class="tok-chain-val" style="color:#C8C8C8;">#C8C8C8</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.red.400</span><span class="tok-chain-val" style="color:#F14E48;">#F14E48</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">system.body-l</span><span class="tok-chain-val" style="color:var(--acc);">16px Regular · 150% lh</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. TABS -->
+    <div class="tok-section">
+      <p class="tok-section-title">Tabs — Navigation</p>
+      <div class="comp-showcase">
+        <div>
+          <p class="comp-showcase-label">Component Preview</p>
+          <div class="comp-preview-area" style="padding:24px 24px 0;">
+            <div class="wkdk-tabs" id="demo-tabs">
+              <div class="wkdk-tab-item active" data-tab-item="0">Schedule</div>
+              <div class="wkdk-tab-item" data-tab-item="1">Tasks</div>
+              <div class="wkdk-tab-item" data-tab-item="2">Staff</div>
+              <div class="wkdk-tab-item" data-tab-item="3">Reports</div>
+            </div>
+            <div class="wkdk-tab-content" id="demo-tab-content">Staff schedule is displayed here. Tap a tab to switch views.</div>
+          </div>
+          <p style="font-size:.72rem;color:var(--txt-400);margin-top:10px;">Click tabs to switch — active indicator uses brand yellow</p>
+        </div>
+        <div>
+          <p class="comp-showcase-label">Applied tokens (token studio)</p>
+          <div class="ts-panel">
+            <div class="ts-panel-header">component.tabs · item</div>
+            <div class="ts-panel-rows">
+              <div class="ts-row"><span class="ts-row-num">1</span><span class="ts-prop">paddingTop</span><span class="ts-colon">:</span><span class="ts-token">"ref.spacing-s"</span></div>
+              <div class="ts-row"><span class="ts-row-num">2</span><span class="ts-prop">paddingBottom</span><span class="ts-colon">:</span><span class="ts-token">"ref.spacing-s"</span></div>
+              <div class="ts-row"><span class="ts-row-num">3</span><span class="ts-prop">paddingRight</span><span class="ts-colon">:</span><span class="ts-token">"ref.spacing-m"</span></div>
+              <div class="ts-row"><span class="ts-row-num">4</span><span class="ts-prop">paddingLeft</span><span class="ts-colon">:</span><span class="ts-token">"ref.spacing-m"</span></div>
+              <div class="ts-row"><span class="ts-row-num">5</span><span class="ts-prop">indicator-color</span><span class="ts-colon">:</span><span class="ts-token">"ref.yellow.500"</span></div>
+              <div class="ts-row"><span class="ts-row-num">6</span><span class="ts-prop">divider-color</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.100"</span></div>
+              <div class="ts-row"><span class="ts-row-num">7</span><span class="ts-prop">color:active</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.900"</span></div>
+              <div class="ts-row"><span class="ts-row-num">8</span><span class="ts-prop">color:inactive</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.400"</span></div>
+              <div class="ts-row"><span class="ts-row-num">9</span><span class="ts-prop">typography</span><span class="ts-colon">:</span><span class="ts-token">"system.label-m"</span></div>
+            </div>
+          </div>
+          <div class="tok-chain">
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.spacing-s · padding</span><span class="tok-chain-val" style="color:var(--acc);">12px</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.yellow.500 · indicator</span><span class="tok-chain-val" style="color:#E6CC00;">#FEDE00</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.gray.900 · active</span><span class="tok-chain-val" style="color:var(--txt-600);">#212121</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">system.label-m</span><span class="tok-chain-val" style="color:var(--acc);">14px SemiBold · 125% lh</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SWITCH -->
+    <div class="tok-section">
+      <p class="tok-section-title">Switch — Toggle</p>
+      <div class="comp-showcase">
+        <div>
+          <p class="comp-showcase-label">Component Preview</p>
+          <div class="comp-preview-area">
+            <div class="wkdk-switch-row">
+              <div class="wkdk-switch-meta"><span class="wkdk-switch-title">Push Notifications</span><span class="wkdk-switch-sub">Receive alerts for new shifts</span></div>
+              <label class="wkdk-switch"><input type="checkbox" checked><span class="wkdk-switch-track"></span></label>
+            </div>
+            <div class="wkdk-switch-row">
+              <div class="wkdk-switch-meta"><span class="wkdk-switch-title">Auto Check-in</span><span class="wkdk-switch-sub">Use GPS to verify attendance</span></div>
+              <label class="wkdk-switch"><input type="checkbox"><span class="wkdk-switch-track"></span></label>
+            </div>
+            <div class="wkdk-switch-row">
+              <div class="wkdk-switch-meta"><span class="wkdk-switch-title">Weekly Report</span><span class="wkdk-switch-sub">Receive summary every Monday</span></div>
+              <label class="wkdk-switch"><input type="checkbox" checked><span class="wkdk-switch-track"></span></label>
+            </div>
+          </div>
+          <p style="font-size:.72rem;color:var(--txt-400);margin-top:10px;">Click to toggle — spring animation on the thumb</p>
+        </div>
+        <div>
+          <p class="comp-showcase-label">Applied tokens (token studio)</p>
+          <div class="ts-panel">
+            <div class="ts-panel-header">component.switch</div>
+            <div class="ts-panel-rows">
+              <div class="ts-row"><span class="ts-row-num">1</span><span class="ts-prop">track-color:off</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.200"</span></div>
+              <div class="ts-row"><span class="ts-row-num">2</span><span class="ts-prop">track-color:on</span><span class="ts-colon">:</span><span class="ts-token">"ref.yellow.500"</span></div>
+              <div class="ts-row"><span class="ts-row-num">3</span><span class="ts-prop">thumb-color</span><span class="ts-colon">:</span><span class="ts-token">"ref.white"</span></div>
+              <div class="ts-row"><span class="ts-row-num">4</span><span class="ts-prop">track-border-radius</span><span class="ts-colon">:</span><span class="ts-token">"ref.border-radius-full"</span></div>
+              <div class="ts-row"><span class="ts-row-num">5</span><span class="ts-prop">title-typography</span><span class="ts-colon">:</span><span class="ts-token">"system.label-m"</span></div>
+              <div class="ts-row"><span class="ts-row-num">6</span><span class="ts-prop">sub-typography</span><span class="ts-colon">:</span><span class="ts-token">"system.caption-m"</span></div>
+              <div class="ts-row"><span class="ts-row-num">7</span><span class="ts-prop">row-padding</span><span class="ts-colon">:</span><span class="ts-token">"ref.spacing-s"</span></div>
+              <div class="ts-row"><span class="ts-row-num">8</span><span class="ts-prop">divider-color</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.100"</span></div>
+            </div>
+          </div>
+          <div class="tok-chain">
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.gray.200 · track off</span><span class="tok-chain-val" style="color:#E1E1E1;">#E1E1E1</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.yellow.500 · track on</span><span class="tok-chain-val" style="color:#E6CC00;">#FEDE00</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">system.label-m · title</span><span class="tok-chain-val" style="color:var(--acc);">14px SemiBold</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">system.caption-m · sub</span><span class="tok-chain-val" style="color:var(--acc);">12px Regular</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. BOTTOM SHEET -->
+    <div class="tok-section">
+      <p class="tok-section-title">Bottom Sheet</p>
+      <div class="comp-showcase">
+        <div>
+          <p class="comp-showcase-label">Mobile Preview — iPhone 17 Pro</p>
+          <div class="iphone-wrap">
+            <div class="iphone-frame">
+              <div class="iphone-di"></div>
+              <div class="iphone-screen">
+                <!-- Status bar -->
+                <div class="iphone-statusbar">
+                  <span class="isb-time">9:41</span>
+                  <div class="isb-icons">
+                    <svg width="16" height="11" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="4" width="3" height="8" rx="1" opacity=".3"/></svg>
+                    <svg width="15" height="11" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.5C10.3 2.5 12.4 3.5 13.8 5.1L15.2 3.6C13.4 1.6 10.9.5 8 .5S2.6 1.6.8 3.6L2.2 5.1C3.6 3.5 5.7 2.5 8 2.5z"/><path d="M8 5.5C9.4 5.5 10.7 6.1 11.6 7.1L13 5.6C11.7 4.3 9.9 3.5 8 3.5S4.3 4.3 3 5.6L4.4 7.1C5.3 6.1 6.6 5.5 8 5.5z"/><circle cx="8" cy="10" r="1.5"/></svg>
+                    <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><path d="M23 4.5v3a1.5 1.5 0 000-3z" fill="currentColor" opacity=".4"/></svg>
+                  </div>
+                </div>
+                <!-- Top Nav -->
+                <div class="iphone-topnav">
+                  <div class="itn-left"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div>
+                  <span class="itn-title">Today's Schedule</span>
+                  <div class="itn-right">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+                  </div>
+                </div>
+                <!-- Content + Bottom Sheet container -->
+                <div class="iphone-content">
+                  <div class="mbs-container">
+                    <div class="mbs-trigger-area">
+                      <div class="iphone-card" style="width:calc(100% - 20px);margin:0;">
+                        <div class="iphone-card-label">Next shift</div>
+                        <div class="iphone-card-title">Kim Jihoon · 09:00 – 18:00</div>
+                        <span class="shift-badge">▲ 8hrs</span>
+                      </div>
+                      <button class="mobile-trigger-btn" id="mbs-open-btn">Tap to see bottom sheet</button>
+                      <p class="mbs-trigger-hint">Swipe down handle or tap outside to dismiss</p>
+                    </div>
+                    <!-- Overlay -->
+                    <div class="mbs-overlay" id="mbs-overlay"></div>
+                    <!-- Bottom Sheet -->
+                    <div class="mbs-sheet" id="mbs-sheet">
+                      <div class="mbs-handle-wrap" id="mbs-handle">
+                        <div class="mbs-drag-handle"></div>
+                      </div>
+                      <div class="mbs-title">Staff Actions</div>
+                      <div class="mbs-item"><span class="mbs-item-icon">✏️</span>Edit shift schedule</div>
+                      <div class="mbs-item"><span class="mbs-item-icon">📋</span>Assign task checklist</div>
+                      <div class="mbs-item"><span class="mbs-item-icon">💬</span>Send announcement</div>
+                      <div class="mbs-item mbs-danger"><span class="mbs-item-icon">🗑️</span>Remove staff member</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Home indicator -->
+                <div class="iphone-home-indicator"><div class="iphone-home-bar"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="comp-showcase-label">Applied tokens (token studio)</p>
+          <div class="ts-panel">
+            <div class="ts-panel-header">component.bottom-sheet</div>
+            <div class="ts-panel-rows">
+              <div class="ts-row"><span class="ts-row-num">1</span><span class="ts-prop">border-radius-top</span><span class="ts-colon">:</span><span class="ts-token">"ref.border-radius-xxl"</span></div>
+              <div class="ts-row"><span class="ts-row-num">2</span><span class="ts-prop">background</span><span class="ts-colon">:</span><span class="ts-token">"system.neutral-background-main"</span></div>
+              <div class="ts-row"><span class="ts-row-num">3</span><span class="ts-prop">handle-color</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.300"</span></div>
+              <div class="ts-row"><span class="ts-row-num">4</span><span class="ts-prop">item-padding</span><span class="ts-colon">:</span><span class="ts-token">"ref.spacing-m"</span></div>
+              <div class="ts-row"><span class="ts-row-num">5</span><span class="ts-prop">item-divider</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.100"</span></div>
+              <div class="ts-row"><span class="ts-row-num">6</span><span class="ts-prop">title-typography</span><span class="ts-colon">:</span><span class="ts-token">"system.title-l"</span></div>
+              <div class="ts-row"><span class="ts-row-num">7</span><span class="ts-prop">item-typography</span><span class="ts-colon">:</span><span class="ts-token">"system.body-m"</span></div>
+              <div class="ts-row"><span class="ts-row-num">8</span><span class="ts-prop">overlay-color</span><span class="ts-colon">:</span><span class="ts-token">rgba(ref.black · 0.45)</span></div>
+            </div>
+          </div>
+          <div class="tok-chain">
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.border-radius-xxl</span><span class="tok-chain-val" style="color:var(--acc);">20px</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">system.neutral-bg-main</span><span class="tok-chain-val" style="color:var(--acc);">ref.white · #FFFFFF</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">system.title-l</span><span class="tok-chain-val" style="color:var(--acc);">22px Bold · 125% lh</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">system.body-m</span><span class="tok-chain-val" style="color:var(--acc);">14px Regular · 150% lh</span></div>
+          </div>
+          <div style="margin-top:16px;padding:12px;background:rgba(79,114,224,.06);border-radius:var(--radius-md);border:1px solid rgba(79,114,224,.12);">
+            <p style="font-size:.67rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);margin-bottom:6px;">Interaction</p>
+            <p style="font-size:.72rem;color:var(--txt-600);line-height:1.6;">Tap button → overlay fades in + sheet slides up from bottom using <code style="font-family:'Geist Mono',monospace;font-size:.68rem;color:var(--acc);">translateY(100%→0)</code>. Dismiss by tapping overlay or dragging the handle downward.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. BOTTOM NAVIGATION & CTA -->
+    <div class="tok-section">
+      <p class="tok-section-title">Bottom Navigation &amp; CTA</p>
+      <div class="comp-showcase">
+        <div>
+          <p class="comp-showcase-label">Mobile Preview — iPhone 17 Pro</p>
+          <div class="iphone-wrap">
+            <div class="iphone-frame">
+              <div class="iphone-di"></div>
+              <div class="iphone-screen">
+                <!-- Status bar -->
+                <div class="iphone-statusbar">
+                  <span class="isb-time">9:41</span>
+                  <div class="isb-icons">
+                    <svg width="16" height="11" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="4" width="3" height="8" rx="1" opacity=".3"/></svg>
+                    <svg width="15" height="11" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.5C10.3 2.5 12.4 3.5 13.8 5.1L15.2 3.6C13.4 1.6 10.9.5 8 .5S2.6 1.6.8 3.6L2.2 5.1C3.6 3.5 5.7 2.5 8 2.5z"/><path d="M8 5.5C9.4 5.5 10.7 6.1 11.6 7.1L13 5.6C11.7 4.3 9.9 3.5 8 3.5S4.3 4.3 3 5.6L4.4 7.1C5.3 6.1 6.6 5.5 8 5.5z"/><circle cx="8" cy="10" r="1.5"/></svg>
+                    <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><path d="M23 4.5v3a1.5 1.5 0 000-3z" fill="currentColor" opacity=".4"/></svg>
+                  </div>
+                </div>
+                <!-- Top Navigation (Figma: node 2013-11270) -->
+                <div class="iphone-topnav">
+                  <div class="itn-left"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div>
+                  <span class="itn-title">My Store</span>
+                  <div class="itn-right">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><circle cx="18" cy="6" r="3" fill="#F14E48" stroke="none"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+                  </div>
+                </div>
+                <!-- Scrollable content — actual screen -->
+                <div id="bnav-content" class="iphone-content" style="overflow-y:auto;-webkit-overflow-scrolling:touch;">
+                  <img src="hds/source/actual%20screen.png" style="width:100%;display:block;" alt="App screen">
+                </div>
+                <!-- CTA bar — transparent bg, between content and nav -->
+                <div class="iphone-cta-bar">
+                  <button class="bn-cta">+ Add a product</button>
+                </div>
+                <!-- Fixed: Bottom Nav -->
+                <div class="iphone-bottom">
+                  <div class="bn-cta-wrap"></div>
+                  <div class="bottom-nav-bar" style="border-top:1px solid #EEEEEE;background:#FFFFFF;">
+                    <div class="bn-item" style="position:relative;">
+                      <div class="bn-icon"><img src="hds/source/to-do.svg" alt=""></div>
+                      <span style="position:absolute;top:2px;right:18px;width:7px;height:7px;background:#F14E48;border-radius:50%;border:1.5px solid #fff;display:block;"></span>
+                      <span class="bn-label">To-do</span>
+                    </div>
+                    <div class="bn-item active"><div class="bn-icon"><img src="hds/source/scan_s.svg" alt=""></div><span class="bn-label" style="color:#212121;font-weight:700;">Scan</span></div>
+                    <div class="bn-item"><div class="bn-icon"><img src="hds/source/job.svg" alt=""></div><span class="bn-label">Job&amp;Hire</span></div>
+                    <div class="bn-item"><div class="bn-icon"><img src="hds/source/more.svg" alt=""></div><span class="bn-label">More</span></div>
+                  </div>
+                </div>
+                <div class="iphone-home-indicator"><div class="iphone-home-bar"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="comp-showcase-label">Applied tokens (token studio)</p>
+          <div class="ts-panel">
+            <div class="ts-panel-header">component.top-nav</div>
+            <div class="ts-panel-rows">
+              <div class="ts-row"><span class="ts-row-num">1</span><span class="ts-prop">background</span><span class="ts-colon">:</span><span class="ts-token">"system.neutral-background-main"</span></div>
+              <div class="ts-row"><span class="ts-row-num">2</span><span class="ts-prop">divider-color</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.100"</span></div>
+              <div class="ts-row"><span class="ts-row-num">3</span><span class="ts-prop">height</span><span class="ts-colon">:</span><span class="ts-token">— (52px, not tokenized)</span></div>
+              <div class="ts-row"><span class="ts-row-num">4</span><span class="ts-prop">icon-color</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.900"</span></div>
+              <div class="ts-row"><span class="ts-row-num">5</span><span class="ts-prop">title-typography</span><span class="ts-colon">:</span><span class="ts-token">"system.title-l"</span></div>
+            </div>
+          </div>
+          <div class="ts-panel" style="margin-top:10px;">
+            <div class="ts-panel-header">component.bottom-nav</div>
+            <div class="ts-panel-rows">
+              <div class="ts-row"><span class="ts-row-num">1</span><span class="ts-prop">background</span><span class="ts-colon">:</span><span class="ts-token">"system.neutral-background-main"</span></div>
+              <div class="ts-row"><span class="ts-row-num">2</span><span class="ts-prop">divider-color</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.100"</span></div>
+              <div class="ts-row"><span class="ts-row-num">3</span><span class="ts-prop">icon-color:active</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.900"</span></div>
+              <div class="ts-row"><span class="ts-row-num">4</span><span class="ts-prop">icon-color:inactive</span><span class="ts-colon">:</span><span class="ts-token">"ref.gray.300"</span></div>
+              <div class="ts-row"><span class="ts-row-num">5</span><span class="ts-prop">label-typography</span><span class="ts-colon">:</span><span class="ts-token">"system.caption-s"</span></div>
+            </div>
+          </div>
+          <div class="ts-panel" style="margin-top:10px;">
+            <div class="ts-panel-header">component.cta-button (bottom)</div>
+            <div class="ts-panel-rows">
+              <div class="ts-row"><span class="ts-row-num">1</span><span class="ts-prop">borderRadius</span><span class="ts-colon">:</span><span class="ts-token">"component.button.large-border-radius"</span></div>
+              <div class="ts-row"><span class="ts-row-num">2</span><span class="ts-prop">fill</span><span class="ts-colon">:</span><span class="ts-token">"component.button.primary-brand-background"</span></div>
+              <div class="ts-row"><span class="ts-row-num">3</span><span class="ts-prop">typography</span><span class="ts-colon">:</span><span class="ts-token">"component.button.large-text"</span></div>
+            </div>
+          </div>
+          <div class="tok-chain">
+            <div class="tok-chain-row"><span class="tok-chain-key">system.title-l · top-nav title</span><span class="tok-chain-val" style="color:var(--acc);">22px Bold</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.gray.900 · active icon</span><span class="tok-chain-val" style="color:var(--txt-600);">#212121</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">ref.gray.300 · inactive icon</span><span class="tok-chain-val" style="color:#C8C8C8;">#C8C8C8</span></div>
+            <div class="tok-chain-row"><span class="tok-chain-key">system.caption-s · nav label</span><span class="tok-chain-val" style="color:var(--acc);">11px Regular</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- TAB: LIGHT -->
+  <div class="tab-panel" id="tab-light">
+
+    <!-- Color Palettes -->
+    <div class="tok-section">
+      <p class="tok-section-title">ref · Color Palettes</p>
+      <div id="light-palettes"></div>
+    </div>
+
+    <!-- System colors -->
+    <div class="tok-section">
+      <p class="tok-section-title">system · Background Colors</p>
+      <div class="comp-table" id="light-system"></div>
+    </div>
+
+    <!-- Component -->
+    <div class="tok-section">
+      <p class="tok-section-title">component · button</p>
+      <div class="comp-table" id="light-comp"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>HDS Token Reference · HDS WEB Design System</span>
+  <a href="hds.html" style="color:var(--acc);text-decoration:none;font-size:.78rem;">← Back to case study</a>
+</footer>
+
+<script>
+const TOKENS = {"wkdk":{"ref":{"white":{"value":"#FFFFFF","type":"color"},"black":{"value":"#000000","type":"color"},"bold":{"value":"Bold","type":"fontWeights"},"semi-bold":{"value":"SemiBold","type":"fontWeights"},"regular":{"value":"Regular","type":"fontWeights"},"pretendard":{"value":"Pretendard","type":"fontFamilies"},"spacing-xxxs":{"value":"2px","type":"spacing"},"spacing-xxs":{"value":"4px","type":"spacing"},"spacing-xs":{"value":"8px","type":"spacing"},"spacing-s":{"value":"12px","type":"spacing"},"spacing-m":{"value":"16px","type":"spacing"},"spacing-l":{"value":"20px","type":"spacing"},"spacing-xl":{"value":"24px","type":"spacing"},"spacing-xxl":{"value":"32px","type":"spacing"},"spacing-xxxl":{"value":"40px","type":"spacing"},"font-size-xxxxs":{"value":"11px","type":"fontSizes"},"font-size-xxxs":{"value":"12px","type":"fontSizes"},"font-size-xxs":{"value":"14px","type":"fontSizes"},"font-size-xs":{"value":"16px","type":"fontSizes"},"font-size-s":{"value":"22px","type":"fontSizes"},"font-size-m":{"value":"24px","type":"fontSizes"},"font-size-l":{"value":"28px","type":"fontSizes"},"font-size-xl":{"value":"32px","type":"fontSizes"},"font-size-xxl":{"value":"36px","type":"fontSizes"},"font-size-xxxl":{"value":"45px","type":"fontSizes"},"line-height-wide":{"value":"150%","type":"lineHeights"},"line-height-normal":{"value":"125%","type":"lineHeights"},"letter-spacing-normal":{"value":"-0.1px","type":"letterSpacing"},"letter-spacing-tight":{"value":"-0.3px","type":"letterSpacing"},"letter-spacing-tighter":{"value":"-0.4px","type":"letterSpacing"},"border-radius-xs":{"value":"4px","type":"borderRadius"},"border-radius-s":{"value":"6px","type":"borderRadius"},"border-radius-m":{"value":"8px","type":"borderRadius"},"border-radius-l":{"value":"12px","type":"borderRadius"},"border-radius-xl":{"value":"16px","type":"borderRadius"},"border-radius-xxl":{"value":"20px","type":"borderRadius"}},"system":{"display-s":{"value":{"fontFamily":"{ref.pretendard}","fontWeight":"{ref.semi-bold}","lineHeight":"{ref.line-height-normal}","fontSize":"{ref.font-size-xxl}","letterSpacing":"{ref.letter-spacing-normal}"},"type":"typography"},"headline-m":{"value":{"fontFamily":"{ref.pretendard}","fontWeight":"{ref.bold}","lineHeight":"{ref.line-height-normal}","fontSize":"{ref.font-size-l}","letterSpacing":"{ref.letter-spacing-normal}"},"type":"typography"},"title-l":{"value":{"fontFamily":"{ref.pretendard}","fontWeight":"{ref.bold}","lineHeight":"{ref.line-height-normal}","fontSize":"{ref.font-size-s}","letterSpacing":"{ref.letter-spacing-normal}"},"type":"typography"},"body-l":{"value":{"fontFamily":"{ref.pretendard}","fontWeight":"{ref.regular}","lineHeight":"{ref.line-height-wide}","fontSize":"{ref.font-size-xs}","letterSpacing":"{ref.letter-spacing-tighter}"},"type":"typography"},"body-m":{"value":{"fontFamily":"{ref.pretendard}","fontWeight":"{ref.regular}","lineHeight":"{ref.line-height-wide}","fontSize":"{ref.font-size-xxs}","letterSpacing":"{ref.letter-spacing-tighter}"},"type":"typography"},"caption-m":{"value":{"fontFamily":"{ref.pretendard}","fontWeight":"{ref.regular}","fontSize":"{ref.font-size-xxxs}","letterSpacing":"{ref.letter-spacing-tight}","lineHeight":"{ref.line-height-normal}"},"type":"typography"},"caption-s":{"value":{"fontFamily":"{ref.pretendard}","fontWeight":"{ref.regular}","lineHeight":"{ref.line-height-normal}","fontSize":"{ref.font-size-xxxxs}","letterSpacing":"{ref.letter-spacing-tight}"},"type":"typography"},"label-l":{"value":{"fontFamily":"{ref.pretendard}","fontWeight":"{ref.semi-bold}","lineHeight":"{ref.line-height-normal}","fontSize":"{ref.font-size-xs}","letterSpacing":"{ref.letter-spacing-tighter}"},"type":"typography"},"label-m":{"value":{"fontFamily":"{ref.pretendard}","fontWeight":"{ref.semi-bold}","lineHeight":"{ref.line-height-normal}","fontSize":"{ref.font-size-xxs}","letterSpacing":"{ref.letter-spacing-tighter}"},"type":"typography"},"label-s":{"value":{"fontFamily":"{ref.pretendard}","fontWeight":"{ref.semi-bold}","lineHeight":"{ref.line-height-normal}","fontSize":"{ref.font-size-xxxs}","letterSpacing":"{ref.letter-spacing-tight}"},"type":"typography"},"page-margin":{"value":"$ref.spacing-m","type":"spacing"},"temp-border-radius":{"value":"$ref.border-radius-xs","type":"borderRadius"}},"component":{"button":{"large-text":{"value":"$system.label-l","type":"typography"},"medium-text":{"value":"$system.label-l","type":"typography"},"small-text":{"value":"$system.label-l","type":"typography"},"large-padding-horizontal":{"value":"$ref.spacing-xl","type":"spacing"},"large-border-radius":{"value":"$ref.border-radius-l","type":"borderRadius"},"medium-border-radius":{"value":"$ref.border-radius-l","type":"borderRadius"},"medium-padding-horizontal":{"value":"$ref.spacing-l","type":"spacing"},"small-border-radius":{"value":"$ref.border-radius-m","type":"borderRadius"},"small-padding-horizontal":{"value":"$ref.spacing-m","type":"spacing"}}}},"wkdk_light":{"ref":{"gray":{"50":{"value":"#F6F6F6","type":"color"},"100":{"value":"#EEEEEE","type":"color"},"200":{"value":"#E1E1E1","type":"color"},"300":{"value":"#C8C8C8","type":"color"},"400":{"value":"#ACACAC","type":"color"},"500":{"value":"#8E8E8E","type":"color"},"600":{"value":"#6E6E6E","type":"color"},"700":{"value":"#585858","type":"color"},"800":{"value":"#333333","type":"color"},"900":{"value":"#212121","type":"color"}},"yellow":{"50":{"value":"#FFF6DA","type":"color"},"100":{"value":"#FFF0BD","type":"color"},"200":{"value":"#FFEBA2","type":"color"},"300":{"value":"#FEE78F","type":"color"},"400":{"value":"#FFE253","type":"color"},"500":{"value":"#FEDE00","type":"color"},"600":{"value":"#F2D40A","type":"color"},"700":{"value":"#E4C701","type":"color"},"800":{"value":"#D6BB00","type":"color"},"900":{"value":"#C7AE00","type":"color"}},"red":{"50":{"value":"#FFCBC4","type":"color"},"100":{"value":"#FFB2AA","type":"color"},"200":{"value":"#FF9086","type":"color"},"300":{"value":"#FF6E65","type":"color"},"400":{"value":"#F14E48","type":"color"},"500":{"value":"#D32F2F","type":"color"},"600":{"value":"#BB0818","type":"color"},"700":{"value":"#92000F","type":"color"},"800":{"value":"#6F0008","type":"color"},"900":{"value":"#520004","type":"color"}},"green":{"50":{"value":"#C3FFC7","type":"color"},"100":{"value":"#98FFA3","type":"color"},"200":{"value":"#7BF78C","type":"color"},"300":{"value":"#71ED82","type":"color"},"400":{"value":"#63E076","type":"color"},"500":{"value":"#51CF66","type":"color"},"600":{"value":"#2FB34B","type":"color"},"700":{"value":"#009633","type":"color"},"800":{"value":"#007F2A","type":"color"},"900":{"value":"#006A21","type":"color"}},"orange":{"50":{"value":"#FFECDF","type":"color"},"100":{"value":"#FFE6D4","type":"color"},"200":{"value":"#FFD2B2","type":"color"},"300":{"value":"#FFC091","type":"color"},"400":{"value":"#FFAB69","type":"color"},"500":{"value":"#FF922B","type":"color"},"600":{"value":"#E57C00","type":"color"},"700":{"value":"#CB6D00","type":"color"},"800":{"value":"#A95A00","type":"color"},"900":{"value":"#8E4B00","type":"color"}}},"system":{"neutral-background-main":{"value":"$ref.white","type":"color"},"neutral-background-sub":{"value":"$ref.gray.100","type":"color"},"neutral-background-card":{"value":"$ref.gray.50","type":"color"}},"component":{"button":{"primary-brand-background":{"value":"$ref.yellow.500","type":"color"},"primary-brand-background-press":{"value":"$ref.yellow.600","type":"color"},"primary-neutral-text":{"value":"$ref.gray.900","type":"color"},"primary-neutral-text-press":{"value":"$ref.gray.900","type":"color"}}}}};
+
+// REF lookup helper
+function refVal(key){
+  const t = TOKENS.wkdk.ref[key] || TOKENS.wkdk_light.ref[key];
+  return t ? t.value : key;
+}
+function resolveTypoRef(ref){
+  const k = ref.replace(/[{}]/g,'').replace('ref.','');
+  return refVal(k);
+}
+
+/* ---- BASE TAB ---- */
+// ref colors
+const refColorEl = document.getElementById('ref-colors');
+['white','black'].forEach(k=>{
+  const t = TOKENS.wkdk.ref[k];
+  refColorEl.innerHTML += `<div class="swatch-item">
+    <div class="swatch-box" style="background:${t.value};${t.value==='#FFFFFF'?'border:1px solid #E0E0E0':''}"></div>
+    <span class="swatch-label">${k}<br>${t.value}</span>
+  </div>`;
+});
+
+// ref spacing
+const spacingEl = document.getElementById('ref-spacing');
+const spacingKeys = Object.keys(TOKENS.wkdk.ref).filter(k=>k.startsWith('spacing-'));
+const maxSpacing = 40;
+spacingKeys.forEach(k=>{
+  const v = TOKENS.wkdk.ref[k].value;
+  const px = parseInt(v);
+  spacingEl.innerHTML += `<div class="spacing-row">
+    <span class="spacing-name">ref.${k}</span>
+    <span class="spacing-val">${v}</span>
+    <div style="display:flex;align-items:center;"><div class="spacing-bar" style="width:${Math.round(px/maxSpacing*100)}%;min-width:3px;max-width:100%;"></div></div>
+  </div>`;
+});
+
+// ref font sizes
+const fsEl = document.getElementById('ref-fontsizes');
+const fsKeys = Object.keys(TOKENS.wkdk.ref).filter(k=>k.startsWith('font-size-'));
+fsKeys.forEach(k=>{
+  const v = TOKENS.wkdk.ref[k].value;
+  const px = parseInt(v);
+  fsEl.innerHTML += `<div class="fontsize-row">
+    <span class="spacing-name">ref.${k}</span>
+    <span class="spacing-val">${v}</span>
+    <span class="fontsize-specimen" style="font-size:${Math.min(px,32)}px;">Aa</span>
+  </div>`;
+});
+
+// ref border radius
+const radEl = document.getElementById('ref-radius');
+const radKeys = Object.keys(TOKENS.wkdk.ref).filter(k=>k.startsWith('border-radius-'));
+radKeys.forEach(k=>{
+  const v = TOKENS.wkdk.ref[k].value;
+  radEl.innerHTML += `<div class="radius-item">
+    <div class="radius-box" style="border-radius:${v}"></div>
+    <span class="radius-label">${k.replace('border-radius-','')}<br>${v}</span>
+  </div>`;
+});
+
+// ref other (fontWeights, lineHeights, letterSpacing, fontFamilies)
+const otherEl = document.getElementById('ref-other');
+const groups = {fontWeights:[],lineHeights:[],letterSpacing:[],fontFamilies:[]};
+Object.entries(TOKENS.wkdk.ref).forEach(([k,t])=>{
+  if(groups[t.type]) groups[t.type].push({k,v:t.value});
+});
+Object.entries(groups).forEach(([type,items])=>{
+  if(!items.length) return;
+  const label = {fontWeights:'Font Weights',lineHeights:'Line Heights',letterSpacing:'Letter Spacing',fontFamilies:'Font Families'}[type];
+  let html = `<p style="font-size:.7rem;font-weight:600;color:var(--txt-400);margin:16px 0 8px;">${label}</p><div class="pill-group">`;
+  items.forEach(({k,v})=>{ html+=`<span class="pill">${k} <code>${v}</code></span>`; });
+  html+='</div>';
+  otherEl.innerHTML+=html;
+});
+
+// system typography
+const typoEl = document.getElementById('sys-typo');
+const weightMap={'Bold':700,'SemiBold':600,'Regular':400};
+const sampleTexts={
+  'display-s':'Display S','headline-m':'Headline M','title-l':'Title L',
+  'body-l':'The quick brown fox jumps over the lazy dog','body-m':'The quick brown fox jumps over the lazy dog',
+  'caption-m':'Caption medium text','caption-s':'Caption small','label-l':'Label Large','label-m':'Label Medium','label-s':'Label Small'
+};
+Object.entries(TOKENS.wkdk.system).forEach(([k,t])=>{
+  if(t.type!=='typography') return;
+  const v=t.value;
+  const fs=parseInt(resolveTypoRef(v.fontSize));
+  const fw=weightMap[resolveTypoRef(v.fontWeight)]||400;
+  const lh=resolveTypoRef(v.lineHeight);
+  const ls=resolveTypoRef(v.letterSpacing);
+  const fsRef = v.fontSize.replace(/[{}]/g,'').replace('ref.','');
+  const fwRef = v.fontWeight.replace(/[{}]/g,'').replace('ref.','');
+  const lhRef = v.lineHeight.replace(/[{}]/g,'').replace('ref.','');
+  const lsRef = v.letterSpacing.replace(/[{}]/g,'').replace('ref.','');
+  typoEl.innerHTML+=`<div class="typo-row">
+    <span class="typo-name">system.${k}</span>
+    <span class="typo-specimen" style="font-size:${Math.min(fs,36)}px;font-weight:${fw};line-height:${lh};letter-spacing:${ls};">${sampleTexts[k]||k}</span>
+    <span class="typo-meta">${fsRef} · ${fs}px<br>${fwRef} · ${fw}<br>${lhRef} · ${lh}<br>${lsRef}</span>
+  </div>`;
+});
+
+// system other
+const sysOtherEl = document.getElementById('sys-other');
+Object.entries(TOKENS.wkdk.system).forEach(([k,t])=>{
+  if(t.type==='typography') return;
+  sysOtherEl.innerHTML+=`<div class="comp-row">
+    <span class="comp-key">system.${k}</span>
+    <span class="comp-ref">${t.value}</span>
+    <span class="comp-type">${t.type}</span>
+  </div>`;
+});
+
+// component button
+const compEl = document.getElementById('comp-button');
+Object.entries(TOKENS.wkdk.component.button).forEach(([k,t])=>{
+  compEl.innerHTML+=`<div class="comp-row">
+    <span class="comp-key">component.button.${k}</span>
+    <span class="comp-ref">${t.value}</span>
+    <span class="comp-type">${t.type}</span>
+  </div>`;
+});
+
+/* ---- LIGHT TAB ---- */
+// palettes
+const palEl = document.getElementById('light-palettes');
+const palettes = TOKENS.wkdk_light.ref;
+Object.entries(palettes).forEach(([name,steps])=>{
+  let stripHtml='', hexHtml='';
+  const entries = Object.entries(steps);
+  entries.forEach(([step,t])=>{
+    stripHtml+=`<div class="palette-strip-item" style="background:${t.value}" data-step="${step}" title="${step}: ${t.value}"></div>`;
+    hexHtml+=`<span>${step}: ${t.value}</span>`;
+  });
+  palEl.innerHTML+=`<div class="palette-group">
+    <p class="palette-name">${name}</p>
+    <div class="palette-strip">${stripHtml}</div>
+    <div class="palette-hex">${hexHtml}</div>
+  </div>`;
+});
+
+// light system
+const lightSysEl = document.getElementById('light-system');
+Object.entries(TOKENS.wkdk_light.system).forEach(([k,t])=>{
+  lightSysEl.innerHTML+=`<div class="comp-row">
+    <span class="comp-key">system.${k}</span>
+    <span class="comp-ref">${t.value}</span>
+    <span class="comp-type">${t.type}</span>
+  </div>`;
+});
+
+// light comp
+const lightCompEl = document.getElementById('light-comp');
+Object.entries(TOKENS.wkdk_light.component.button).forEach(([k,t])=>{
+  lightCompEl.innerHTML+=`<div class="comp-row">
+    <span class="comp-key">component.button.${k}</span>
+    <span class="comp-ref">${t.value}</span>
+    <span class="comp-type">${t.type}</span>
+  </div>`;
+});
+
+/* ---- TABS ---- */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ---- ACCORDION ---- */
+document.querySelectorAll('.wkdk-acc-trigger').forEach(trigger=>{
+  trigger.addEventListener('click',()=>{
+    const idx = trigger.dataset.acc;
+    const body = document.getElementById('acc-body-'+idx);
+    const isOpen = body.classList.contains('open');
+    // close all
+    document.querySelectorAll('.wkdk-acc-body').forEach(b=>b.classList.remove('open'));
+    document.querySelectorAll('.wkdk-acc-trigger').forEach(t=>t.classList.remove('open'));
+    if(!isOpen){ body.classList.add('open'); trigger.classList.add('open'); }
+  });
+});
+
+/* ---- BOTTOM SHEET INTERACTION ---- */
+(function(){
+  const openBtn = document.getElementById('mbs-open-btn');
+  const overlay = document.getElementById('mbs-overlay');
+  const sheet   = document.getElementById('mbs-sheet');
+  const handle  = document.getElementById('mbs-handle');
+  if(!openBtn||!overlay||!sheet) return;
+
+  function openSheet(){
+    overlay.classList.add('open');
+    sheet.classList.add('open');
+    sheet.style.transform='';
+    sheet.style.transition='transform .36s cubic-bezier(.25,.46,.45,.94)';
+    overlay.style.background='';
+    overlay.style.transition='background .3s';
+  }
+  function closeSheet(){
+    sheet.style.transition='transform .36s cubic-bezier(.25,.46,.45,.94)';
+    overlay.style.transition='background .3s';
+    sheet.style.transform='translateY(100%)';
+    overlay.style.background='rgba(0,0,0,0)';
+    setTimeout(()=>{ overlay.classList.remove('open'); sheet.classList.remove('open'); sheet.style.transform=''; },360);
+  }
+
+  openBtn.addEventListener('click', openSheet);
+  overlay.addEventListener('click', closeSheet);
+
+  /* drag-to-dismiss */
+  let startY=0, curY=0, dragging=false;
+  handle.addEventListener('touchstart',e=>{
+    if(!sheet.classList.contains('open')) return;
+    startY=e.touches[0].clientY; dragging=true;
+    sheet.style.transition='none'; overlay.style.transition='none';
+  },{passive:true});
+  handle.addEventListener('mousedown',e=>{
+    if(!sheet.classList.contains('open')) return;
+    startY=e.clientY; dragging=true;
+    sheet.style.transition='none'; overlay.style.transition='none';
+    const onMove=mv=>{ curY=mv.clientY; const d=Math.max(0,curY-startY); sheet.style.transform=`translateY(${d}px)`; overlay.style.background=`rgba(0,0,0,${Math.max(0,0.45*(1-d/200))})`;};
+    const onUp=()=>{ document.removeEventListener('mousemove',onMove); document.removeEventListener('mouseup',onUp); if(!dragging)return; dragging=false; (curY-startY>80)?closeSheet():(sheet.style.transition='transform .3s',sheet.style.transform='',overlay.style.transition='background .3s',overlay.style.background='rgba(0,0,0,.45)'); };
+    document.addEventListener('mousemove',onMove);
+    document.addEventListener('mouseup',onUp);
+  });
+  document.addEventListener('touchmove',e=>{
+    if(!dragging) return; curY=e.touches[0].clientY;
+    const d=Math.max(0,curY-startY);
+    sheet.style.transform=`translateY(${d}px)`;
+    overlay.style.background=`rgba(0,0,0,${Math.max(0,0.45*(1-d/200))})`;
+  },{passive:true});
+  document.addEventListener('touchend',()=>{
+    if(!dragging) return; dragging=false;
+    (curY-startY>80)?closeSheet():(sheet.style.transition='transform .3s',sheet.style.transform='',overlay.style.transition='background .3s',overlay.style.background='rgba(0,0,0,.45)');
+  });
+})();
+
+/* ---- BOTTOM NAV AUTO-SCROLL (demonstrates fixed bottom) ---- */
+(function(){
+  const el = document.getElementById('bnav-content');
+  if(!el) return;
+  let dir=1, pos=0, raf, paused=false;
+  function step(){
+    pos += 0.55 * dir;
+    const max = el.scrollHeight - el.clientHeight;
+    if(max <= 0) return;
+    if(pos >= max){ pos=max; dir=-1; paused=true; setTimeout(()=>{ paused=false; raf=requestAnimationFrame(step); },1000); return; }
+    if(pos <= 0){ pos=0; dir=1; paused=true; setTimeout(()=>{ paused=false; raf=requestAnimationFrame(step); },1600); return; }
+    el.scrollTop=pos;
+    if(!paused) raf=requestAnimationFrame(step);
+  }
+  setTimeout(()=>{ raf=requestAnimationFrame(step); }, 1800);
+  el.addEventListener('touchstart', ()=>cancelAnimationFrame(raf), {passive:true});
+  el.addEventListener('mousedown', ()=>cancelAnimationFrame(raf));
+})();
+
+/* ---- DEMO TABS (component preview) ---- */
+(function(){
+  const tabContents = ['Staff schedule is displayed here. Tap a tab to switch views.','Task checklist for today\'s shifts. Assign and track progress.','Manage staff members, roles, and permissions.','View weekly and monthly performance reports.'];
+  const tabsEl = document.getElementById('demo-tabs');
+  const contentEl = document.getElementById('demo-tab-content');
+  if(!tabsEl||!contentEl) return;
+  tabsEl.querySelectorAll('.wkdk-tab-item').forEach(item=>{
+    item.addEventListener('click',()=>{
+      tabsEl.querySelectorAll('.wkdk-tab-item').forEach(i=>i.classList.remove('active'));
+      item.classList.add('active');
+      contentEl.textContent = tabContents[+item.dataset.tabItem]||'';
+    });
+  });
+})();
+
+/* ---- NAV ---- */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('floating',window.scrollY>24),{passive:true});
+
+/* ---- BUTTON PLAYGROUND ---- */
+(function(){
+  // Exact values from Figma node 2003-9393
+  const COLORS = {
+    primary:   { fillBg:'#FEDE00', fillTxt:'#212121', hover:'#F0CF00',  pressed:'#E6CC00',
+                 lineBorder:'#FEDE00', lineTxt:'#212121', textTxt:'#212121',
+                 tokenBg:'component.button.fill.primary.background', tokenTxt:'component.button.fill.primary.label',
+                 refBg:'ref.yellow.500 · #FEDE00', swatch:'#E6CC00', variants:['fill','line','text'] },
+    secondary: { fillBg:'#333333', fillTxt:'#FFFFFF', hover:'#444444',  pressed:'#222222',
+                 lineBorder:'#333333', lineTxt:'#333333', textTxt:'#333333',
+                 tokenBg:'component.button.fill.secondary.background', tokenTxt:'component.button.fill.secondary.label',
+                 refBg:'ref.gray.800 · #333333', swatch:'#666', variants:['fill','line','text'] },
+    negative:  { fillBg:'#F14E48', fillTxt:'#FFFFFF', hover:'#DE3E38',  pressed:'#C73530',
+                 lineBorder:'#F14E48', lineTxt:'#F14E48', textTxt:'#F14E48',
+                 tokenBg:'component.button.fill.negative.background', tokenTxt:'component.button.fill.negative.label',
+                 refBg:'ref.red.500 · #F14E48', swatch:'#D03030', variants:['fill','line','text'] },
+    neutral:   { fillBg:'#FFFFFF',  fillTxt:'#585858', hover:'#F5F5F5', pressed:'#EEEEEE',
+                 lineBorder:'#EEEEEE', lineTxt:'#585858', textTxt:'#585858',
+                 tokenBg:'component.button.line.neutral.background',   tokenTxt:'component.button.line.neutral.label',
+                 refBg:'ref.gray.100 · #EEEEEE', swatch:'#ACACAC', variants:['line'] }
+  };
+  // Sizes: Large(48) / Medium(40) / Small(32) / Xsmall(26) per Figma
+  const SIZES = {
+    lg: { h:'48px', px:'24px', r:'12px', fs:'16px', is:24, gap:4, name:'large',  padRef:'ref.spacing-xl · 24px',  rRef:'ref.border-radius-l · 12px',  tyRef:'system.label-l · 16px Medium' },
+    md: { h:'40px', px:'20px', r:'10px', fs:'14px', is:20, gap:4, name:'medium', padRef:'ref.spacing-l · 20px',   rRef:'ref.border-radius-m · 10px',  tyRef:'system.label-m · 14px Medium' },
+    sm: { h:'32px', px:'16px', r:'8px',  fs:'13px', is:16, gap:4, name:'small',  padRef:'ref.spacing-m · 16px',   rRef:'ref.border-radius-s · 8px',   tyRef:'system.label-s · 13px Medium' },
+    xs: { h:'26px', px:'12px', r:'6px',  fs:'12px', is:14, gap:4, name:'xsmall', padRef:'ref.spacing-s · 12px',   rRef:'ref.border-radius-xs · 6px',  tyRef:'system.label-xs · 12px Medium' }
+  };
+  const ARROW = (n) => `<svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>`;
+
+  function $id(id){ return document.getElementById(id); }
+
+  function vals(){
+    return {
+      sem:  $id('pg-semantic').value,
+      var_: $id('pg-variant').value,
+      sz:   $id('pg-size').value,
+      sh:   $id('pg-shape').value,
+      li:   $id('pg-licon-chk').checked,
+      ri:   $id('pg-ricon-chk').checked,
+      lbl:  $id('pg-lbl-txt').value || 'button'
+    };
+  }
+
+  // Update Variant options based on semantic (Neutral = Line only)
+  function syncVariantOptions(sem){
+    const sel = $id('pg-variant');
+    const allowed = COLORS[sem].variants;
+    Array.from(sel.options).forEach(o => {
+      o.disabled = !allowed.includes(o.value);
+    });
+    if(!allowed.includes(sel.value)) sel.value = allowed[0];
+  }
+
+  function render(){
+    const v = vals();
+    syncVariantOptions(v.sem);
+    const c = COLORS[v.sem];
+    const s = SIZES[v.sz];
+    const btn = $id('pg-btn');
+    const licEl = $id('pg-licon');
+    const ricEl = $id('pg-ricon');
+    const lblEl = $id('pg-label');
+    if(!btn) return;
+
+    const radius = v.sh === 'round' ? '99px' : s.r;
+
+    let bg, color, border, hoverBg, activeBg;
+    if(v.var_ === 'fill'){
+      bg = c.fillBg; hoverBg = c.hover; activeBg = c.pressed;
+      color = c.fillTxt; border = 'none';
+    } else if(v.var_ === 'line'){
+      bg = v.sem==='neutral' ? c.fillBg : 'transparent';
+      hoverBg = v.sem==='neutral' ? c.hover : c.fillBg+'22';
+      activeBg = v.sem==='neutral' ? c.pressed : c.fillBg+'38';
+      color = c.lineTxt; border = `1px solid ${c.lineBorder}`;
+    } else {
+      bg = 'transparent'; hoverBg = c.fillBg+'22'; activeBg = c.fillBg+'38';
+      color = c.textTxt; border = 'none';
+    }
+
+    btn.style.cssText = [
+      `height:${s.h}`, `padding:0 ${s.px}`, `border-radius:${radius}`,
+      `background:${bg}`, `color:${color}`, `border:${border}`,
+      `font-size:${s.fs}`, `font-weight:500`,
+      `font-family:'Pretendard',system-ui,sans-serif`,
+      `display:inline-flex`, `align-items:center`, `gap:${s.gap}px`,
+      `cursor:pointer`, `letter-spacing:-0.4px`,
+      `transition:background .12s, transform .1s`
+    ].join(';')+';';
+
+    // Inject hover / active pseudo-class CSS (overrides inline style)
+    let stTag = document.getElementById('pg-btn-states');
+    if(!stTag){ stTag=document.createElement('style'); stTag.id='pg-btn-states'; document.head.appendChild(stTag); }
+    stTag.textContent = `#pg-btn:hover{background:${hoverBg}!important;}#pg-btn:active{background:${activeBg}!important;transform:scale(0.97)!important;}`;
+
+    licEl.innerHTML = v.li ? ARROW(s.is) : '';
+    licEl.style.display = v.li ? '' : 'none';
+    ricEl.innerHTML = v.ri ? ARROW(s.is) : '';
+    ricEl.style.display = v.ri ? '' : 'none';
+    lblEl.textContent = v.lbl;
+
+    updateTokens(v, c, s);
+  }
+
+  function updateTokens(v, c, s){
+    const hdr = $id('pg-tok-header');
+    const rows = $id('pg-tok-rows');
+    const chain = $id('pg-tok-chain');
+    if(!hdr) return;
+
+    hdr.textContent = `component.button · ${s.name} · ${v.var_}`;
+
+    const baseRows = [
+      ['paddingRight', `"component.button.${s.name}-padding-horizontal"`],
+      ['paddingLeft',  `"component.button.${s.name}-padding-horizontal"`],
+      ['borderRadius', `"component.button.${s.name}-border-radius"`],
+      ['fill',         `"${c.tokenBg}"`],
+      ['fill:press',   `"${c.tokenBg}-press"`],
+      ['color',        `"${c.tokenTxt}"`],
+      ['typography',   `"component.button.${s.name}-text"`]
+    ];
+    if(v.var_==='line') baseRows.splice(3, 0, ['borderWidth','"component.button.line-border-width"'], ['borderColor',`"component.button.${v.var_}.${v.sem}.border"`]);
+    if(v.var_==='text') baseRows.splice(3, 2); // no fill tokens for text variant
+
+    rows.innerHTML = baseRows.map((r,i)=>
+      `<div class="ts-row"><span class="ts-row-num">${i+1}</span><span class="ts-prop">${r[0]}</span><span class="ts-colon">:</span><span class="ts-token">${r[1]}</span></div>`
+    ).join('');
+
+    const bgVal = v.var_==='fill' ? c.refBg : (v.var_==='line' ? c.refBg.replace('background','border') : 'transparent');
+    chain.innerHTML = [
+      `<div class="ts-ref-row"><span class="ts-ref-key">${s.name}-padding-horizontal</span><span class="ts-ref-val" style="color:#8888CC;">${s.padRef}</span></div>`,
+      `<div class="ts-ref-row"><span class="ts-ref-key">${s.name}-border-radius</span><span class="ts-ref-val" style="color:#8888CC;">${s.rRef}</span></div>`,
+      `<div class="ts-ref-row"><span class="ts-ref-key">${v.sem}-${v.var_==='fill'?'background':'border'}</span><span class="ts-ref-val" style="color:${c.swatch};">${v.var_==='fill'?c.refBg:c.refBg}</span></div>`,
+      `<div class="ts-ref-row"><span class="ts-ref-key">${s.name}-text</span><span class="ts-ref-val" style="color:#8888CC;">${s.tyRef}</span></div>`
+    ].join('');
+  }
+
+  // Wire controls
+  $id('pg-semantic')?.addEventListener('change', () => { syncVariantOptions($id('pg-semantic').value); render(); });
+  ['pg-variant','pg-size','pg-shape'].forEach(id=>$id(id)?.addEventListener('change',render));
+  ['pg-licon-chk','pg-ricon-chk'].forEach(id=>$id(id)?.addEventListener('change',render));
+  $id('pg-lbl-txt')?.addEventListener('input',render);
+  $id('pg-reset')?.addEventListener('click',()=>{
+    $id('pg-semantic').value='primary';
+    syncVariantOptions('primary');
+    $id('pg-variant').value='fill';
+    $id('pg-size').value='lg';
+    $id('pg-shape').value='square';
+    $id('pg-licon-chk').checked=true;
+    $id('pg-ricon-chk').checked=true;
+    $id('pg-lbl-txt').value='button';
+    render();
+  });
+
+  // ---- CONFETTI BURST ----
+  const CONFETTI_ICONS = [
+    // to-do
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4M16 3v4"/><path d="M8 14l2 2 4-4"/></svg>`,
+    // scan
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="3" y1="12" x2="21" y2="12"/></svg>`,
+    // job
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>`,
+    // more
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/></svg>`,
+    // star
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="currentColor"/></svg>`,
+    // checkmark
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  ];
+
+  const CONFETTI_COLORS = ['#FEDE00','#F14E48','#4A90E2','#7ED321','#FF6B6B','#BD10E0','#50E3C2'];
+
+  function burstConfetti(originEl){
+    const rect = originEl.getBoundingClientRect();
+    const cx = rect.left + rect.width/2;
+    const cy = rect.top  + rect.height/2;
+    const count = 18;
+
+    for(let i=0;i<count;i++){
+      const el = document.createElement('div');
+      const icon = CONFETTI_ICONS[i % CONFETTI_ICONS.length];
+      const color = CONFETTI_COLORS[i % CONFETTI_COLORS.length];
+      const size = 14 + Math.random()*10;
+      el.innerHTML = icon;
+      el.style.cssText = [
+        `position:fixed`,`left:${cx}px`,`top:${cy}px`,
+        `width:${size}px`,`height:${size}px`,
+        `color:${color}`,`pointer-events:none`,`z-index:9999`,
+        `transform-origin:center center`
+      ].join(';');
+      document.body.appendChild(el);
+
+      const angle = (i/count)*Math.PI*2 + (Math.random()-.5)*.5;
+      const dist  = 60 + Math.random()*90;
+      const dx = Math.cos(angle)*dist;
+      const dy = Math.sin(angle)*dist - 30; // bias upward
+      const rot = (Math.random()-0.5)*720;
+      const dur  = 550 + Math.random()*300;
+
+      el.animate([
+        { transform:`translate(-50%,-50%) scale(1) rotate(0deg)`, opacity:1 },
+        { transform:`translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.4) rotate(${rot}deg)`, opacity:0 }
+      ],{ duration:dur, easing:'cubic-bezier(.2,.8,.5,1)', fill:'forwards' }).onfinish = ()=>el.remove();
+    }
+  }
+
+  $id('pg-btn')?.addEventListener('click', ()=>burstConfetti($id('pg-btn')));
+
+  render();
+})();
+
+</script>
+</body>
+</html>
