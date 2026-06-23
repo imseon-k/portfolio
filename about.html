@@ -321,7 +321,7 @@
   }
 
   /* ══════════════════════════════════════
-     SECTION 2 — EXPERIENCE
+     SECTION 2 — EXPERIENCE (accordion)
   ══════════════════════════════════════ */
   .exp-section { padding-top: var(--sp-lg); }
   .section-label {
@@ -329,38 +329,106 @@
     text-transform: uppercase; color: var(--txt-400);
     margin-bottom: 32px;
   }
-  .exp-list { display: flex; flex-direction: column; }
-  .exp-row {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 40px;
-    padding: 36px 0;
-    border-top: 1px solid var(--txt-200);
+
+  /* Accordion toggle button — solid container */
+  .exp-accordion-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%;
+    background: var(--clr-surface);
+    border: none;
+    border-radius: var(--radius-2xl);
+    padding: 18px 24px;
+    cursor: pointer; color: var(--txt-900);
+    text-align: left; gap: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
   }
-  .exp-row:last-child { border-bottom: 1px solid var(--txt-200); }
-  .exp-meta { padding-top: 2px; }
-  .exp-title {
-    font-family: 'Geist', system-ui, sans-serif;
+  .exp-accordion-btn:hover {
+    box-shadow: var(--shadow-md);
+  }
+  .exp-accordion-label {
+    font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+    font-weight: 600; color: var(--txt-900); letter-spacing: -0.1px;
+  }
+  .acc-chevron {
+    width: 18px; height: 18px; color: var(--txt-400);
+    flex-shrink: 0; transition: transform 0.35s ease;
+  }
+  .exp-accordion-btn[aria-expanded="true"] .acc-chevron { transform: rotate(180deg); }
+
+  /* Accordion body — smooth open/close via grid */
+  .exp-accordion-body {
+    display: grid; grid-template-rows: 1fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .exp-accordion-body.acc-closed { grid-template-rows: 0fr; }
+  /* overflow: clip instead of hidden — lets box-shadows escape while still clipping height */
+  .exp-accordion-inner { overflow: clip; min-height: 0; }
+
+  /* Experience card grid */
+  .exp-card-grid { display: flex; flex-direction: column; gap: 12px; padding: 20px 4px 6px; }
+  .exp-card {
+    background: rgba(255,255,255,0.62);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.76);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.92) inset,
+      0 3px 14px rgba(0,0,0,0.05);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+  }
+
+  /* Card top: avatar + badge / company */
+  .exp-card-top {
+    display: flex; align-items: center; gap: 14px;
+    padding: 22px 28px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.055);
+  }
+
+  /* Avatar circle */
+  .exp-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    flex-shrink: 0; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
     font-size: 1rem; font-weight: 800;
-    line-height: 1.35;
-    color: var(--txt-900);
-    margin-bottom: 10px;
+    background: var(--txt-100); color: var(--txt-600);
   }
-  .exp-date {
-    font-size: 0.78rem; color: var(--txt-400);
-    display: flex; align-items: center; gap: 8px;
+  .exp-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .exp-avatar--lime { background: var(--clr-lime); color: #3A5000; }
+  .exp-card-header { flex: 1; min-width: 0; }
+
+  /* Card body */
+  .exp-card-body {
+    padding: 20px 28px 28px;
+    display: flex; flex-direction: column;
   }
-  .exp-date .dot { width: 1px; height: 10px; background: var(--txt-200); }
-  .exp-type {
-    font-size: 0.72rem; font-weight: 500;
-    padding: 2px 8px; border-radius: 99px;
-    background: rgba(0,0,0,0.05); color: var(--txt-600);
+
+  /* Badge */
+  .exp-badge {
+    display: inline-flex; align-items: center;
+    font-size: 0.59rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 99px; margin-bottom: 6px;
   }
+  .badge-freelance { background: #C8FF4A; color: #3A5000; }
+  .badge-fulltime  { background: var(--txt-100); color: var(--txt-600); }
+  .badge-contract  { background: #FFE8B0; color: #7A5200; }
+
+  .exp-company-name {
+    font-size: 0.68rem; font-weight: 500; color: var(--txt-400);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .exp-role {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    font-weight: 800; line-height: 1.2;
+    color: var(--txt-900); margin-bottom: 4px;
+  }
+  .exp-dates { font-size: 0.74rem; color: var(--txt-400); margin-bottom: 16px; }
   .exp-highlight {
-    display: block;
-    font-size: 0.93rem; font-weight: 600;
-    color: var(--txt-900);
-    margin-bottom: 10px;
+    font-size: 0.85rem; font-weight: 600;
+    color: var(--txt-900); line-height: 1.6; margin-bottom: 10px;
   }
   .exp-bullets {
     list-style: none; margin: 0; padding: 0;
@@ -368,17 +436,19 @@
   }
   .exp-bullets li {
     display: flex; gap: 10px;
-    font-size: 0.93rem; line-height: 1.7; color: var(--txt-600);
+    font-size: 0.85rem; line-height: 1.7; color: var(--txt-600);
   }
   .exp-bullets li::before {
     content: '·'; font-size: 1.1rem; line-height: 1.6;
     color: var(--txt-400); flex-shrink: 0;
   }
-  .exp-desc {
-    font-size: 0.93rem; line-height: 1.75;
-    color: var(--txt-600);
-    padding-top: 2px;
+  .exp-desc { font-size: 0.85rem; line-height: 1.75; color: var(--txt-600); }
+  .exp-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 16px; font-size: 0.8rem; font-weight: 600;
+    color: var(--txt-900); text-decoration: none; transition: gap 0.2s;
   }
+  .exp-cta:hover { gap: 10px; }
 
   /* ══════════════════════════════════════
      SECTION 3 — ANOTHER ME
@@ -486,7 +556,10 @@
     section { padding: var(--sp-md) var(--sp-sm); }
     .intro-grid { grid-template-columns: 1fr; gap: 32px; }
     .intro-photo { width: 100%; height: 280px; }
-    .exp-row { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; }
+    .exp-accordion-btn { padding: 16px 0; }
+    .exp-card-top { padding: 18px 22px 14px; gap: 12px; }
+    .exp-card-body { padding: 16px 22px 22px; }
+    .exp-avatar { width: 36px; height: 36px; font-size: 0.88rem; }
     .other-grid { grid-template-columns: 1fr; }
     .other-photo { aspect-ratio: 4/3; }
     .other-content { padding: 32px 28px; }
@@ -494,10 +567,16 @@
     .contact-bar { flex-direction: column; align-items: flex-start; gap: 16px; }
   }
 
+  @media (max-width: 712px) {
+    .exp-card-top { padding: 16px 18px 12px; gap: 10px; }
+    .exp-card-body { padding: 14px 18px 20px; }
+    .exp-avatar { width: 32px; height: 32px; font-size: 0.8rem; }
+    .exp-role { font-size: 0.95rem; }
+  }
+
   @media (max-width: 640px) {
     .intro-greeting { font-size: 2rem; }
     .intro-photo { height: 240px; }
-    .exp-row { gap: 8px; }
     footer { flex-direction: column; gap: 8px; text-align: center; }
   }
   
@@ -505,6 +584,19 @@
   [data-theme="dark"] body {
     background-color: var(--clr-bg);
     background-image: radial-gradient(ellipse 50% 40% at 90% 5%, rgba(0,191,255,.13) 0%, transparent 70%), radial-gradient(ellipse 40% 35% at 10% 95%, rgba(200,255,74,.10) 0%, transparent 70%);
+  }
+  [data-theme="dark"] .exp-accordion-btn {
+    background: var(--clr-surface);
+  }
+  [data-theme="dark"] .exp-card {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.10);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.08) inset,
+      0 3px 14px rgba(0,0,0,0.25);
+  }
+  [data-theme="dark"] .exp-card-top {
+    border-bottom-color: rgba(255,255,255,0.07);
   }
   [data-theme="dark"] nav {
     background: rgba(17,17,17,0.10);
@@ -913,94 +1005,119 @@
 
     <!-- ══ EXPERIENCE ══ -->
     <section class="exp-section">
-      <p class="section-label reveal">Experience</p>
-      <div class="exp-list">
+      <button class="exp-accordion-btn" aria-expanded="true" aria-controls="exp-list">
+        <span class="exp-accordion-label">See more my experience</span>
+        <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
 
-        <div class="exp-row reveal">
-          <div class="exp-meta">
-            <div class="exp-title">Independent<br>Product Designer</div>
-            <div class="exp-date">
-              Aug 2024 – Present
-              <span class="dot"></span>
-              <span class="exp-type">Freelance</span>
+      <div class="exp-accordion-body" id="exp-list">
+        <div class="exp-accordion-inner">
+          <div class="exp-card-grid">
+
+            <!-- FREELANCE -->
+            <div class="exp-card reveal">
+              <div class="exp-card-top">
+                <div class="exp-avatar exp-avatar--lime">F</div>
+                <div class="exp-card-header">
+                  <span class="exp-badge badge-freelance">Freelance</span>
+                  <p class="exp-company-name">@ Self-employed</p>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <h3 class="exp-role">Independent Product Designer</h3>
+                <p class="exp-dates">Aug 2024 – Present</p>
+                <p class="exp-highlight">Notable clients: Samsung, LG Energy Solution, CLASS101, LKT.</p>
+                <ul class="exp-bullets">
+                  <li>Samsung — Designed responsive UX for SmartThings promotional web campaign (mobile, tablet, TV) deployed across 8 countries.</li>
+                  <li>LG Energy Solution × Fastcampus — Built a scalable presentation design system for a corporate training programme; delivered 7 decks (200 pages) in 4 weeks using AI-assisted visual asset generation.</li>
+                  <li><a href="https://www.clubmetis.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">Metis</a> (Google Play) — 0-to-1 product designer for a live mobile commerce app; led end-to-end UX/UI from concept to App Store release.</li>
+                  <li><a href="http://lkterritory.com/?ckattempt=1" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">LKT</a> — Designed B2B fulfillment dashboard (WCS/WMS SaaS); delivered component kit and interface guidelines, extended to HD Autoever.</li>
+                  <li><a href="https://class101.net/en" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">CLASS101</a> — Designed an AI-assisted thumbnail system for South Korea's leading EdTech platform, establishing GPT prompt guidelines for visual consistency at scale.</li>
+                </ul>
+              </div>
             </div>
-          </div>
-          <div class="exp-desc">
-            <strong class="exp-highlight">Notable clients: Samsung, LG Energy Solution, CLASS101, LKT.</strong>
-            <ul class="exp-bullets">
-              <li>Samsung — Designed responsive UX for SmartThings promotional web campaign (mobile, tablet, TV) deployed across 8 countries.</li>
-              <li>LG Energy Solution × Fastcampus — Built a scalable presentation design system for a corporate training programme; delivered 7 decks (200 pages) in 4 weeks using AI-assisted visual asset generation.</li>
-              <li><a href="https://www.clubmetis.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">Metis</a> (Google Play) — 0-to-1 product designer for a live mobile commerce app; led end-to-end UX/UI from concept to App Store release.</li>
-              <li><a href="http://lkterritory.com/?ckattempt=1" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">LKT</a> — Designed B2B fulfillment dashboard (WCS/WMS SaaS); delivered component kit and interface guidelines, extended to HD Autoever.</li>
-              <li><a href="https://class101.net/en" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">CLASS101</a> — Designed an AI-assisted thumbnail system for South Korea's leading EdTech platform, establishing GPT prompt guidelines for visual consistency at scale.</li>
-            </ul>
-          </div>
-        </div>
 
-        <div class="exp-row reveal">
-          <div class="exp-meta">
-            <div class="exp-title">Product Design Mentor<br>at Blue Tiger</div>
-            <div class="exp-date">
-              Aug 2025 – Feb 2026
-              <span class="dot"></span>
-              <span class="exp-type">Contract</span>
+            <!-- BLUE TIGER -->
+            <div class="exp-card reveal">
+              <div class="exp-card-top">
+                <div class="exp-avatar"><img src="logo01.png" alt="Blue Tiger logo"></div>
+                <div class="exp-card-header">
+                  <span class="exp-badge badge-contract">Contract</span>
+                  <p class="exp-company-name">@ Blue Tiger Mentoring Program</p>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <h3 class="exp-role">Product Design Mentor</h3>
+                <p class="exp-dates">Aug 2025 – Feb 2026</p>
+                <p class="exp-desc">Provided detailed feedback to refine mentee portfolios, boosting design thinking depth. Helped junior designers frame better problems and deliver innovative solutions.</p>
+              </div>
             </div>
-          </div>
-          <p class="exp-desc">As a product Mentor for the Blue Tiger Mentoring Program, I focused on providing detailed feedback to refine mentee portfolios, specifically boosting their design thinking depth. Proudly mentored and guided designers, directly contributing to their ability to frame better problems and deliver innovative design solutions.</p>
-        </div>
 
-        <div class="exp-row reveal">
-          <div class="exp-meta">
-            <div class="exp-title">Senior Product Designer<br>at <a href="https://www.wkdk.kr/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">HIGHERX Co., Ltd.</a></div>
-            <div class="exp-date">
-              Mar 2022 – Mar 2024
-              <span class="dot"></span>
-              <span class="exp-type">Full-time</span>
+            <!-- HIGHERX -->
+            <div class="exp-card reveal">
+              <div class="exp-card-top">
+                <div class="exp-avatar"><img src="logo02.png" alt="HigherX logo"></div>
+                <div class="exp-card-header">
+                  <span class="exp-badge badge-fulltime">Full-time</span>
+                  <p class="exp-company-name">@ Higher X Co., Ltd.</p>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <h3 class="exp-role">Product Designer</h3>
+                <p class="exp-dates">Mar 2022 – Mar 2024</p>
+                <p class="exp-highlight">Sole product designer; drove 150%+ user growth over 2 years through end-to-end UX ownership.</p>
+                <ul class="exp-bullets">
+                  <li>Improved photo-saving UX via A/B testing, achieving a 25% increase in daily photo uploads — directly contributed to securing B2B client ADT Cap.</li>
+                  <li>Architected HDS WEB design system from brand identity tokens up — built 19 components, enabling consistent design-to-dev handoff.</li>
+                  <li>Managed and delegated work to a junior designer within the design system build, overseeing quality and delivery.</li>
+                </ul>
+                <a class="exp-cta" href="wkdk01.html">View case study →</a>
+              </div>
             </div>
-          </div>
-          <div class="exp-desc">
-            <strong class="exp-highlight">Sole product designer; drove 150%+ user growth over 2 years through end-to-end UX ownership across the full product lifecycle.</strong>
-            <ul class="exp-bullets">
-              <li>Improved photo-saving UX via A/B testing, achieving a 25% increase in daily photo uploads — directly contributed to securing a new B2B client (ADT Cap.).</li>
-              <li>Architected HDS WEB design system from brand identity tokens up — built 19 components and integrated design tokens with GitHub via Figma plugin (pre-native token era), enabling consistent design-to-dev handoff across the team.</li>
-              <li>Managed and delegated work to a junior designer within the design system build, overseeing quality and delivery.</li>
-            </ul>
-          </div>
-        </div>
 
-        <div class="exp-row reveal">
-          <div class="exp-meta">
-            <div class="exp-title">UXUI Designer<br>at <a href="https://www.remain.co.kr/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">RemainCo., Ltd.</a></div>
-            <div class="exp-date">
-              Nov 2020 – Feb 2022
-              <span class="dot"></span>
-              <span class="exp-type">Full-time</span>
+            <!-- REMAIN CO. -->
+            <div class="exp-card reveal">
+              <div class="exp-card-top">
+                <div class="exp-avatar"><img src="logo03.png" alt="RemainCo logo"></div>
+                <div class="exp-card-header">
+                  <span class="exp-badge badge-fulltime">Full-time</span>
+                  <p class="exp-company-name">@ RemainCo., Ltd.</p>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <h3 class="exp-role">UXUI Designer</h3>
+                <p class="exp-dates">Nov 2020 – Feb 2022</p>
+                <p class="exp-highlight">Notable clients: LG U+, WECA, Logisall.</p>
+                <ul class="exp-bullets">
+                  <li><a href="https://remainlayer.com/work/2008%EB%85%84%EB%94%94%EC%9E%90%EC%9D%B8%EC%8A%A4%ED%83%80%EC%9D%BC%EB%A1%9C%EA%B5%AC%ED%98%84%ED%95%9CLG%ED%99%80%EB%A7%A8%EB%B8%8C%EB%9E%9C%EB%93%9C%EC%82%AC%EC%9D%B4%ED%8A%B8.html" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">LG U+ "Holeman is Back!"</a> — All campaign gifts claimed within 4 hours of launch, exceeding targets.</li>
+                  <li>Managed 2–3 client projects in parallel monthly; took on client communication and project management from year one.</li>
+                  <li>Led design direction on 5–6 projects as primary designer, including intern and junior oversight.</li>
+                  <li>Delivered responsive web and mobile UI across NGO, e-commerce, and enterprise sectors.</li>
+                </ul>
+              </div>
             </div>
-          </div>
-          <div class="exp-desc">
-            <strong class="exp-highlight">Notable clients: LG U+, WECA, Logisall.</strong>
-            <ul class="exp-bullets">
-              <li><a href="https://remainlayer.com/work/2008%EB%85%84%EB%94%94%EC%9E%90%EC%9D%B8%EC%8A%A4%ED%83%80%EC%9D%BC%EB%A1%9C%EA%B5%AC%ED%98%84%ED%95%9CLG%ED%99%80%EB%A7%A8%EB%B8%8C%EB%9E%9C%EB%93%9C%EC%82%AC%EC%9D%B4%ED%8A%B8.html" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">LG U+ "Holeman is Back!"</a> — Designed mobile web promotional event; all campaign gifts claimed within 4 hours of launch, exceeding event targets.</li>
-              <li>Managed 2–3 client projects in parallel monthly; took on client communication and project management from year one.</li>
-              <li>Led design direction on 5–6 projects as primary designer, including intern and junior designer oversight — covering moodboard through to shipped interface.</li>
-              <li>Delivered responsive web and mobile UI across NGO, e-commerce, and enterprise sectors (LG U+, WECA, Logisall).</li>
-            </ul>
-          </div>
-        </div>
 
-        <div class="exp-row reveal">
-          <div class="exp-meta">
-            <div class="exp-title">Graphic Designer<br>at Leesong Design Co., Ltd.</div>
-            <div class="exp-date">
-              Mar 2019 – Feb 2020
-              <span class="dot"></span>
-              <span class="exp-type">Full-time</span>
+            <!-- LEESONG DESIGN -->
+            <div class="exp-card reveal">
+              <div class="exp-card-top">
+                <div class="exp-avatar"><img src="logo04.png" alt="Leesong Design logo"></div>
+                <div class="exp-card-header">
+                  <span class="exp-badge badge-fulltime">Full-time</span>
+                  <p class="exp-company-name">@ Leesong Design Co., Ltd.</p>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <h3 class="exp-role">Graphic Designer</h3>
+                <p class="exp-dates">Mar 2019 – Feb 2020</p>
+                <p class="exp-desc">At a branding and editorial design agency, produced client-tailored graphic work spanning brand identity and print/digital design — building foundational craft discipline.</p>
+              </div>
             </div>
-          </div>
-          <p class="exp-desc">At a branding and editorial design agency, I produced client-tailored graphic work spanning brand identity and print/digital design. This experience gave me the foundational craft discipline.</p>
-        </div>
 
-      </div>
+          </div><!-- /exp-card-grid -->
+        </div><!-- /exp-accordion-inner -->
+      </div><!-- /exp-accordion-body -->
     </section>
 
     <!-- ══ ANOTHER ME ══ -->
@@ -1137,6 +1254,16 @@
           {duration:250,easing:'ease',fill:'forwards'}).onfinish = () => { window.location.href = href; };
       });
     });
+
+    /* Experience accordion */
+    const accBtn = document.querySelector('.exp-accordion-btn');
+    if (accBtn) {
+      accBtn.addEventListener('click', () => {
+        const expanded = accBtn.getAttribute('aria-expanded') === 'true';
+        accBtn.setAttribute('aria-expanded', String(!expanded));
+        document.getElementById('exp-list').classList.toggle('acc-closed', expanded);
+      });
+    }
 
     /* Magnetic buttons */
     document.querySelectorAll('.btn-primary, .btn-text').forEach(btn => {
