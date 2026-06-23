@@ -321,30 +321,76 @@
   }
 
   /* ══════════════════════════════════════
-     SECTION 2 — EXPERIENCE (accordion)
+     SECTION 2 — NOTABLE CLIENTS + EXPERIENCE
   ══════════════════════════════════════ */
-  .exp-section { padding-top: var(--sp-lg); }
+  .clients-exp-section {
+    padding-top: calc(var(--sp-lg) * 0.75);
+    padding-bottom: calc(var(--sp-lg) * 0.5);
+  }
+  /* Shared glass container wrapping both clients + accordion */
+  .clients-exp-container {
+    background: var(--lg-bg);
+    backdrop-filter: var(--lg-blur);
+    -webkit-backdrop-filter: var(--lg-blur);
+    border: 1px solid var(--lg-lo);
+    box-shadow: var(--lg-shadow);
+    border-radius: var(--radius-2xl);
+    overflow: clip;
+  }
+  /* Logo strip — no own glass, inherits from container */
+  .clients-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 28px 40px 24px;
+  }
+  .client-logo {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+  }
+  .client-logo + .client-logo {
+    border-left: 1px solid var(--lg-lo);
+  }
+  .client-logo img {
+    width: 100%;
+    max-width: 140px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+  [data-theme="dark"] .client-logo img {
+    filter: invert(1);
+  }
+
   .section-label {
     font-size: 0.72rem; font-weight: 600; letter-spacing: 1.5px;
     text-transform: uppercase; color: var(--txt-400);
     margin-bottom: 32px;
   }
 
-  /* Accordion toggle button — solid container */
+  /* Accordion toggle — flat row inside shared container */
   .exp-accordion-btn {
     display: flex; align-items: center; justify-content: space-between;
     width: 100%;
-    background: var(--clr-surface);
+    background: none;
     border: none;
-    border-radius: var(--radius-2xl);
-    padding: 18px 24px;
+    border-top: 1px solid var(--lg-lo);
+    border-radius: 0;
+    padding: 18px 40px;
     cursor: pointer; color: var(--txt-900);
     text-align: left; gap: 16px;
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.2s;
+    transition: background 0.2s;
   }
   .exp-accordion-btn:hover {
-    box-shadow: var(--shadow-md);
+    background: rgba(0,0,0,0.025);
+  }
+  [data-theme="dark"] .exp-accordion-btn:hover {
+    background: rgba(255,255,255,0.04);
   }
   .exp-accordion-label {
     font-size: clamp(0.92rem, 1.2vw, 1.05rem);
@@ -366,7 +412,7 @@
   .exp-accordion-inner { overflow: clip; min-height: 0; }
 
   /* Experience card grid */
-  .exp-card-grid { display: flex; flex-direction: column; gap: 12px; padding: 20px 4px 6px; }
+  .exp-card-grid { display: flex; flex-direction: column; gap: 12px; padding: 20px 20px 20px; }
   .exp-card {
     background: rgba(255,255,255,0.62);
     backdrop-filter: blur(24px) saturate(160%);
@@ -556,7 +602,10 @@
     section { padding: var(--sp-md) var(--sp-sm); }
     .intro-grid { grid-template-columns: 1fr; gap: 32px; }
     .intro-photo { width: 100%; height: 280px; }
-    .exp-accordion-btn { padding: 16px 0; }
+    .clients-grid { padding: 20px 28px 18px; gap: 6px; }
+    .client-logo { padding: 0 10px; }
+    .client-logo img { max-width: 100px; }
+    .exp-accordion-btn { padding: 16px 28px; }
     .exp-card-top { padding: 18px 22px 14px; gap: 12px; }
     .exp-card-body { padding: 16px 22px 22px; }
     .exp-avatar { width: 36px; height: 36px; font-size: 0.88rem; }
@@ -568,6 +617,22 @@
   }
 
   @media (max-width: 712px) {
+    .clients-grid {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0;
+      padding: 16px 20px 14px;
+    }
+    .client-logo {
+      flex: 0 0 50%;
+      padding: 12px 14px;
+      border-left: none !important;
+    }
+    .client-logo:nth-child(2) { border-left: 1px solid var(--lg-lo) !important; }
+    .client-logo:nth-child(3) { border-top: 1px solid var(--lg-lo); }
+    .client-logo:nth-child(4) { border-top: 1px solid var(--lg-lo); border-left: 1px solid var(--lg-lo) !important; }
+    .client-logo img { max-width: 110px; }
+    .exp-accordion-btn { padding: 14px 20px; }
     .exp-card-top { padding: 16px 18px 12px; gap: 10px; }
     .exp-card-body { padding: 14px 18px 20px; }
     .exp-avatar { width: 32px; height: 32px; font-size: 0.8rem; }
@@ -586,7 +651,7 @@
     background-image: radial-gradient(ellipse 50% 40% at 90% 5%, rgba(0,191,255,.13) 0%, transparent 70%), radial-gradient(ellipse 40% 35% at 10% 95%, rgba(200,255,74,.10) 0%, transparent 70%);
   }
   [data-theme="dark"] .exp-accordion-btn {
-    background: var(--clr-surface);
+    border-top-color: rgba(255,255,255,0.08);
   }
   [data-theme="dark"] .exp-card {
     background: rgba(255,255,255,0.05);
@@ -1003,16 +1068,36 @@
       </div>
     </section>
 
-    <!-- ══ EXPERIENCE ══ -->
-    <section class="exp-section">
-      <button class="exp-accordion-btn" aria-expanded="true" aria-controls="exp-list">
+    <!-- ══ NOTABLE CLIENTS + EXPERIENCE ══ -->
+    <section class="clients-exp-section reveal">
+      <p class="section-label">Notable Clients</p>
+      <div class="clients-exp-container">
+
+        <!-- Logo strip -->
+        <div class="clients-grid">
+          <div class="client-logo">
+            <img src="about/samsung.png" alt="Samsung" loading="lazy">
+          </div>
+          <div class="client-logo">
+            <img src="about/LGE.png" alt="LG Electronics" loading="lazy">
+          </div>
+          <div class="client-logo">
+            <img src="about/LGU.png" alt="LG U+" loading="lazy">
+          </div>
+          <div class="client-logo">
+            <img src="about/class.png" alt="Class101" loading="lazy">
+          </div>
+        </div>
+
+        <!-- Experience accordion (inside same container) -->
+        <button class="exp-accordion-btn" aria-expanded="false" aria-controls="exp-list">
         <span class="exp-accordion-label">See more my experience</span>
         <svg class="acc-chevron" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
 
-      <div class="exp-accordion-body" id="exp-list">
+      <div class="exp-accordion-body acc-closed" id="exp-list">
         <div class="exp-accordion-inner">
           <div class="exp-card-grid">
 
@@ -1118,6 +1203,8 @@
           </div><!-- /exp-card-grid -->
         </div><!-- /exp-accordion-inner -->
       </div><!-- /exp-accordion-body -->
+
+      </div><!-- /clients-exp-container -->
     </section>
 
     <!-- ══ ANOTHER ME ══ -->
