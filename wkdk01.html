@@ -17,7 +17,7 @@
   <meta name="twitter:image" content="og-thumb.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Geist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;500;600;700;800&family=Geist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
 
   /* ── Design Tokens ── */
@@ -103,7 +103,7 @@
     box-shadow: 0 1px 0 rgba(255,255,255,0.75) inset, 0 4px 16px rgba(51,51,51,0.06);
   }
   .nav-logo { color: var(--txt-900); text-decoration: none; flex-shrink: 0; display: flex; align-items: center; transition: opacity .25s; }
-  .nav-logo-text { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 0.95rem; letter-spacing: -0.2px; white-space: nowrap; }
+  .nav-logo-text { font-family: 'Zalando Sans Expanded', sans-serif; font-weight: 800; font-size: 0.95rem; letter-spacing: -0.2px; white-space: nowrap; }
   .nav-logo-icon { display: none; color: var(--txt-900); }
   nav.floating .nav-logo-text { display: none; }
   nav.floating .nav-logo-icon { display: flex; align-items: center; }
@@ -149,7 +149,7 @@
   /* ── PROJECT HEADER ── */
   .project-header { padding: var(--sp-32) var(--sp-48) var(--sp-48); max-width: 1200px; margin: 0 auto; border-bottom: 1px solid var(--txt-200); }
   .project-eyebrow { font-size: 0.68rem; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: var(--wkdk-blue); margin-bottom: var(--sp-16); }
-  .project-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 700; letter-spacing: -1px; line-height: 1.15; color: var(--txt-900); margin-bottom: var(--sp-32); }
+  .project-title { font-family: 'Zalando Sans Expanded', sans-serif; font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 700; letter-spacing: -1px; line-height: 1.15; color: var(--txt-900); margin-bottom: var(--sp-32); }
   .project-meta { display: flex; gap: var(--sp-48); flex-wrap: wrap; }
   .meta-item { display: flex; flex-direction: column; gap: 4px; }
   .meta-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--txt-400); }
@@ -416,7 +416,7 @@
     padding: 28px 24px;
   }
   .stat-num {
-    font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 700;
+    font-family: 'Zalando Sans Expanded', sans-serif; font-size: 2.4rem; font-weight: 700;
     color: var(--wkdk-blue); letter-spacing: -1px; line-height: 1;
     margin-bottom: 10px;
   }
@@ -453,7 +453,319 @@
     .back-to-top { bottom: 20px; right: 20px; }
     .outcome-stats { grid-template-columns: 1fr; }
   }
-  </style>
+  
+  /* ═══════════════════════════════════════════════
+     NAV — liquid glass sticky (matches index_new-design)
+     ═══════════════════════════════════════════════ */
+  @import url('https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;500;600;700;800&display=swap');
+
+  nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:200;
+    height:auto;
+    padding:12px 24px 0;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    background:none!important;
+    border:none!important;
+    box-shadow:none!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+    pointer-events:none;
+    transition:none;
+  }
+
+  .nav-shell{
+    pointer-events:auto;
+    width:100%;
+    max-width:1120px;
+    height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:0 24px 0 16px;
+    border-radius:40px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0);
+    box-shadow:none;
+    backdrop-filter:blur(0px);
+    -webkit-backdrop-filter:blur(0px);
+    transition:background .38s cubic-bezier(.22,1,.36,1),
+               border-color .38s cubic-bezier(.22,1,.36,1),
+               box-shadow .38s cubic-bezier(.22,1,.36,1),
+               backdrop-filter .38s cubic-bezier(.22,1,.36,1);
+  }
+  nav.floating .nav-shell,
+  nav.stuck .nav-shell{
+    background:rgba(255,255,255,0.62);
+    border-color:rgba(255,255,255,0.7);
+    backdrop-filter:blur(24px) saturate(1.8);
+    -webkit-backdrop-filter:blur(24px) saturate(1.8);
+    box-shadow:0 1px 2px rgba(33,33,33,0.04),
+               0 8px 32px rgba(33,33,33,0.08),
+               inset 0 1px 0 rgba(255,255,255,0.85);
+  }
+  [data-theme="dark"] nav.floating .nav-shell,
+  [data-theme="dark"] nav.stuck .nav-shell{
+    background:rgba(28,28,28,0.62);
+    border-color:rgba(255,255,255,0.10);
+    box-shadow:0 1px 2px rgba(0,0,0,0.2),
+               0 8px 32px rgba(0,0,0,0.34),
+               inset 0 1px 0 rgba(255,255,255,0.10);
+  }
+
+  .nav-left{display:flex;align-items:center;gap:4px;flex-shrink:0;}
+
+  .nav-back{
+    display:flex!important;
+    align-items:center; justify-content:center;
+    width:44px; height:44px;
+    flex-shrink:0;
+    border-radius:999px;
+    background:none; border:none; cursor:pointer;
+    color:var(--txt-900);
+    padding:0;
+    transition:background .22s cubic-bezier(.22,1,.36,1);
+  }
+  .nav-back:hover{background:rgba(51,51,51,0.08);}
+  [data-theme="dark"] .nav-back:hover{background:rgba(255,255,255,0.10);}
+
+  .nav-logo{
+    display:flex!important;
+    align-items:center; justify-content:center;
+    width:52px; height:52px;
+    flex-shrink:0;
+    text-decoration:none;
+    color:var(--txt-900);
+    font-size:0;
+  }
+  .nav-logo img{width:31px;height:36px;object-fit:contain;display:block;}
+  .nav-logo-text{display:none!important;}
+  .nav-logo-icon{display:none!important;}
+
+  .nav-right{display:flex;align-items:center;gap:4px;flex-shrink:0;}
+  .nav-links{display:none!important;}
+  .nav-burger{display:none!important;}
+  .nav-drawer{display:none!important;}
+
+  .nav-item{
+    height:48px;
+    display:flex; align-items:center; justify-content:center;
+    padding:0 16px;
+    font-family:'Zalando Sans Expanded',sans-serif;
+    font-weight:700; font-size:15px; line-height:1.2;
+    color:var(--txt-900);
+    text-transform:uppercase;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:opacity .2s cubic-bezier(.22,1,.36,1);
+  }
+  .nav-item:hover{opacity:.6;}
+
+  .nav-more{
+    display:flex; align-items:center; gap:4px;
+    height:48px;
+    padding:0 14px;
+    border-radius:24px;
+    background:rgba(51,51,51,0.06);
+    text-decoration:none;
+    transition:background .22s cubic-bezier(.22,1,.36,1);
+  }
+  .nav-more:hover{background:rgba(51,51,51,0.12);}
+  [data-theme="dark"] .nav-more{background:rgba(255,255,255,0.08);}
+  [data-theme="dark"] .nav-more:hover{background:rgba(255,255,255,0.16);}
+  .nav-more-label{
+    font-family:'Zalando Sans Expanded',sans-serif;
+    font-weight:500; font-size:14px; line-height:1.2;
+    color:var(--txt-900);
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .nav-more-eyes{width:34px;height:34px;display:flex;align-items:center;justify-content:center;}
+  .nav-more-eyes svg{width:30px;height:24px;}
+
+  /* theme toggle sits inside the shell */
+  nav .theme-toggle{flex-shrink:0;margin-left:4px;}
+
+  @media (max-width:860px){
+    nav{padding:12px 16px 0;}
+    .nav-shell{height:64px;padding:0 16px 0 10px;border-radius:32px;}
+    .nav-logo{width:44px;height:44px;}
+    .nav-logo img{width:26px;height:30px;}
+    .nav-back{width:40px;height:40px;}
+    .nav-item{font-size:13px;padding:0 10px;height:44px;}
+    .nav-more{height:44px;padding:0 10px;}
+    .nav-more-label{font-size:12px;}
+    .nav-more-eyes{width:28px;height:28px;}
+    .nav-more-eyes svg{width:25px;height:20px;}
+  }
+  @media (max-width:560px){
+    .nav-item{display:none;}
+    .nav-shell{padding:0 12px 0 8px;}
+  }
+
+
+  /* ═══════════════════════════════════════════════
+     TYPOGRAPHY — display face matches index_new-design
+     headings: Zalando Sans Expanded · body: Geist
+     ═══════════════════════════════════════════════ */
+  h1, h2, h3, h4,
+  .project-title,
+  .section-title,
+  .section-eyebrow,
+  .info-label,
+  .stat-num,
+  .doc-card-num,
+  .meeting-freq,
+  .type-eyebrow,
+  .form-header h1,
+  .form-header h2,
+  .form-monogram,
+  .btn-submit,
+  .btn-back-home,
+  .btn-label,
+  .breadcrumb a{
+    font-family:'Zalando Sans Expanded',sans-serif;
+  }
+  .project-title{letter-spacing:-1.2px;}
+  .section-eyebrow,.info-label{letter-spacing:-0.2px;}
+
+
+  /* ═══════════════════════════════════════════════
+     THEME TOGGLE — single icon (matches inquiry)
+     ═══════════════════════════════════════════════ */
+  .theme-toggle{
+    width:40px; height:40px;
+    border-radius:50%;
+    border:1px solid rgba(51,51,51,0.10);
+    background:rgba(255,255,255,0.55);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    color:var(--txt-600);
+    padding:0;
+    flex-shrink:0;
+    transition:color .18s, border-color .18s, background .18s;
+  }
+  .theme-toggle:hover{color:var(--txt-900);background:rgba(255,255,255,0.85);}
+  [data-theme="dark"] .theme-toggle{
+    border-color:rgba(255,255,255,0.12);
+    background:rgba(255,255,255,0.06);
+  }
+  [data-theme="dark"] .theme-toggle:hover{background:rgba(255,255,255,0.14);}
+
+  .theme-toggle .icon-sun{display:none!important;}
+  .theme-toggle .icon-moon{display:block!important;}
+  [data-theme="dark"] .theme-toggle .icon-sun{display:block!important;}
+  [data-theme="dark"] .theme-toggle .icon-moon{display:none!important;}
+
+  /* retire the old track-style toggle */
+  .toggle-track,.toggle-indicator,.toggle-icon{display:none!important;}
+
+
+  /* ═══════════════════════════════════════════════
+     WKDK MODAL — aligned to index_new-design
+     ═══════════════════════════════════════════════ */
+  .wkdk-modal-overlay{
+    background:rgba(33,33,33,0.42);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    padding:32px;
+  }
+
+  .wkdk-modal-card{
+    border-radius:40px;
+    max-width:560px;
+    border:1px solid rgba(255,255,255,0.7);
+    box-shadow:
+      0 2px 8px rgba(33,33,33,0.06),
+      0 32px 90px rgba(33,33,33,0.20),
+      inset 0 1px 0 rgba(255,255,255,0.9);
+  }
+  [data-theme="dark"] .wkdk-modal-card{
+    border-color:rgba(255,255,255,0.09);
+    box-shadow:
+      0 2px 8px rgba(0,0,0,0.3),
+      0 32px 90px rgba(0,0,0,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.07);
+  }
+
+  .wkdk-modal-close{
+    top:20px; right:20px;
+    width:44px; height:44px;
+    background:rgba(51,51,51,0.06);
+    color:#333;
+    transition:background .22s cubic-bezier(.22,1,.36,1), transform .22s cubic-bezier(.22,1,.36,1);
+  }
+  .wkdk-modal-close:hover{background:rgba(51,51,51,0.13);transform:scale(1.06);}
+  [data-theme="dark"] .wkdk-modal-close{background:rgba(255,255,255,0.08);color:#9A9A9A;}
+  [data-theme="dark"] .wkdk-modal-close:hover{background:rgba(255,255,255,0.16);}
+
+  .wkdk-modal-body{padding:36px 36px 36px;}
+
+  .wkdk-modal-eyebrow{
+    font-family:'Zalando Sans Expanded',sans-serif;
+    font-size:0.68rem; font-weight:700;
+    letter-spacing:1.4px; text-transform:uppercase;
+    color:#4A6300;
+    margin-bottom:10px;
+  }
+  [data-theme="dark"] .wkdk-modal-eyebrow{color:#A8D400;}
+
+  .wkdk-modal-heading{
+    font-family:'Zalando Sans Expanded',sans-serif;
+    font-size:1.35rem; font-weight:800;
+    letter-spacing:-0.6px; line-height:1.2;
+    color:#212121;
+    margin-bottom:14px;
+  }
+
+  .wkdk-modal-desc{
+    font-family:'Geist',sans-serif;
+    font-size:0.9rem; line-height:1.7;
+    color:#555; margin-bottom:24px;
+  }
+
+  .wkdk-feat-grid{gap:12px;}
+
+  .wkdk-feat-card{
+    border-radius:24px;
+    padding:20px 18px 18px;
+    transition:transform .26s cubic-bezier(.22,1,.36,1);
+  }
+  .wkdk-feat-card:hover{transform:translateY(-3px);}
+
+  .wkdk-feat-icon{
+    width:40px; height:40px;
+    border-radius:13px;
+    margin-bottom:14px;
+  }
+  .wkdk-feat-icon img{width:18px;height:18px;}
+
+  .wkdk-feat-title{
+    font-family:'Zalando Sans Expanded',sans-serif;
+    font-size:0.85rem; font-weight:700;
+    letter-spacing:-0.2px;
+    color:#212121;
+    margin-bottom:6px;
+  }
+  .wkdk-feat-desc{
+    font-family:'Geist',sans-serif;
+    font-size:0.78rem; line-height:1.55;
+    color:#555;
+  }
+
+  @media(max-width:860px){
+    .wkdk-modal-overlay{padding:0;}
+    .wkdk-modal-card{border-radius:36px 36px 0 0;}
+    .wkdk-modal-body{padding:28px 24px 32px;}
+    .wkdk-modal-heading{font-size:1.2rem;}
+    .wkdk-feat-card{padding:18px 16px 16px;}
+  }
+
+</style>
 </head>
 <body>
   <!-- Page Loader -->
@@ -465,51 +777,45 @@
 <!-- NAV -->
 <div id="scroll-progress"></div>
 <nav id="nav">
-  <button class="nav-back" onclick="history.length > 1 ? history.back() : window.location.href='work.html'" aria-label="Go back">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-  </button>
-  <a href="index.html" class="nav-logo">
-    <span class="nav-logo-text">Imseon Kwon</span>
-    <span class="nav-logo-icon">
-      <svg width="22" height="22" viewBox="0 0 60 60" fill="none">
-        <rect x="6" y="16.4" width="48" height="6.4" fill="currentColor"/>
-        <rect x="6" y="26.8" width="21.6" height="6.4" fill="currentColor"/>
-        <rect x="32.4" y="26.8" width="21.6" height="6.4" fill="currentColor"/>
-        <rect x="6" y="37.2" width="48" height="6.4" fill="currentColor"/>
-      </svg>
-    </span>
-  </a>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="about.html">About</a></li>
-      <li><a href="https://drive.google.com/file/d/1XxGR5leZ2zUodozmAO7PDx2dXAGlayoR/view?usp=sharing" target="_blank" rel="noopener">Resume</a></li>
-    </ul>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-      <div class="toggle-track">
-        <div class="toggle-indicator"></div>
-        <div class="toggle-icon toggle-icon-sun">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="4.5"/>
-            <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+  <div class="nav-shell">
+    <div class="nav-left">
+      <button class="nav-back" onclick="history.length > 1 ? history.back() : window.location.href='index.html'" aria-label="Go back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <a href="index.html" class="nav-logo" aria-label="Imseon Kwon — home">
+        <img src="me symbol.png" alt="">
+      </a>
+    </div>
+    <div class="nav-right">
+      <a class="nav-item" href="https://drive.google.com/file/d/1XxGR5leZ2zUodozmAO7PDx2dXAGlayoR/view" target="_blank" rel="noopener">resume</a>
+      <a class="nav-more" href="https://imseon-gallery.vercel.app/" target="_blank" rel="noopener" aria-label="More work">
+        <span class="nav-more-label">more?</span>
+        <span class="nav-more-eyes" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="7" y="10.4" width="15.54" height="27.2" rx="7.77" fill="white"/>
+            <rect x="8.94" y="17.2" width="6.8" height="13.6" rx="3.4" fill="#333"/>
+            <rect x="7.97" y="20.11" width="3.89" height="3.89" rx="1.94" fill="white"/>
+            <rect x="25.46" y="10.4" width="15.54" height="27.2" rx="7.77" fill="white"/>
+            <rect x="27.4" y="17.2" width="6.8" height="13.6" rx="3.4" fill="#333"/>
+            <rect x="26.43" y="20.11" width="3.89" height="3.89" rx="1.94" fill="white"/>
           </svg>
-        </div>
-        <div class="toggle-icon toggle-icon-moon">
-          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </div>
-      </div>
-    </button>
-    <button class="nav-burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+        </span>
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
   </div>
 </nav>
-<div class="nav-drawer" id="drawer">
-  <a href="about.html">About</a>
-  <a href="https://drive.google.com/file/d/1XxGR5leZ2zUodozmAO7PDx2dXAGlayoR/view?usp=sharing" target="_blank" rel="noopener">Resume</a>
-</div>
 
 <main>
 
@@ -849,7 +1155,6 @@
   function updateFloating() {
     const s = window.scrollY > 24;
     nav.classList.toggle('floating', s);
-    drawer.classList.toggle('floating', s);
     backTop.classList.toggle('visible', window.scrollY > 400);
   }
   window.addEventListener('scroll', updateFloating, {passive:true});
@@ -863,9 +1168,8 @@
   }, {passive:true});
 
   // Mobile burger
-  burger.addEventListener('click', () => {
-    burger.classList.toggle('open');
-    drawer.classList.toggle('open');
+  burger && burger.addEventListener('click', () => {
+    burger && burger.classList.toggle('open');
   });
 
   // Scroll reveal

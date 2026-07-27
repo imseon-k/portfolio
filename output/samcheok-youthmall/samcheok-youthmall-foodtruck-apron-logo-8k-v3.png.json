@@ -1,0 +1,26 @@
+{
+  "basePath": "output/samcheok-youthmall/foodtruck-apron-scene-generated.png",
+  "logoPath": "output/samcheok-youthmall/logo-standard.svg",
+  "outputPath": "output/samcheok-youthmall/samcheok-youthmall-foodtruck-apron-logo-8k-v3.png",
+  "resolution": "7680x4320",
+  "corners": {
+    "TL": {
+      "x": 2790,
+      "y": 1220
+    },
+    "TR": {
+      "x": 3735,
+      "y": 1288
+    },
+    "BL": {
+      "x": 2665,
+      "y": 2465
+    },
+    "BR": {
+      "x": 3825,
+      "y": 2518
+    }
+  },
+  "opacity": 0.74,
+  "foldCenter": 0.72
+}

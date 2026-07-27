@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+<script>
+  (function(){var t=localStorage.getItem('imseon-theme-v2');if(t)document.documentElement.setAttribute('data-theme',t);})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HDS Token Reference · Imseon Kwon</title>
 <link rel="icon" type="image/png" href="favicon_imseon.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;500;600;700;800&family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --clr-bg:#FAFAFA;--clr-surface:#FFFFFF;
@@ -15,19 +18,19 @@
   --lg-blur:blur(28px) saturate(180%);
   --shadow-sm:0 2px 8px rgba(0,0,0,0.07);
   --radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:20px;--radius-2xl:24px;--radius-3xl:28px;--radius-full:99999px;
-  --acc:#4F72E0;--acc-bg:#EEF2FF;
+  --acc:#4A6300;--acc-bg:rgba(200,255,74,0.14);--clr-lime:#C8FF4A;
   --ease-spring:cubic-bezier(0.34,1.52,0.64,1);
 }
 [data-theme="dark"]{
   --clr-bg:#111111;--clr-surface:#1C1C1C;
   --txt-900:#EFEFEF;--txt-600:#9A9A9A;--txt-400:#7C7C7C;--txt-200:#2C2C2C;--txt-100:#1C1C1C;
-  --acc-bg:rgba(79,114,224,0.12);color-scheme:dark;
+  --acc:#A8D400;--acc-bg:rgba(200,255,74,0.08);color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{overflow-x:hidden;}
 body{font-family:'Geist',system-ui,sans-serif;background:var(--clr-bg);color:var(--txt-900);
-  background-image:radial-gradient(ellipse 50% 40% at 90% 5%,rgba(79,114,224,.07) 0%,transparent 70%),
-  radial-gradient(ellipse 40% 35% at 10% 95%,rgba(79,114,224,.07) 0%,transparent 70%);
+  background-image:radial-gradient(ellipse 50% 40% at 90% 5%,rgba(200,255,74,.07) 0%,transparent 70%),
+  radial-gradient(ellipse 40% 35% at 10% 95%,rgba(200,255,74,.07) 0%,transparent 70%);
   background-attachment:fixed;animation:fadeIn .4s ease forwards;}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
@@ -38,7 +41,7 @@ nav.floating{top:12px;left:12px;right:12px;border-radius:18px;background:rgba(25
 [data-theme="dark"] nav.floating{background:rgba(17,17,17,.80);border-color:rgba(255,255,255,.08);}
 .nav-back{display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:none;border:none;cursor:pointer;color:var(--txt-900);border-radius:var(--radius-sm);transition:background .2s;padding:0;}
 .nav-back:hover{background:rgba(0,0,0,.05);}
-.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:var(--txt-900);text-decoration:none;}
+.nav-logo{font-family:'Zalando Sans Expanded',sans-serif;font-weight:800;font-size:.95rem;color:var(--txt-900);text-decoration:none;}
 .nav-right{display:flex;align-items:center;gap:16px;}
 .theme-toggle{position:relative;display:flex;align-items:center;justify-content:center;min-height:48px;min-width:48px;padding:0 4px;background:none;border:none;cursor:pointer;outline:none;}
 .toggle-track{position:relative;display:flex;align-items:center;gap:4px;padding:4px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.30),0 2px 8px rgba(0,0,0,.08);backdrop-filter:blur(12px);border-radius:var(--radius-full);}
@@ -58,8 +61,8 @@ main{padding-top:64px;max-width:1100px;margin:0 auto;padding-left:48px;padding-r
 .page-eyebrow{font-size:.68rem;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--acc);margin-bottom:12px;}
 .page-title{font-family:'Geist',sans-serif;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:700;letter-spacing:-1px;line-height:1.2;margin-bottom:12px;}
 .page-desc{font-size:.9rem;color:var(--txt-600);line-height:1.7;max-width:600px;}
-.download-btn{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:8px 16px;border-radius:var(--radius-full);background:var(--acc-bg);color:var(--acc);font-size:.78rem;font-weight:600;text-decoration:none;border:1px solid rgba(79,114,224,.2);transition:background .2s;}
-.download-btn:hover{background:rgba(79,114,224,.18);}
+.download-btn{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:8px 16px;border-radius:var(--radius-full);background:var(--acc-bg);color:var(--acc);font-size:.78rem;font-weight:600;text-decoration:none;border:1px solid rgba(200,255,74,.2);transition:background .2s;}
+.download-btn:hover{background:rgba(200,255,74,.18);}
 
 /* TABS */
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--txt-200);margin-bottom:40px;}
@@ -437,15 +440,237 @@ main{overflow-x:hidden;}
   .spacing-row,.fontsize-row{grid-template-columns:90px 40px 1fr;gap:8px;}
   .comp-showcase{gap:16px;}
 }
+
+/* ═══════════════════════════════════════════════
+   NAV — liquid glass sticky (matches index_new-design)
+   ═══════════════════════════════════════════════ */
+nav{
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  height:auto;
+  padding:12px 24px 0;
+  display:flex; justify-content:center; align-items:flex-start;
+  background:none!important; border:none!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important; -webkit-backdrop-filter:none!important;
+  pointer-events:none; transition:none;
+}
+.nav-shell{
+  pointer-events:auto;
+  width:100%; max-width:1120px; height:72px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:0 24px 0 16px;
+  border-radius:40px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0);
+  backdrop-filter:blur(0px); -webkit-backdrop-filter:blur(0px);
+  transition:background .38s cubic-bezier(.22,1,.36,1),
+             border-color .38s cubic-bezier(.22,1,.36,1),
+             box-shadow .38s cubic-bezier(.22,1,.36,1),
+             backdrop-filter .38s cubic-bezier(.22,1,.36,1);
+}
+nav.floating .nav-shell,nav.stuck .nav-shell{
+  background:rgba(255,255,255,0.62);
+  border-color:rgba(255,255,255,0.7);
+  backdrop-filter:blur(24px) saturate(1.8);
+  -webkit-backdrop-filter:blur(24px) saturate(1.8);
+  box-shadow:0 1px 2px rgba(33,33,33,.04),0 8px 32px rgba(33,33,33,.08),
+             inset 0 1px 0 rgba(255,255,255,.85);
+}
+[data-theme="dark"] nav.floating .nav-shell,
+[data-theme="dark"] nav.stuck .nav-shell{
+  background:rgba(28,28,28,0.62);
+  border-color:rgba(255,255,255,0.10);
+  box-shadow:0 1px 2px rgba(0,0,0,.2),0 8px 32px rgba(0,0,0,.34),
+             inset 0 1px 0 rgba(255,255,255,.10);
+}
+
+.nav-left{display:flex;align-items:center;gap:4px;flex-shrink:0;}
+.nav-back{
+  display:flex!important;align-items:center;justify-content:center;
+  width:44px;height:44px;flex-shrink:0;border-radius:999px;
+  background:none;border:none;cursor:pointer;color:var(--txt-900);padding:0;
+  transition:background .22s cubic-bezier(.22,1,.36,1);
+}
+.nav-back:hover{background:rgba(51,51,51,.08);}
+[data-theme="dark"] .nav-back:hover{background:rgba(255,255,255,.10);}
+
+.nav-logo{
+  display:flex!important;align-items:center;justify-content:center;
+  width:52px;height:52px;flex-shrink:0;text-decoration:none;font-size:0;
+}
+.nav-logo img{width:31px;height:36px;object-fit:contain;display:block;}
+
+.nav-right{display:flex;align-items:center;gap:4px;flex-shrink:0;}
+.nav-item{
+  height:48px;display:flex;align-items:center;justify-content:center;padding:0 16px;
+  font-family:'Zalando Sans Expanded',sans-serif;
+  font-weight:700;font-size:15px;line-height:1.2;
+  color:var(--txt-900);text-transform:uppercase;text-decoration:none;white-space:nowrap;
+  transition:opacity .2s cubic-bezier(.22,1,.36,1);
+}
+.nav-item:hover{opacity:.6;}
+.nav-more{
+  display:flex;align-items:center;gap:4px;height:48px;padding:0 14px;
+  border-radius:24px;background:rgba(51,51,51,.06);text-decoration:none;
+  transition:background .22s cubic-bezier(.22,1,.36,1);
+}
+.nav-more:hover{background:rgba(51,51,51,.12);}
+[data-theme="dark"] .nav-more{background:rgba(255,255,255,.08);}
+[data-theme="dark"] .nav-more:hover{background:rgba(255,255,255,.16);}
+.nav-more-label{
+  font-family:'Zalando Sans Expanded',sans-serif;
+  font-weight:500;font-size:14px;line-height:1.2;
+  color:var(--txt-900);text-transform:uppercase;white-space:nowrap;
+}
+.nav-more-eyes{width:34px;height:34px;display:flex;align-items:center;justify-content:center;}
+.nav-more-eyes svg{width:30px;height:24px;}
+
+/* single-icon theme toggle */
+.theme-toggle{
+  width:40px;height:40px;min-width:40px;min-height:40px;
+  border-radius:50%;
+  border:1px solid rgba(51,51,51,.10);
+  background:rgba(255,255,255,.55);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--txt-600);padding:0;flex-shrink:0;margin-left:4px;
+  transition:color .18s,border-color .18s,background .18s;
+}
+.theme-toggle:hover{color:var(--txt-900);background:rgba(255,255,255,.85);}
+[data-theme="dark"] .theme-toggle{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.06);}
+[data-theme="dark"] .theme-toggle:hover{background:rgba(255,255,255,.14);}
+.theme-toggle .icon-sun{display:none!important;}
+.theme-toggle .icon-moon{display:block!important;}
+[data-theme="dark"] .theme-toggle .icon-sun{display:block!important;}
+[data-theme="dark"] .theme-toggle .icon-moon{display:none!important;}
+.toggle-track,.toggle-indicator,.toggle-icon{display:none!important;}
+
+@media(max-width:860px){
+  nav{padding:12px 16px 0;}
+  .nav-shell{height:64px;padding:0 16px 0 10px;border-radius:32px;}
+  .nav-logo{width:44px;height:44px;} .nav-logo img{width:26px;height:30px;}
+  .nav-back{width:40px;height:40px;}
+  .nav-item{font-size:13px;padding:0 10px;height:44px;}
+  .nav-more{height:44px;padding:0 10px;}
+  .nav-more-label{font-size:12px;}
+  .nav-more-eyes{width:28px;height:28px;} .nav-more-eyes svg{width:25px;height:20px;}
+}
+@media(max-width:560px){
+  .nav-item{display:none;}
+  .nav-shell{padding:0 12px 0 8px;}
+}
+
+/* ═══════════════════════════════════════════════
+   TYPOGRAPHY — display face matches index_new-design
+   ═══════════════════════════════════════════════ */
+h1,h2,h3,h4,
+.page-title,
+.page-eyebrow,
+.tok-section-title,
+.comp-showcase-label,
+.tab-btn{
+  font-family:'Zalando Sans Expanded',sans-serif;
+}
+.page-title{letter-spacing:-1.2px;font-weight:800;}
+.page-eyebrow{letter-spacing:1.4px;font-weight:600;}
+
+/* ═══════════════════════════════════════════════
+   INTERFACE — align with index_new-design surfaces
+   ═══════════════════════════════════════════════ */
+main{padding-top:104px;max-width:1120px;}
+
+.page-header{padding-top:8px;}
+
+/* tabs as pills, not underline */
+.tabs{
+  display:flex;gap:8px;flex-wrap:wrap;
+  border-bottom:none;
+  margin-bottom:40px;
+}
+.tab-btn{
+  padding:12px 22px;
+  border:none;
+  border-bottom:none!important;
+  margin-bottom:0;
+  border-radius:9999px;
+  background:#F2F2F2;
+  font-family:'Zalando Sans Expanded',sans-serif;
+  font-size:.8rem;font-weight:600;
+  color:var(--txt-600);
+  transition:background .24s cubic-bezier(.22,1,.36,1),color .24s,transform .24s cubic-bezier(.22,1,.36,1);
+}
+.tab-btn:hover{transform:translateY(-2px);}
+.tab-btn.active{
+  background:var(--clr-lime,#C8FF4A);
+  color:#212121;
+}
+[data-theme="dark"] .tab-btn{background:rgba(255,255,255,.07);}
+[data-theme="dark"] .tab-btn.active{background:var(--clr-lime,#C8FF4A);color:#212121;}
+
+/* softer, larger card surfaces */
+.comp-preview-area{
+  border-radius:32px;
+  border-color:rgba(51,51,51,.08);
+}
+[data-theme="dark"] .comp-preview-area{border-color:rgba(255,255,255,.08);}
+
+.ts-panel{border-radius:24px;}
+
+.btn-pg-wrap{
+  border-radius:24px;
+  border-color:rgba(51,51,51,.08);
+}
+[data-theme="dark"] .btn-pg-wrap{border-color:rgba(255,255,255,.08);}
+
+.tok-section-title{
+  font-size:.7rem;letter-spacing:1.6px;
+  color:var(--txt-400);
+  border-bottom-color:rgba(51,51,51,.07);
+}
+[data-theme="dark"] .tok-section-title{border-bottom-color:rgba(255,255,255,.07);}
+
 </style>
 </head>
 <body>
 
 <nav id="nav">
-  <button class="nav-back" onclick="history.length>1?history.back():window.location.href='hds.html'" aria-label="Back">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-  </button>
-  <a href="index.html" class="nav-logo">Imseon Kwon</a>
+  <div class="nav-shell">
+    <div class="nav-left">
+      <button class="nav-back" onclick="history.length>1?history.back():window.location.href='hds.html'" aria-label="Go back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <a href="index.html" class="nav-logo" aria-label="Imseon Kwon &mdash; home">
+        <img src="me symbol.png" alt="">
+      </a>
+    </div>
+    <div class="nav-right">
+      <a class="nav-item" href="https://drive.google.com/file/d/1XxGR5leZ2zUodozmAO7PDx2dXAGlayoR/view" target="_blank" rel="noopener">resume</a>
+      <a class="nav-more" href="https://imseon-gallery.vercel.app/" target="_blank" rel="noopener" aria-label="More work">
+        <span class="nav-more-label">more?</span>
+        <span class="nav-more-eyes" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="7" y="10.4" width="15.54" height="27.2" rx="7.77" fill="white"/>
+            <rect x="8.94" y="17.2" width="6.8" height="13.6" rx="3.4" fill="#333"/>
+            <rect x="7.97" y="20.11" width="3.89" height="3.89" rx="1.94" fill="white"/>
+            <rect x="25.46" y="10.4" width="15.54" height="27.2" rx="7.77" fill="white"/>
+            <rect x="27.4" y="17.2" width="6.8" height="13.6" rx="3.4" fill="#333"/>
+            <rect x="26.43" y="20.11" width="3.89" height="3.89" rx="1.94" fill="white"/>
+          </svg>
+        </span>
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
+  </div>
 </nav>
 
 <main>
@@ -865,7 +1090,7 @@ main{overflow-x:hidden;}
             <div class="tok-chain-row"><span class="tok-chain-key">system.title-l</span><span class="tok-chain-val" style="color:var(--acc);">22px Bold · 125% lh</span></div>
             <div class="tok-chain-row"><span class="tok-chain-key">system.body-m</span><span class="tok-chain-val" style="color:var(--acc);">14px Regular · 150% lh</span></div>
           </div>
-          <div style="margin-top:16px;padding:12px;background:rgba(79,114,224,.06);border-radius:var(--radius-md);border:1px solid rgba(79,114,224,.12);">
+          <div style="margin-top:16px;padding:12px;background:rgba(200,255,74,.06);border-radius:var(--radius-md);border:1px solid rgba(200,255,74,.12);">
             <p style="font-size:.67rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);margin-bottom:6px;">Interaction</p>
             <p style="font-size:.72rem;color:var(--txt-600);line-height:1.6;">Tap button → overlay fades in + sheet slides up from bottom using <code style="font-family:'Geist Mono',monospace;font-size:.68rem;color:var(--acc);">translateY(100%→0)</code>. Dismiss by tapping overlay or dragging the handle downward.</p>
           </div>
@@ -1489,6 +1714,23 @@ window.addEventListener('scroll',()=>nav.classList.toggle('floating',window.scro
   render();
 })();
 
+</script>
+
+<script>
+  (function(){
+    var btn = document.getElementById('themeToggle');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var cur  = document.documentElement.getAttribute('data-theme') || 'light';
+      var next = cur === 'dark' ? 'light' : 'dark';
+      function apply(){
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('imseon-theme-v2', next);
+      }
+      if(!document.startViewTransition){ apply(); return; }
+      document.startViewTransition(apply).ready.catch(function(){});
+    });
+  })();
 </script>
 </body>
 </html>
