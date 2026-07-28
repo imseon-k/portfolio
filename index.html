@@ -1020,6 +1020,30 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;}
   .footer-title{font-size:23px;}
 }
 
+/* ═══════════════════════════════════════════════════
+   MOBILE / TOUCH — no scroll-entrance animations.
+   Content must never depend on JS to become visible.
+   ═══════════════════════════════════════════════════ */
+@media (max-width:860px), (hover:none), (pointer:coarse){
+  .reveal,
+  .reveal.in,
+  .stack-card,
+  .stack-card.in,
+  .stack-card.behind,
+  .stack-card.behind-2,
+  .intro .stack-card--first,
+  .intro .hero,
+  .intro .hero-copy,
+  .intro .hero-art{
+    opacity:1!important;
+    transform:none!important;
+    animation:none!important;
+    transition:none!important;
+  }
+  .stack{perspective:none;}
+  .hero{border-radius:var(--r-xl)!important;}
+}
+
 /* ── touch devices: never show the cursor tooltip ── */
 @media (hover:none),(pointer:coarse){
   .tools-cluster{display:none;}
@@ -1411,7 +1435,14 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;}
   var cards = Array.prototype.slice.call(document.querySelectorAll('.stack-card'));
   var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-  if(cards.length && !reduce){
+  /* mobile & touch: skip the entrance choreography entirely —
+     everything is already visible via CSS */
+  var noMotion = reduce
+    || window.matchMedia('(max-width:860px)').matches
+    || window.matchMedia('(hover:none)').matches
+    || window.matchMedia('(pointer:coarse)').matches;
+
+  if(cards.length && !noMotion){
     /* intro: hero frames in, first card follows */
     var first = document.querySelector('.stack-card--first');
     if(first) first.classList.add('in');
@@ -1475,8 +1506,10 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;}
     window.addEventListener('resize', syncStack, { passive:true });
     syncStack();
   } else {
+    /* mobile / reduced-motion: show everything immediately */
     document.body.classList.remove('intro');
     cards.forEach(function(c){ c.classList.add('in'); });
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
   }
 
   /* ── Sticky nav — engage glass on scroll ─ */
